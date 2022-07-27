@@ -2,7 +2,7 @@ import React from "react";
 import "./header.css";
 
 const Header = () => {
-  
+
   return (
     <div className="Header">
       <div className="Container">
@@ -16,18 +16,7 @@ const Header = () => {
           SWIM
         </div>
         <div className="Button">
-          {/* <label for="Dropdown">BIKE</label> */}
-          {/* <div class="dropdown">
-            <button class="dropbtn" onclick="">Dropdown
-              <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" id="myDropdown">
-              <option value="BIKE">BIKE</option>
-              <option value="WALK">WALK</option>
-              <option value="STACK">STACK</option>
-              <option value="HOCKEY">HOCKEY</option>
-            </div>
-          </div> */}
+          BIKE
         </div>
       </div>
       <div className="Activity">
@@ -36,8 +25,8 @@ const Header = () => {
         </div>
       </div>
     </div>
-    
-    
+
+
   )
 }
 
