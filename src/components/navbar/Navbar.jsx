@@ -4,9 +4,9 @@ import Logo from "./immifit.svg";
 
 function Navbar() {
   return (
-    <div className="navbar ">
+    <div className="navbar">
       <img src={Logo} alt="logo" />
-      <h1>Welcome <span>to your exercise tracker</span></h1>
+      <h1>Welcome to your exercise tracker</h1>
     </div>
   );
 }
