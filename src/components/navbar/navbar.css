@@ -17,9 +17,10 @@
 
 .navbar h1 {
     margin-right: 50px;
+    text-align: center;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 525px) {
     .navbar {
         font-size: 0.75rem;
     }
@@ -33,5 +34,28 @@
 
     .navbar h1 {
         margin-right: 20px;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .navbar {
+        font-size: 0.75rem;
+    }
+
+    .navbar img {
+        width: 100px;
+        height: 75px;
+        margin-left: 5%;
+        margin-right: 20px;
+    }
+
+    .navbar h1 {
+        margin-right: 20px;
+        text-align: center;
+    }
+
+    .navbar h1 span {
+        display: none;
     }
 }
