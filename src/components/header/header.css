@@ -4,7 +4,7 @@
 .Header {
     display: flex;
     justify-content: space-between;   
-
+    margin: 0px 40px;
 }
 
 .Container .Button {
