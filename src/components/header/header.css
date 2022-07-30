@@ -4,7 +4,7 @@
 .Header {
     display: flex;
     justify-content: space-between;   
-    margin: 0px 40px;
+
 }
 
 .Container .Button {
@@ -12,7 +12,7 @@
     background-color: white;
     padding: 0px 0px;
     height: 46px;
-    width: 199px;
+    min-width: 60px;
     border-radius: 40px;
     justify-content: center;
     align-items: center; 
@@ -26,7 +26,7 @@
     align-items: center;
     padding: 0px 0px;
     margin: 0px 0px;
-    background-color: #ff9797;
+    background-color: #f08080;
     padding: 0px 0px;
     height: 90px;
     width: 1047px;
@@ -35,14 +35,15 @@
 
 .Button-Activity {
     display: flex;
-    background-color: #ff9797;
+    background-color: #f08080;
     padding: 0px 0px;
     height: 46px;
-    width: 199px;
+    min-width: 100px;
     border-radius: 40px;
     justify-content: center;
     align-items: center; 
     margin: 23px auto;
+    color: white;
 }
 
 /* .dropdown {
