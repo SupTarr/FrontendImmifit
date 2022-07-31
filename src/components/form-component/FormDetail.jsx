@@ -15,8 +15,11 @@ function FormDetail() {
           <p>Type</p>
           <select name="type">
             <option value="run">Run</option>
+            <option value="bicycle">Bicycle</option>
             <option value="swim">Swim</option>
             <option value="Hiking">Hiking</option>
+            <option value="Hiking">Walking</option>
+
           </select>
         </div>
 
