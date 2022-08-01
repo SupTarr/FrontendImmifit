@@ -1,0 +1,19 @@
+.form-header{
+}
+
+a {
+   margin-top: 10px;
+   text-decoration: solid;
+   display: inline-block;
+   padding: 20px 24px;
+ }
+ 
+ a:hover {
+   background-color: #ddd;
+   color: black;
+ }
+ 
+ .previous {
+   background-color: #f1f1f1;
+   color: black;
+ }
