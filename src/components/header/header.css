@@ -1,49 +1,70 @@
 * {
-    font-size: 16px;
+  font-size: 16px;
 }
+
+@media screen and (max-width: 550px) {
+    .Header .Container .Button {
+    display: none;
+  }
+}
+
 .Header {
-    display: flex;
-    justify-content: space-between;   
-    margin: 0px 40px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 40px;
 }
 
 .Container .Button {
+  text-align: center;
+  display: flex;
+  background-color: white;
+  padding: 0px 0px;
+  height: 46px;
+  min-width: 75px;
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
+  margin: 23px auto;
+}
+
+.dropDown {
+    text-align: center;
     display: flex;
     background-color: white;
     padding: 0px 0px;
     height: 46px;
-    min-width: 60px;
+    min-width: 75px;
     border-radius: 40px;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     margin: 23px auto;
-}
+  }
 
 .Container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0px 0px;
-    margin: 0px 0px;
-    background-color: #f08080;
-    padding: 0px 0px;
-    height: 90px;
-    width: 1047px;
-    border-radius: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0px 0px;
+  margin: 0px 20px;
+  background-color: #f08080;
+  padding: 0px 0px;
+  height: 90px;
+  width: 1047px;
+  border-radius: 40px;
 }
 
 .Button-Activity {
-    display: flex;
-    background-color: #f08080;
-    padding: 0px 0px;
-    height: 46px;
-    min-width: 100px;
-    border-radius: 40px;
-    justify-content: center;
-    align-items: center; 
-    margin: 23px auto;
-    color: white;
+  display: flex;
+  background-color: #f08080;
+  padding: 0px 0px;
+  height: 46px;
+  min-width: 100px;
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
+  margin: 23px auto;
+  color: white;
 }
 
 /* .dropdown {
