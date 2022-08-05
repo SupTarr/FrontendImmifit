@@ -1,12 +1,20 @@
 import React from 'react'
 import './logindetail.css'
+import Facebook from './facebook.png'
+import Line from './line.png'
+import Tel from './telephone.png'
+// import Back from './previous.png'
+
 const Logindetail = () => {
   return (
     <div className='login h-screen relative'>
-      <div className='flex justify-center pt-16'>
-        <div className="max-w-5xl flex justify-center">
-          <img className="shadow-md rounded-l-xl object-cover max-w-xl" src="../../public/imagecard2.jpg" alt="imagecard"></img>
-          <form className="bg-white shadow-md rounded-r-xl px-6 w-[350px] pt-16">
+      {/* <button className='w-[50px]'>
+          <img src={Back} alt="" />
+        </button> */}
+      <div className='flex flex-col justify-center items-center pt-16'>
+        <div className="max-w-5xl flex flex-col justify-center sm:flex-row">
+          <img className="shadow-md rounded-l-xl object-cover sm:max-w-[350px] md:max-w-sm lg:max-w-lg xl:max-w-xl" src="../../public/imagecard2.jpg" alt="imagecard"></img>
+          <form className="bg-white shadow-md rounded-r-xl px-6 md:max-w-[250px] xl:max-w-[350px] pt-16">
             <div className="flex text-gray-700 text-2xl font-bold mb-10">
               Log in
             </div>
@@ -27,17 +35,21 @@ const Logindetail = () => {
               <button className="bg-[#6971f2] hover:bg-[#5960cc] text-white font-bold w-full py-2 rounded focus:outline-none focus:shadow-outline" type="button">
                 Log in
               </button>
-              {/* <a className="inline-block align-baseline font-bold text-sm text-[#6971f2] hover:text-[#5960cc]" href="#">
-              Forgot Password?
-            </a> */}
+            </div>
+            <div className="flex flex-col-3 mt-6 justify-around">
+            <a href="#"><img src={Facebook} alt="facebook" className='w-[50px]'/></a>
+            <a href="#"><img src={Line} alt="Line" className='w-[50px]'/></a>
+            <a href="#"><img src={Tel} alt="Tel" className='w-[50px]'/></a>
+            </div>
+            <div className="mt-8 flex flex-1 justify-center">            
+                <a href="#">Don't have an account? Sign up</a>
             </div>
           </form>
-          <p className="text-center text-gray-500 text-xs">
-            {/* &copy;2020 Acme Corp. All rights reserved. */}
-          </p>
+          
         </div>
       </div>
     </div>
+    
   )
 }
 
