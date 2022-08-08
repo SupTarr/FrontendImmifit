@@ -7,14 +7,14 @@ import "./home.css";
 
 function Home() {
   return (
-    <div className="home">
+    <div class="home">
       <div>
       <Navbar />
-      <div className="header">
+      <div class="header">
         <Header />
       </div>
         
-      <div className="container">
+      <div class="container">
         <Container />
         <Footer />
       </div>

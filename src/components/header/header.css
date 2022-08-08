@@ -9,7 +9,6 @@
 
 .Container .Button {
     display: flex;
-    /* background-color: white; */
     min-width: 60px;
     justify-content: center;
     align-items: center; 
