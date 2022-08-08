@@ -3,8 +3,10 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     screens: {
+      'mobile': {'min': '0px', 'max': '450px'},
+
       'sm': '450px',
-      // => @media (min-width: 640px) { ... }
+      // => @media (min-width: 450px) { ... }
 
       'md': '768px',
       // => @media (min-width: 768px) { ... }
