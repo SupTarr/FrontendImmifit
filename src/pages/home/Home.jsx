@@ -10,8 +10,11 @@ function Home() {
     <div className="home">
       <div>
       <Navbar />
-      <div>
+      <div className="header">
         <Header />
+      </div>
+        
+      <div className="container">
         <Container />
         <Footer />
       </div>
