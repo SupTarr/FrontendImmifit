@@ -13,8 +13,8 @@ const Logindetail = () => {
         </button> */}
       <div className='flex flex-col justify-center items-center pt-16'>
         <div className="max-w-5xl flex flex-col justify-center sm:flex-row">
-          <img className="shadow-md rounded-l-xl object-cover sm:max-w-[350px] md:max-w-sm lg:max-w-lg xl:max-w-xl" src="../../public/imagecard2.jpg" alt="imagecard"></img>
-          <form className="bg-white shadow-md rounded-r-xl px-6 md:max-w-[250px] xl:max-w-[350px] pt-16">
+          <img className="shadow-md rounded-l-xl object-cover sm:max-w-[200px] md:max-w-sm lg:max-w-lg xl:max-w-xl" src="../../public/imagecard2.jpg" alt="imagecard"></img>
+          <form className="flex flex-col justify-center bg-white shadow-md rounded-r-xl px-5 md:max-w-[250px] xl:max-w-[350px] py-5">
             <div className="flex text-gray-700 text-2xl font-bold mb-10">
               Log in
             </div>
@@ -42,7 +42,7 @@ const Logindetail = () => {
             <a href="#"><img src={Tel} alt="Tel" className='w-[50px]'/></a>
             </div>
             <div className="mt-8 flex flex-1 justify-center">            
-                <a href="#">Don't have an account? Sign up</a>
+                <a className="text-sm" href="#">Don't have an account? <sapn className="font-[600]">Sign up</sapn></a>
             </div>
           </form>
           
