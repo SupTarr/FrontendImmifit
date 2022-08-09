@@ -1,8 +1,8 @@
 import React from "react";
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'  
 import "./header.css";
 
 const Header = () => {
-
   return (
     <div className="Header">
       <div className="Container bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg">
@@ -37,9 +37,7 @@ const Header = () => {
       </div>
 
     </div>
-
-
-  )
-}
+  );
+};
 
 export default Header;

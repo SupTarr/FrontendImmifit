@@ -12,7 +12,6 @@ function Navbar() {
       <p className="text-md mx-[20px] text-white">Login</p>
       <p className="text-md mx-[20px] text-white">Profile</p>
       </div>
-      
     </div>
   );
 }
