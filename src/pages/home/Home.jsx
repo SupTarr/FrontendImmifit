@@ -9,18 +9,17 @@ function Home() {
   return (
     <div class="home">
       <div>
-      <Navbar />
-      <div class="header">
-        <Header />
-      </div>
-        
-      <div class="container">
-        <Container />
-        <Footer />
+        <Navbar />
+        <div class="header">
+          <Header />
+        </div>
+        <div class="container">
+          <Container />
+          <Footer />
+        </div>
       </div>
     </div>
-    </div>
-    
+
   );
 }
 

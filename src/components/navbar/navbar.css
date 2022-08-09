@@ -9,20 +9,12 @@
     padding: 0px 20px;
 }
 
-
-
 .navbar img {
     width: 150px;
-    height: 100px;
+    height: 75px;
     margin-left: 5%;
     margin-right: 50px;
 }
-
-/* .navbar h1 {
-    margin-right: 50px;
-    text-align: center;
-    color: #ff5757;
-} */
 
 @media screen and (max-width: 525px) {
     .navbar {
@@ -34,11 +26,6 @@
         height: 75px;
         margin-left: 5%;
         margin-right: 20px;
-    }
-
-    .navbar h1 {
-        margin-right: 20px;
-        text-align: center;
     }
 }
 
@@ -52,14 +39,5 @@
         height: 75px;
         margin-left: 5%;
         margin-right: 20px;
-    }
-
-    .navbar h1 {
-        margin-right: 20px;
-        text-align: center;
-    }
-
-    .navbar h1 span {
-        display: none;
     }
 }
