@@ -4,18 +4,24 @@ import Container from "../../components/container/Container";
 import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/navbar/Navbar";
 import "./home.css";
+import Profile from "../profile/Profile";
 
 function Home() {
   return (
-    <div class="home">
+    <div className="home">
       <div>
         <Navbar />
-        <div class="header">
-          <Header />
-        </div>
-        <div class="container">
-          <Container />
-          <Footer />
+        <div className="flex flex-wrap max-w-[1300px] mx-auto">
+          <div className="Profile w-[40%]">
+            <Profile />
+          </div>
+          <div className="Activities max-w-[60%]">
+            <Header />
+            <Container />
+            <Container />
+            <Container />
+            <Footer />
+          </div>
         </div>
       </div>
     </div>
