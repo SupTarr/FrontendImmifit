@@ -16,7 +16,10 @@ const Header = () => {
           SWIM
         </div>
         <div className="Button">
-          BIKE
+          <option value="BIKE">BIKE</option>
+          <option value="WALK">WALK</option>
+          <option value="STACK">STACK</option>
+          <option value="HOCKEY">HOCKEY</option>
         </div>
       </div>
       <div className="Activity">
