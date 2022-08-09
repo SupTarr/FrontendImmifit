@@ -29,56 +29,6 @@
     font-size: 20px;
   }
   
-  
-  .form-type-select {
-    display: flex;
-    width: 25%;
-    flex-direction: column;
-    margin-top: 50px;
-  }
-  
-  .form-type-select p {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-  
-  .form-type-select select {
-    width: 50%;
-    height: 3rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 0.5rem;
-    font-size: 1.2rem;
-    border-radius: 50px;
-  }
-  
-  .form-type-select select option {
-    font-size: 20px;
-  }
-  
-  .form-date-time {
-    display: flex;
-    width: 25%;
-    flex-direction: column;
-    margin-top: 50px;
-  }
-  
-  .form-date-time p {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-  
-  .form-date-time input {
-    height: 3rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 0.5rem;
-    font-size: 1.2rem;
-    border-radius: 50px;
-  }
-  
   .form-duration {
     display: flex;
     width: 25%;
@@ -123,13 +73,6 @@
     border-radius: 50px;
   }
 
-  .form-desc textarea {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 0.5rem;
-    font-size: 1.2rem;
-    border-radius: 50px;
-  }
   
   .form-component button {
     display: inline-block;
