@@ -6,7 +6,7 @@ const Container = () => {
 
     <div className="mb-4">
       <div className="flex justify-around flex-wrap" >
-        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50 backdrop-blur-xl drop-shadow-lg rounded-[40px] border shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
+        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50 rounded-[40px] border shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
           <div className="grid grid-cols-2">
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">image</h5>
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">Topic</h5>
@@ -35,7 +35,7 @@ const Container = () => {
 
           </div>
         </a>
-        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50 backdrop-blur-xl drop-shadow-lg rounded-[40px] border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
+        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50 rounded-[40px] border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
           <div className="grid grid-cols-2">
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">image</h5>
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">Topic</h5>
@@ -64,7 +64,7 @@ const Container = () => {
 
           </div>
         </a>
-        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50 backdrop-blur-xl drop-shadow-lg  rounded-[40px] border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
+        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50  rounded-[40px] border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
           <div className="grid grid-cols-2">
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">image</h5>
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">Topic</h5>
@@ -95,7 +95,7 @@ const Container = () => {
         </a>
       </div>
       <div className="flex justify-around flex-wrap sm:mx-auto my-0" >
-        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50 backdrop-blur-xl drop-shadow-lg  rounded-[40px] border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
+        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50  rounded-[40px] border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
           <div className="grid grid-cols-2">
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">image</h5>
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">Topic</h5>
@@ -124,7 +124,7 @@ const Container = () => {
 
           </div>
         </a>
-        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50 backdrop-blur-xl drop-shadow-lg  rounded-[40px] border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
+        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50  rounded-[40px] border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
           <div className="grid grid-cols-2">
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">image</h5>
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">Topic</h5>
@@ -153,7 +153,7 @@ const Container = () => {
 
           </div>
         </a>
-        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50 backdrop-blur-xl drop-shadow-lg  rounded-[40px] border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
+        <a href="#" className="block p-6 max-w-sm bg-white bg-opacity-50  rounded-[40px] border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto my-2">
           <div className="grid grid-cols-2">
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">image</h5>
             <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">Topic</h5>
