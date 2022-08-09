@@ -20,19 +20,19 @@ function Footer() {
   }
 
   return (
-    <div className="pb-10 flex justify-center items-center w-[100%]">
-      <button onClick={Back} className="rounded-l-lg border-r-0 flex content-center justify-center h-12 border-2  border-[#ff5757] w-12
+    <div className="flex justify-center items-center w-[100%]">
+      <button onClick={Back} className="bg-white bg-opacity-50 backdrop-blur-xl rounded-l-lg border-r-0 flex content-center justify-center h-12 border-2 w-12
       hover:bg-[#f08080] hover:text-white"><FiChevronLeft className="w-4 h-4 mt-3" /></button>
       {
         pages.map((page, index) => {
           if (page.page === number) {
-            return <button key={index} className="bg-[#fbc3bc] h-12 border-2 border-r-0 border-[#ff5757] w-12">{page.page}</button>
+            return <button key={index} className="bg-white bg-opacity-50 backdrop-blur-xl h-12 border-2 border-r-0 w-12">{page.page}</button>
           } else {
-            return <button key={index} className="h-12 border-2 border-r-0 border-[#ff5757] w-12">{page.page}</button>
+            return <button key={index} className="bg-white bg-opacity-50 backdrop-blur-xl h-12 border-2 border-r-0 w-12">{page.page}</button>
           }
         })
       }
-      <button onClick={Next} className="rounded-r-lg flex content-center justify-center h-12 border-2 border-r-2  border-[#ff5757] w-12
+      <button onClick={Next} className="bg-white bg-opacity-50 backdrop-blur-xl rounded-r-lg flex content-center justify-center h-12 border-2 border-r-2 w-12
       hover:bg-[#f08080] hover:text-white"><FiChevronRight className="w-4 h-4 mt-3" /></button>
     </div>
   )
