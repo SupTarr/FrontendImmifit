@@ -27,7 +27,6 @@ function registerForm(){
              <input type="email" name="email" />
            </div>
    
-   
            <button>ADD ACTIVITIES</button>
          </form>
        </section>
