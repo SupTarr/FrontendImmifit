@@ -6,7 +6,7 @@ function Navbar() {
   return (
     <div className="navbar">
       <img src={Logo} alt="logo" />
-      <h1>Welcome to your exercise tracker</h1>
+      <h1 className="font-bold text-xl">Welcome to your exercise tracker</h1>
     </div>
   );
 }
