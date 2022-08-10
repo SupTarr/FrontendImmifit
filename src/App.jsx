@@ -10,9 +10,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/form/:id" element={<Form />} />
+        <Route path="/form/" element={<Form />} />
+        <Route path="/login/" element={<Login />} />
+        <Route path="/register/" element={<Register />} />
+        {/* <Route path="/form/:id" element={<Form />} />
         <Route path="/login/:id" element={<Login />} />
-        <Route path="/register/:id" element={<Register />} />
+        <Route path="/register/:id" element={<Register />} /> */}
       </Routes>
     </BrowserRouter>
   );
