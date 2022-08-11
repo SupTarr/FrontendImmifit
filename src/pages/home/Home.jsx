@@ -11,11 +11,11 @@ function Home() {
     <div className="home">
       <div>
         <Navbar />
-        <div className="flex flex-wrap max-w-[1300px] mx-auto">
-          <div className="Profile w-[40%]">
+        <div className="flex tablet:flex-col max-w-[1300px] mx-auto">
+          <div className="Profile w-[40%] tablet:w-[100%]">
             <Profile />
           </div>
-          <div className="Activities max-w-[60%]">
+          <div className="Activities max-w-[60%] tablet:w-[100%] mx-auto">
             <Header />
             <Container />
             <Container />

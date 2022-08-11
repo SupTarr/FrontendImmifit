@@ -4,7 +4,7 @@ function Profile() {
   return (
     <div className="h-[100%]">
       <div className="flex items-end w-[100%] h-[300px] bg-[#5F576C]">
-        <div className="w-[125px] h-[125px] ml-10 rounded-lg bg-[#FFFFFF]">
+        <div className="w-[125px] h-[125px] mx-auto lg:ml-10 rounded-lg bg-[#FFFFFF]">
         </div>
       </div>
       <div className="pt-10">
