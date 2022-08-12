@@ -4,7 +4,7 @@ import "./forget-password.css";
 const Forgetpassword = () => {
 	return (
 		<div className="forgetPassword relative sm:h-screen">
-			<div className="flex flex-col justify-center items-center sm:pt-16 h-[100%]">
+			<div className="flex flex-col justify-center items-center sm:pt-16 h-[100vh]">
 				<div className="max-w-5xl flex flex-col justify-center sm:flex-row mobile:m-10">
 					<img
 						className="shadow-md sm:rounded-l-xl object-cover  sm:max-w-[200px] md:max-w-sm lg:max-w-lg xl:max-w-xl"
