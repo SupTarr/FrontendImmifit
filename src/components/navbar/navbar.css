@@ -2,27 +2,16 @@
     font-size: 1rem;
     font-family: Roboto;
     /* background-color: #ffffff; */
-    padding-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0px 20px;
+    padding: 0px 5%;
 }
-
-
 
 .navbar img {
     width: 150px;
-    height: 100px;
-    margin-left: 5%;
-    margin-right: 50px;
+    height: 75px;
 }
-
-/* .navbar h1 {
-    margin-right: 50px;
-    text-align: center;
-    color: #ff5757;
-} */
 
 @media screen and (max-width: 525px) {
     .navbar {
@@ -34,11 +23,6 @@
         height: 75px;
         margin-left: 5%;
         margin-right: 20px;
-    }
-
-    .navbar h1 {
-        margin-right: 20px;
-        text-align: center;
     }
 }
 
@@ -52,14 +36,5 @@
         height: 75px;
         margin-left: 5%;
         margin-right: 20px;
-    }
-
-    .navbar h1 {
-        margin-right: 20px;
-        text-align: center;
-    }
-
-    .navbar h1 span {
-        display: none;
     }
 }
