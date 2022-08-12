@@ -12,7 +12,6 @@ function Form() {
       <div>
         <HeaderForm />
         <FormDetail />
-        <Footer />
       </div>
     </div>
   );
