@@ -1,9 +1,9 @@
 import React from "react";
-import "./registerForm.css";
+import "./password-reset.css";
 
-const Registerdetail = () => {
+const Passwordreset = () => {
 	return (
-		<div className="login relative sm:h-screen">
+		<div className="passwordReset relative sm:h-screen">
 			<div className="flex flex-col justify-center items-center sm:pt-16 h-[100%]">
 				<div className="max-w-5xl flex flex-col justify-center sm:flex-row mobile:m-10">
 					<img
@@ -13,42 +13,14 @@ const Registerdetail = () => {
 					></img>
 					<form className="flex flex-col justify-center bg-white shadow-md sm:rounded-r-xl px-5 md:max-w-[250px] xl:max-w-[350px] py-5">
 						<div className="flex text-gray-700 text-2xl font-bold mb-10">
-							Sign up
-						</div>
-						<div className="mb-4">
-							<label
-								className="block text-gray-700 text-sm font-bold mb-2"
-								for="username"
-							>
-								Username
-							</label>
-							<input
-								className="shadow appearance-none border-b border-[#32312d] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-								id="username"
-								type="text"
-								placeholder="Username"
-							/>
-						</div>
-						<div className="mb-6">
-							<label
-								className="block text-gray-700 text-sm font-bold mb-2"
-								for="email"
-							>
-								Email
-							</label>
-							<input
-								className="appearance-non rounded border-b border-[#32312d] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-								id="email"
-								type="email"
-								placeholder="example@lmmifit.com"
-							/>
+							Password Reset
 						</div>
 						<div className="mb-6">
 							<label
 								className="block text-gray-700 text-sm font-bold mb-2"
 								for="password"
 							>
-								Password
+								New Password
 							</label>
 							<input
 								className="appearance-non rounded border-b border-[#32312d] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -65,7 +37,7 @@ const Registerdetail = () => {
 								className="block text-gray-700 text-sm font-bold mb-2"
 								for="password"
 							>
-								Confirm Password
+								Confirm  New Password
 							</label>
 							<input
 								className="appearance-non rounded border-b border-[#32312d] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
@@ -82,7 +54,7 @@ const Registerdetail = () => {
 								className="bg-[#E4665F] hover:bg-[#EDC8D5] text-white font-bold w-full py-2 rounded focus:outline-none focus:shadow-outline"
 								type="button"
 							>
-								Sign up
+								Reset Password
 							</button>
 						</div>
 					</form>
@@ -92,4 +64,4 @@ const Registerdetail = () => {
 	);
 };
 
-export default Registerdetail;
+export default Passwordreset;
