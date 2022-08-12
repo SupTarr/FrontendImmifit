@@ -19,12 +19,11 @@ function FormDetail() {
             <option value="swim">Swim</option>
             <option value="Hiking">Hiking</option>
             <option value="Hiking">Walking</option>
-
           </select>
         </div>
 
         <div className="form-date-time">
-          <p>Date / Time</p>
+          <p>Date</p>
           <input type="date" name="date" />
         </div>
 
