@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "../../components/navbar/Navbar";
 import FormDetail from "../../components/form-component/FormDetail";
 import HeaderForm from "../../components/form-component-header/header-form";
-import Footer from "../../components/footer/Footer";
 import "./form.css";
 
 function Form() {
@@ -12,7 +11,6 @@ function Form() {
       <div>
         <HeaderForm />
         <FormDetail />
-        <Footer />
       </div>
     </div>
   );
