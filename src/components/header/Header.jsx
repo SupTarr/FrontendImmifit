@@ -4,7 +4,7 @@ import "./header.css";
 
 const Header = () => {
   return (
-    <div className="Header">
+    <div className="Header mt-5">
       <div className="Container bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg">
         <div className="Button hover:bg-[#005B97] hover:text-white py-2 px-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg font-semibold">
           ALL

@@ -2,8 +2,8 @@ import React from "react";
 
 function Profile() {
   return (
-    <div className="h-[100%]">
-      <div className="flex items-end w-[100%] h-[300px] bg-[#5F576C]">
+    <div className="h-[100%] bg-[#fbc3bc] rounded-xl md:ml-5 tablet:mx-[2.5%]">
+      <div className="flex items-end w-[100%] h-[300px] bg-[#5F576C] rounded-t-xl">
         <div className="w-[125px] h-[125px] mx-auto lg:ml-10 rounded-lg bg-[#FFFFFF]">
         </div>
       </div>

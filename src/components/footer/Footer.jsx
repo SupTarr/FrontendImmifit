@@ -20,7 +20,7 @@ function Footer() {
   }
 
   return (
-    <div className="flex justify-center items-center w-[100%]">
+    <div className="flex justify-center items-center w-[100%] mb-5">
       <button onClick={Back} className="bg-white bg-opacity-50 backdrop-blur-xl rounded-l-lg border-r-0 flex content-center justify-center h-12 border-2 w-12
       hover:bg-[#f08080] hover:text-white"><FiChevronLeft className="w-4 h-4 mt-3" /></button>
       {
