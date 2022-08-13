@@ -5,6 +5,8 @@ import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/navbar/Navbar";
 import "./home.css";
 import Profile from "../profile/Profile";
+import axios from "axios";
+import cors from "cors"
 
 function Home() {
   return (
@@ -12,10 +14,10 @@ function Home() {
       <div>
         <Navbar />
         <div className="flex tablet:flex-col max-w-[1300px] mx-auto">
-          <div className="Profile w-[40%] tablet:w-[100%]">
+          <div className="Profile w-[40%] tablet:w-[100%] mb-5">
             <Profile />
           </div>
-          <div className="Activities max-w-[60%] tablet:w-[100%] mx-auto">
+          <div className="Activities w-[60%] tablet:w-[95%] tablet:mx-[2.5%] mx-5 mb-5 bg-[#fbc3bc] rounded-xl">
             <Header />
             <Container />
             <Container />

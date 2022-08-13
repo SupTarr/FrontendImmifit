@@ -19,8 +19,8 @@ function Navbar() {
           <a href="/login/:id"><p className="font-bold text-md mx-[20px] text-[#ff5757]">Logout</p></a>
         </div>
         <div className="navbar-text-mobile flex sm:hidden content-center">
-          <a href="/"><FontAwesomeIcon icon={faHouse} size="xl" className="text-[#ff5757] mr-5" /></a>
-          <a href="/form/:id"><FontAwesomeIcon icon={faPlus} size="xl" className="text-[#ff5757] mr-5" /></a>
+          <a href="/"><FontAwesomeIcon icon={faHouse} size="xl" className="text-[#ff5757] mr-10" /></a>
+          <a href="/form/:id"><FontAwesomeIcon icon={faPlus} size="xl" className="text-[#ff5757] mr-10" /></a>
           <a href="/login/:id"><FontAwesomeIcon icon={faRightFromBracket} size="xl" className="text-[#ff5757]" /></a>
         </div>
       </div>
