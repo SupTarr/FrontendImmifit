@@ -1,5 +1,6 @@
 # Final-project-Generation-Group10
 Design Wireframe : https://www.figma.com/file/roWLPhRzj9DDSvTmuaOXcj/Immifit?node-id=0%3A1
+Connect Frontend with Backend : Use axios + https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc/related?hl=en-US (CORS)
 ### Primary Color: #E4665F
 ### Secondary Color: #EDC8D5
 ### Green Color: #A4BD55
