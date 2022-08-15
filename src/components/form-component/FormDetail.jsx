@@ -3,14 +3,14 @@ import "./formDetail.css";
 import axios from "axios";
 
 function FormDetail() {
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState({});
   const [title, setTitle] = useState('');
   const [type, setType] = useState('Running');
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [description, setDescription] = useState('');
-
+  
   const onChangeImage = (e) => {
     setImage(e.target.files[0]);
   }
@@ -42,9 +42,7 @@ function FormDetail() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const activity = {
-      img: {
-        data: image,
-      },
+      img: image,
       username: 'Tata',
       user_id: '1',
       title: title,
@@ -54,7 +52,8 @@ function FormDetail() {
       end_time: new Date(`${date} ${endTime}`),
       description: description
     }
-    axios.post('http://localhost:5000/activities', activity)
+    console.log(activity);
+    axios.post('http://localhost:5000/activities/', activity)
       .then(res => console.log(res.data));
   }
 
@@ -99,7 +98,7 @@ function FormDetail() {
           </textarea>
         </div>
 
-        <input type="submit" value="Submit" />
+        <button type="submit" value="Submit">Submit</button>
       </form>
     </section>
     </div>
