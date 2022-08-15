@@ -50,11 +50,10 @@ function FormDetail() {
       title: title,
       activity_type: type, 
       date: date,
-      start_time: startTime,
-      end_time: endTime,
+      start_time: new Date(`${date} ${startTime}`),
+      end_time: new Date(`${date} ${endTime}`),
       description: description
     }
-    console.log(activity)
     axios.post('http://localhost:5000/activities', activity)
       .then(res => console.log(res.data));
   }
@@ -89,9 +88,9 @@ function FormDetail() {
         <div className="form-duration">
           <p>Duration</p>
           <span>Start</span>
-          <input type="time" name="duration" onChange={onChangeStartTime} value={startTime} />
+          <input type="time" name="stat time" onChange={onChangeStartTime} value={startTime} />
           <span>End</span>
-          <input type="time" name="duration" onChange={onChangeEndTime} value={endTime} />
+          <input type="time" name="end time" onChange={onChangeEndTime} value={endTime} />
         </div>
 
         <div className="form-desc">
