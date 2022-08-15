@@ -15,13 +15,13 @@ function Navbar() {
         {/* <div className="welcome"><p className="text-xl">Welcome to your exercise tracker</p></div> */}
         <div className="navbar-text flex mobile:hidden">
           <a href="/"><p className="font-bold text-md mx-[20px] text-[#ff5757]">Home</p></a>
-          <a href="/form/:id"><p className="font-bold text-md mx-[20px] text-[#ff5757]">Add Activities</p></a>
-          <a href="/login/:id"><p className="font-bold text-md mx-[20px] text-[#ff5757]">Logout</p></a>
+          <a href="/form/"><p className="font-bold text-md mx-[20px] text-[#ff5757]">Add Activities</p></a>
+          <a href="/login/"><p className="font-bold text-md mx-[20px] text-[#ff5757]">Logout</p></a>
         </div>
         <div className="navbar-text-mobile flex sm:hidden content-center">
           <a href="/"><FontAwesomeIcon icon={faHouse} size="xl" className="text-[#ff5757] mr-7" /></a>
-          <a href="/form/:id"><FontAwesomeIcon icon={faPlus} size="xl" className="text-[#ff5757] mr-7" /></a>
-          <a href="/login/:id"><FontAwesomeIcon icon={faRightFromBracket} size="xl" className="text-[#ff5757]" /></a>
+          <a href="/form/"><FontAwesomeIcon icon={faPlus} size="xl" className="text-[#ff5757] mr-7" /></a>
+          <a href="/login/"><FontAwesomeIcon icon={faRightFromBracket} size="xl" className="text-[#ff5757]" /></a>
         </div>
       </div>
     </div>
