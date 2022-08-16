@@ -13,15 +13,19 @@ function Home() {
     <div className="home">
       <div>
         <Navbar />
-        <div className="flex tablet:flex-col max-w-[1300px] mx-auto">
+        <div className="flex tablet:flex-col max-w-[1450px] mx-auto">
           <div className="Profile w-[40%] tablet:w-[100%] mb-5">
             <Profile />
           </div>
           <div className="Activities w-[60%] tablet:w-[95%] tablet:mx-[2.5%] mx-5 mb-5 bg-[#fbc3bc] rounded-xl">
             <Header />
-            <Container />
-            <Container />
-            <Container />
+            <div className="flex justify-around flex-wrap">
+              <Container />
+              <Container />
+              <Container />
+              <Container />
+            </div>
+            
             <Footer />
           </div>
         </div>
