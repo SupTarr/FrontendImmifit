@@ -13,7 +13,7 @@ const Logindetail = () => {
         </button> */}
       <div className='flex flex-col justify-center items-center sm:pt-16 h-[100%]'>
         <div className="max-w-5xl flex flex-col justify-center sm:flex-row mobile:m-10">
-            <img className="shadow-md sm:rounded-l-xl object-cover  sm:max-w-[200px] md:max-w-sm lg:max-w-lg xl:max-w-xl" src="../../public/imagecard2.jpg" alt="imagecard"></img>
+            <img className="shadow-md sm:rounded-l-xl object-cover  sm:max-w-[200px] md:max-w-sm lg:max-w-lg xl:max-w-xl" src="../../imagecard2.jpg" alt="imagecard"></img>
           <form className="flex flex-col justify-center bg-white shadow-md sm:rounded-r-xl px-5 md:max-w-[250px] xl:max-w-[350px] py-5">
             <div className="flex text-gray-700 text-2xl font-bold mb-10">
               Log in
