@@ -1,7 +1,27 @@
 import React from "react";
+import { useEffect } from "react";
+
 import "./container.css";
 
 const Container = () => {
+
+  const [data, setData] = React.useState([]);
+
+  useEffect(() => {
+    (async () => {
+      let activityData;
+      try {
+        const response = await fetch('https://immifit-backend.vercel.app/activities');
+        const activityData = await response.json().results;
+      } catch (error) {
+        console.log(error);
+        activityData = [];
+      }
+
+      setData(activityData);
+    })();
+  }, []);
+
   return (
 
     <div className="mb-8">
@@ -32,7 +52,7 @@ const Container = () => {
             </div>
             
             <div className="grid grid-cols-2 gap-24">
-              <button className="bg-[#F08080] hover:bg-[#ff5757] text-white font-bold px-10 py-2 shadow-md hover:shadow-lg rounded flex justify-center">
+              <button href="/form/" className="bg-[#F08080] hover:bg-[#ff5757] text-white font-bold px-10 py-2 shadow-md hover:shadow-lg rounded flex justify-center">
                 Edit
               </button>
               <button className="bg-[#F08080] hover:bg-[#ff5757] text-white font-bold px-10 py-2 shadow-md hover:shadow-lg rounded flex justify-center">
