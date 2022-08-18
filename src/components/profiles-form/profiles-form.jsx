@@ -2,13 +2,13 @@ import React from "react";
 
 function Profileform() {
 	return (
-		<div className="h-[100%] bg-[#fbc3bc] rounded-xl md:ml-5 tablet:mx-[2.5%]">
-			<div className="flex items-end w-[100%] h-[300px] bg-[#5F576C] rounded-t-xl"></div>
+		<div className="h-[100%] w-[100%] mx-auto bg-[#fbc3bc] rounded-xl tablet:mx-[2.5%]">
+			<div className="flex items-end w-[100%] h-[300px] mx-auto bg-[#5F576C] rounded-t-xl"></div>
 			<div className="pt-10">
 				<form action="#" method="POST">
 					<div>
 						<label
-							className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+							className="block ml-5 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
 							for="file_input"
 						>
 							Upload Profile

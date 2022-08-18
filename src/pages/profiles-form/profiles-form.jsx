@@ -10,9 +10,9 @@ function Profilesform() {
     <div className="home">
       <div>
         <Navbar />
-        <div className="Activities w-[30%] tablet:w-[95%] tablet:mx-[2.5%] mx-auto mb-5 bg-[#fbc3bc] rounded-xl">
-        <Profileform />
-          </div>
+        <div className="Activities max-w-[750px] w-[100%] tablet:w-[95%] tablet:mx-[2.5%] mx-auto mb-5 bg-[#fbc3bc] rounded-xl">
+          <Profileform />
+        </div>
       </div>
       </div>
   );
