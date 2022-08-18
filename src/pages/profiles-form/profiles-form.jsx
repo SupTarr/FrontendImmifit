@@ -10,11 +10,9 @@ function Profilesform() {
     <div className="home">
       <div>
         <Navbar />
-        <div className="flex tablet:flex-col max-w-[1300px] mx-auto">
-          <div className="Profile w-[40%] tablet:w-[100%] mb-5">
-            <Profileform />
+        <div className="Activities w-[40%] tablet:w-[95%] tablet:mx-[2.5%] mx-auto mb-5 bg-[#fbc3bc] rounded-xl">
+        <Profileform />
           </div>
-        </div>
       </div>
       </div>
   );
