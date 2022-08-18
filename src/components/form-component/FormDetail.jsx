@@ -64,8 +64,9 @@ function FormDetail() {
           data: reader.result,
           contentType: selectedImgFile.type,
         },
-        username: "Tata",
-        user_id: "1",
+        // Need to create usename first
+        username: "tatasuppakrit@gmail.com",
+        user_id: "982d094d-3027-42b5-a2f3-0b99db3d684d",
         title: title,
         activity_type: type,
         date: date,
@@ -75,18 +76,21 @@ function FormDetail() {
       };
       console.log(activity);
       axios
-        .post("http://localhost:5000/activities", activity, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => console.log(res.data))
-        .then(setImgInputState(""))
-        .then(setPreviewImgSource(""));
+        .post("https://immifit-backend.vercel.app/activities", activity)
+        .then((res) => console.log(res.data));
     };
     reader.onerror = () => {
       console.error("Fail!!");
     };
+    setImgInputState("");
+    setPreviewImgSource("");
+    setSelectedImgFile("");
+    setTitle("");
+    setType("");
+    setDate("");
+    setStartTime("");
+    setEndTime("");
+    setDescription("");
   };
 
   return (
