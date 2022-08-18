@@ -21,7 +21,7 @@ function Home() {
             <Header />
             <div className="flex justify-around flex-wrap">
               <Container />
-              {/* <Container /> */}
+              <Container />
             </div>
             
             <Footer />
