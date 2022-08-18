@@ -1,6 +1,9 @@
 import React from 'react'
 
+
+
 const Card = ({user}) => {
+  
   return (
     <div>
        <div className="flex justify-around flex-wrap" >
@@ -13,7 +16,9 @@ const Card = ({user}) => {
                 </div>
                 <div className="grid grid-cols-2">
                   <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">Date time: {user.date}</h5>
-                  <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">Duration:</h5>
+                  <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">
+                    Duration: 
+                  </h5>
                 </div>
                 <div className="grid">
                   <h5 className="mb-2 text-lg tracking-tight text-gray-900 dark:text-white">
