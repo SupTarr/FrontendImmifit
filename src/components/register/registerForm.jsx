@@ -8,6 +8,14 @@ import "./registerForm.css";
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
+const config = {
+	headers: {
+	  "Content-Type": "application/json",
+	  'Access-Control-Allow-Origin': '*',
+	  'withCredentials': 'true'			
+	}
+}
+
 const Registerdetail = () => {
 	const userRef = useRef();
 	const errRef = useRef();
@@ -81,12 +89,8 @@ const Registerdetail = () => {
 			return;
 		}
 		try {
-			const response = await axios.post(REGISTER_URL,
-				JSON.stringify({ user, email, password }),
-				{
-					headers: { 'Content-Type': 'application/json' },
-					withCredentials: true
-				}
+			const response = await axios.post('https://immifit-backend.vercel.app/users',
+				JSON.stringify({ user, email, password }), config
 			);
 			console.log(response?.data);
 			console.log(response?.accessToken);
@@ -130,7 +134,7 @@ const Registerdetail = () => {
 								htmlFor="username"
 							>
 								Username :
-								<FontAwesomeIcon icon={faCheck} className={validUser ? "valid" : "hide"} />
+								<FontAwesomeIcon icon={faCheck} className={validUser && user ? "valid" : "hide"} />
 								<FontAwesomeIcon icon={faTimes} className={validUser || !user ? "hide" : "invalid"} />
 							</label>
 							<input
@@ -162,8 +166,8 @@ const Registerdetail = () => {
 								htmlFor="email"
 							>
 								Email :
-								<FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} />
-								<FontAwesomeIcon icon={faTimes} className={validEmail || !user ? "hide" : "invalid"} />
+								<FontAwesomeIcon icon={faCheck} className={validEmail && email ? "valid" : "hide"} />
+								<FontAwesomeIcon icon={faTimes} className={validEmail || !email ? "hide" : "invalid"} />
 							</label>
 							<input
 								className="appearance-non rounded border-b border-[#32312d] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -189,8 +193,8 @@ const Registerdetail = () => {
 								htmlFor="password"
 							>
 								Password :
-								<FontAwesomeIcon icon={faCheck} className={validPassword ? "valid" : "hide"} />
-								<FontAwesomeIcon icon={faTimes} className={validPassword || !user ? "hide" : "invalid"} />
+								<FontAwesomeIcon icon={faCheck} className={validPassword && password ? "valid" : "hide"} />
+								<FontAwesomeIcon icon={faTimes} className={validPassword || !password ? "hide" : "invalid"} />
 							</label>
 							<input
 								className="appearance-non rounded border-b border-[#32312d] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -236,14 +240,17 @@ const Registerdetail = () => {
 								onChange={(e) => setConPass(e.target.value)}
 							/>
 							<p id="confirmnote" className={conPassFocus && !validConPass ? "instructions" : "offscreen"}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Must match the first password input field.
-                        </p>
+                            <FontAwesomeIcon icon={faInfoCircle} /> 
+							Invalid confirm password. <br />
+                            - Must match the first password input field.
+                        	</p>
 						</div>
+						<p className="text-gray-700 text-sm mb-6">Already registered? <a href="/login" className="font-bold text-sm">Login</a></p>
 						<div className="flex items-center justify-between align-middle">
 							<button
 								className="bg-[#E4665F] hover:bg-[#EDC8D5] text-white font-bold w-full py-2 rounded focus:outline-none focus:shadow-outline"
 								type="submit"
+								disabled={!validUser || !validEmail || !validPassword || !validConPass ? true : false}
 							>
 								Sign up
 							</button>
