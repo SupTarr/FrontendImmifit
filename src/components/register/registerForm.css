@@ -1,3 +1,36 @@
 .login {
   background-image: linear-gradient(to right top, #f583c6, #f09fdc, #ecb8ec, #eccff7, #f0e5fd, #ede3fe, #eae1fe, #e7dfff, #d8c7ff, #caadff, #be93ff, #b478ff);
 }
+
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #e4665f;
+  color: #FFF;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+
+.instructions > svg {
+  margin-right: 0.25rem;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.hide {
+  display: none;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.invalid {
+  color: red;
+  margin-left: 0.25rem;
+}
