@@ -1,10 +1,18 @@
 import React from 'react'
 import './card.css'
 import Stretching from '../../../public/Stretching.png'
+import moment from 'moment';
 
 const Card = ({ user }) => {
-  const title_name = user.title
-  console.log(title_name)
+// const title_name = user.start
+var now  = new Date(user.end_time);
+var then = new Date(user.start_time);
+var datetime = new Date(user.date);
+var date = moment(datetime).format('DD/MM/YYYY');
+// console.log(datetime)
+
+var duration = (now-then) / 60000;
+// console.log(duration)
   return (
     <div>
       <div className="flex justify-around flex-wrap" >
@@ -18,9 +26,9 @@ const Card = ({ user }) => {
             <h5 className="col-span-4 mb-2 text-sm tracking-tight text-black dark:text-white">{user.title}</h5>
           </div>
           <div className="grid grid-cols-2">
-            <h5 className="mb-2 text-sm tracking-tight text-black dark:text-white">Date: {user.date}</h5>
+            <h5 className="mb-2 text-sm tracking-tight text-black dark:text-white">Date: {date}</h5>
             <h5 className="mb-2 text-sm tracking-tight text-black dark:text-white">
-              Duration:
+              Duration: {duration} Minutes
             </h5>
           </div>
           <div className="grid">
