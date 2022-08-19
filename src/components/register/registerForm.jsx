@@ -90,11 +90,11 @@ const Registerdetail = () => {
 		}
 		try {
 			const response = await axios.post('https://immifit-backend.vercel.app/users',
-				JSON.stringify({ user, email, password }), config
+				JSON.stringify({ username: user, email: email, password: password }), config
 			);
 			console.log(response?.data);
 			console.log(response?.accessToken);
-			console.log(JSON.stringify(response))
+			console.log(response)
 			setSuccess(true);
 			//clear state and controlled inputs
 			//need value attrib on inputs for this
