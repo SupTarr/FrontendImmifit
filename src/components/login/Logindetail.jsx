@@ -3,7 +3,6 @@ import './logindetail.css'
 import Facebook from './facebook.png'
 import Line from './line.png'
 import Tel from './telephone.png'
-// import Back from './previous.png'
 
 const Logindetail = () => {
   return (
