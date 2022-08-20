@@ -7,6 +7,7 @@ import Passreset from "./pages/password-reset/password-reset";
 import Forgotpassword from "./pages/forgot-password/forgot-password";
 
 function App() {
+  
   return (
     <BrowserRouter>
       <Routes>
