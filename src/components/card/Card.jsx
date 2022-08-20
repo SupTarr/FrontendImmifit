@@ -1,6 +1,5 @@
 import React from 'react'
 import './card.css'
-import Stretching from '../../../public/Stretching.png'
 import moment from 'moment';
 
 const Card = ({ user }) => {
@@ -21,7 +20,6 @@ var duration = (now-then) / 60000;
             <figcaption>
             <div className="grid grid-cols-5 ">
             <h5 className="mb-2 text-sm tracking-tight text-black dark:text-white col-span-1">
-            <img src={Stretching} alt=""  />
             </h5>
             <h5 className="col-span-4 mb-2 text-sm tracking-tight text-black dark:text-white">{user.title}</h5>
           </div>
