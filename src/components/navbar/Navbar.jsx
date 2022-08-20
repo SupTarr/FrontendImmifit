@@ -20,8 +20,8 @@ function Navbar() {
         </div>
         <div className="navbar-text-mobile flex sm:hidden content-center">
           <a href="/"><FontAwesomeIcon icon={faHouse} size="xl" className="text-[#ff5757] mr-7" /></a>
-          <a href="/form/:id"><FontAwesomeIcon icon={faPlus} size="xl" className="text-[#ff5757] mr-7" /></a>
-          <a href="/login/:id"><FontAwesomeIcon icon={faRightFromBracket} size="xl" className="text-[#ff5757]" /></a>
+          <a href="/form/"><FontAwesomeIcon icon={faPlus} size="xl" className="text-[#ff5757] mr-7" /></a>
+          <a href="/login/"><FontAwesomeIcon icon={faRightFromBracket} size="xl" className="text-[#ff5757]" /></a>
         </div>
       </div>
     </div>
