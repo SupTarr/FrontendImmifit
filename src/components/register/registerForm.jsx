@@ -54,21 +54,16 @@ const Registerdetail = () => {
 
 	useEffect(() => {
 		setValidUser(USER_REGEX.test(user));
-		console.log(allUsername);
 		if (allUsername.find(data => data === user) !== undefined) {
 			setErrMsg('Username already exists');
-			console.log('Username already exists');
 			setValidUser(false);
 		}
-		console.log(validUser);
 	}, [user])
 
 	useEffect(() => {
-		console.log(allEmail);
 		setValidEmail(validator.isEmail(email));
 		if (allEmail.find(data => data === email) !== undefined) {
 			setErrMsg('Email already exists');
-			console.log('Email already exists');
 			setValidEmail(false);
 		}
 	}, [email])
@@ -98,10 +93,10 @@ const Registerdetail = () => {
 			setSuccess(true);
 			//clear state and controlled inputs
 			//need value attrib on inputs for this
-			setUsername("");
+			setUser("");
 			setEmail("");
 			setPassword("");
-			setConfirmPassword("");
+			setConPass("");
 		} catch (err) {
 			if (!err?.response) {
 				setErrMsg('No Server Response');
@@ -113,7 +108,7 @@ const Registerdetail = () => {
 			errRef.current.focus();
 		}
 	}
-	console.log(userFocus);
+	
 	return (
 		<div className="login relative sm:h-screen">
 			<div className="flex flex-col justify-center items-center sm:pt-16 h-[100%]">
