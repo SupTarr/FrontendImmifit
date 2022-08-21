@@ -10,7 +10,7 @@ import cors from "cors"
 
 function Home() {
   return (
-    <div className="home">
+    <div className="home min-h-screen">
       <div>
         <Navbar />
         <div className="flex tablet:flex-col max-w-[1450px] mx-auto">
@@ -20,7 +20,6 @@ function Home() {
           <div className="Activities w-[60%] tablet:w-[95%] tablet:mx-[2.5%] mx-5 mb-5 bg-[#fbc3bc] rounded-xl">
             <Header />
             <div className="flex justify-around flex-wrap">
-              <Container />
               <Container />
             </div>
             
