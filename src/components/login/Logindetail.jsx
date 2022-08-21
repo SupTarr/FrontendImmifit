@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext, useNavigate } from 'react'
-import AuthContext from "../../../context/AuthProvider";
+// import AuthContext from "../../../context/AuthProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import './logindetail.css'
@@ -21,7 +21,7 @@ const config = {
 }
 
 const Logindetail = () => {
-  const { setAuth } = useContext(AuthContext);
+  // const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
