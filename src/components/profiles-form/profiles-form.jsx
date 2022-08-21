@@ -1,11 +1,61 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
 function Profileform() {
+	const initialValues = {
+		first_name: "",
+		age: "",
+		height: "",
+		weight: "",
+		bmi: "",
+	};
+	const [formValues, setFormValues] = useState(initialValues);
+	const [formErrors, setFormErrors] = useState({});
+	const [isSubmit, setIsSubmit] = useState(false);
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormValues({ ...formValues, [name]: value });
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setFormErrors(validate(formValues));
+		setIsSubmit(true);
+	};
+
+	useEffect(() => {
+		console.log(formErrors);
+		if (Object.keys(formErrors).length === 0 && isSubmit) {
+			console.log(formValues);
+		}
+	}, [formErrors]);
+
+	const validate = (values) => {
+		const errors = {};
+		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+		if (!values.first_name) {
+			errors.first_name = "first-name is required!";
+		}
+		if (!values.age) {
+			errors.age = "Age is required!";
+		}
+		if (!values.height) {
+			errors.height = "height is required";
+		}
+		if (!values.weight) {
+			errors.weight = "weight is required";
+		}
+		if (!values.bmi) {
+			errors.bmi = "bmi is required";
+		}
+		return errors;
+	};
 	return (
 		<div className="h-[100%] w-[100%] mx-auto bg-[#fbc3bc] rounded-xl tablet:mx-[2.5%]">
 			<div className="flex items-end w-[100%] h-[300px] mx-auto bg-[#5F576C] rounded-t-xl"></div>
 			<div className="pt-10">
-				<form action="#" method="POST">
+				<form onSubmit={handleSubmit} action="" method="POST">
 					<div>
 						<label
 							className="block ml-5 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -57,13 +107,16 @@ function Profileform() {
 						</label>
 						<input
 							type="text"
-							name="first-name"
-							id="first-name"
+							name="first_name"
+							id="first_name"
 							autoComplete="given-name"
+							value={formValues.first_name}
+							onChange={handleChange}
 							className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-2/4 shadow-sm sm:text-sm border-gray-300 rounded-md"
 						/>
+						<p>{formErrors.first_name}</p>
 					</div>
-
+					
 					<div>
 						<label
 							htmlFor="about"
@@ -113,15 +166,17 @@ function Profileform() {
 							Age
 						</label>
 						<input
-							type="text"
+							type="number"
 							name="age"
 							id="age"
 							autoComplete="your_age"
+							value={formValues.age}
+							onChange={handleChange}
 							className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-60 shadow-sm sm:text-sm border-gray-300 rounded-md"
 						/>
+						<p>{formErrors.age}</p>
 					</div>
-
-
+					
 					<div className=" overflow-hidden sm:rounded-md">
 						<div className="px-4 py-5 sm:p-6">
 							<div className="grid grid-cols-6 gap-6">
@@ -133,14 +188,17 @@ function Profileform() {
 										Height
 									</label>
 									<input
-										type="text"
+										type="number"
 										name="height"
 										id="height"
 										autoComplete="your_height"
+										value={formValues.height}
+										onChange={handleChange}
 										className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 shadow-sm sm:text-sm border-gray-300 rounded-md"
 									/>
+									<p>{formErrors.height}</p>
 								</div>
-
+								
 								<div className="col-span-6 sm:col-span-3">
 									<label
 										htmlFor="weight"
@@ -149,13 +207,17 @@ function Profileform() {
 										Weight
 									</label>
 									<input
-										type="text"
+										type="number"
 										name="weight"
 										id="weight"
 										autoComplete="your_weight"
+										value={formValues.weight}
+										onChange={handleChange}
 										className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 shadow-sm sm:text-sm border-gray-300 rounded-md"
 									/>
+									<p>{formErrors.weight}</p>
 								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -168,28 +230,31 @@ function Profileform() {
 							BMI
 						</label>
 						<input
-							type="text"
+							type="number"
 							name="bmi"
 							id="bmi"
 							autoComplete="bmi"
+							value={formValues.bmi}
+							onChange={handleChange}
 							className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-1/4 shadow-sm sm:text-sm border-gray-300 rounded-md"
 						/>
+						<p>{formErrors.bmi}</p>
 					</div>
-				
-          <div className="px-4 py-4 text-right sm:px-6">
-                  <button
-                    type="submit"
-                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="reset"
-                    className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  >
-                    Reset
-                  </button>
-                </div>
+					
+					<div className="px-4 py-4 text-right sm:px-6">
+						<button
+							type="submit"
+							className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+						>
+							Save
+						</button>
+						<button
+							type="reset"
+							className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+						>
+							Reset
+						</button>
+					</div>
 				</form>
 			</div>
 		</div>
