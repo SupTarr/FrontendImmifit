@@ -21,9 +21,7 @@ function Home() {
             <Header />
             <div className="flex justify-around flex-wrap">
               <Container />
-              <Container />
             </div>
-            
             <Footer />
           </div>
         </div>
