@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef, useContext, useNavigate } from 'react'
-import AuthContext from "../../context/AuthProvider";
+import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom';
+import useAuth from "../../hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import './logindetail.css'
@@ -21,7 +22,12 @@ const config = {
 }
 
 const Logindetail = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const userRef = useRef();
   const errRef = useRef();
 
@@ -34,7 +40,6 @@ const Logindetail = () => {
   const [passwordFocus, setPasswordFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     setValidUser(USER_REGEX.test(user));
@@ -56,13 +61,13 @@ const Logindetail = () => {
       );
       console.log(JSON.stringify(response?.data));
       console.log(JSON.stringify(response));
+      console.log(response);
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
-      setAuth({ user, pwd, roles, accessToken });
+      setAuth({ user, password, roles, accessToken });
       setUser("");
       setPassword("");
-      setSuccess(true);
-      useNavigate('/');
+      navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
