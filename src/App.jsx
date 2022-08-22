@@ -7,7 +7,7 @@ import RequireAuth from "./components/requireAuth/RequireAuth";
 // import Passreset from "./pages/password-reset/password-reset";
 // import Forgotpassword from "./pages/forgot-password/forgot-password";
 import Profilesform from "./pages/profiles-form/profiles-form";
-import Layout from './components/Layout/Layout';
+import Layout from './components/layout/Layout';
 
 const ROLES = {
   'User': 1000,
