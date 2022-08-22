@@ -65,6 +65,7 @@ const Container = () => {
     
     <div >
       {/* ✅ check if array before calling `map()` */}
+
       <h1>Social Cards</h1>
       <button value="All" onClick={handleBtns}>
         All
@@ -85,6 +86,7 @@ const Container = () => {
       
       </div>
       
+
     </div>
      
   );
