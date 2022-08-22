@@ -3,7 +3,13 @@ import axios from 'axios'
 import './card.css'
 import moment from 'moment';
 
-
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    'Aceess-Control-Allow-Origin': '*',
+    'withCredentials': true,
+  }
+}
 
 const Card = ({ user }) => {
   // const title_name = user.start
@@ -12,34 +18,22 @@ const Card = ({ user }) => {
   var datetime = new Date(user.date);
   var date = moment(datetime).format('DD/MM/YYYY');
   // console.log(datetime)
-
+  console.log(user.activity_id)
   var duration = (now - then) / 60000;
   // console.log(duration)
  
-  // console.log(id)
-  // const deleteActivity = async ({ activity_id }) => {
-  //   const response = await axios.delete(`https://immifit-backend.vercel.app/activities/activity_id`) 
-  //     activityRoutes.delete("/:activity_id", activitiesController.removeActivityById);
-    
-    
-  //     console.log(response)
-      
-   
-  // };
-  
-  const removeActivityById = async (req, res, next) => {
-    await req.activity.remove();
-    res.status(204).send();
-    axios.delete(`https://immifit-backend.vercel.app/activities/${user.activity_id}`)
-
-  };
-  console.log(user.activity_id)
-
   function handleDeleteClick(e) {
-    e.preventDefault();
-    removeActivityById();
-    axios.get(`https://immifit-backend.vercel.app/activities`)
+    try {
+      e.preventDefault();
+    axios.delete(`https://immifit-backend.vercel.app/${user.activity_id}`, config)
+    console.log(user.activity_id)
+    } catch (error) {
+      console.log(error)
+    }
+      
   }
+    
+  
 
   return (
     <div>
