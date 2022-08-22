@@ -37,10 +37,11 @@ const Card = ({ user }) => {
 
   return (
     <div>
-      <div className="flex justify-around flex-wrap" >
-        <figure className="snip1174 hover:bg-white rounded-[40px]">
-          <img src={user.img.url} alt="imgcard" className='block rounded-[40px] border shadow-md hover:bg-white dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto ' />
-          <figcaption>
+
+      <div className="flex justify-around" >
+      <figure className="snip1174 hover:bg-white rounded-[40px]">
+            <img src={user.img.url} alt="imgcard" className='block rounded-[40px] border shadow-md hover:bg-white dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto ' />
+            <figcaption>
             <div className="grid grid-cols-5 ">
               <h5 className="mb-2 text-sm tracking-tight text-black dark:text-white col-span-1">
                 
