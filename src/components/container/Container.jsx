@@ -26,6 +26,7 @@ const Container = () => {
     } getUsers();
   }, []);
 
+  // filter buttons
   const handleBtns = (event) => {
 
     const value = event.target.value;
