@@ -25,7 +25,7 @@ const Card = ({ user }) => {
   function handleDeleteClick(e) {
     try {
       e.preventDefault();
-    axios.delete(`https://immifit-backend.vercel.app/${user.activity_id}`, config)
+    axios.delete(`https://immifit-backend.vercel.app/activities/${user.activity_id}`, config)
     console.log(user.activity_id)
     } catch (error) {
       console.log(error)
