@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext, useNavigate } from 'react'
-// import AuthContext from "../../../context/AuthProvider";
+import AuthContext from "../../context/AuthProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import './logindetail.css'
@@ -21,7 +21,7 @@ const config = {
 }
 
 const Logindetail = () => {
-  // const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
@@ -55,7 +55,7 @@ const Logindetail = () => {
         JSON.stringify({ username: user, password: password }), config
       );
       console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response));
+      console.log(JSON.stringify(response));
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
       setAuth({ user, pwd, roles, accessToken });
@@ -75,8 +75,6 @@ const Logindetail = () => {
       }
       errRef.current.focus();
     }
-    //clear state and controlled inputs
-    //need value attrib on inputs for this
   }
 
   return (
