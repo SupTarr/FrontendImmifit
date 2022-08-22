@@ -65,8 +65,8 @@ function FormDetail() {
           contentType: selectedImgFile.type,
         },
         // Need to create usename first
-        username: "tatasuppakrit@gmail.com",
-        user_id: "982d094d-3027-42b5-a2f3-0b99db3d684d",
+        username: "Tata",
+        user_id: "e13d37d1-d693-4398-8c16-30a6d354a202",
         title: title,
         activity_type: type,
         date: date,
