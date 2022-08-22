@@ -43,12 +43,6 @@ const Registerdetail = () => {
 	const [success, setSuccess] = useState(false);
 
 	useEffect(() => {
-		axios.get('https://immifit-backend.vercel.app/users').then(res => {
-			res.data.map(data => {
-				setAllEmail(emails => [...emails, data.email]);
-				setAllUsername(users => [...users, data.username]);
-			})
-		});
 		userRef.current.focus();
 	}, [])
 

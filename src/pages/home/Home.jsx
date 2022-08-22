@@ -6,7 +6,7 @@ import Navbar from "../../components/navbar/Navbar";
 import "./home.css";
 import Profile from "../profile/Profile";
 import axios from "axios";
-import cors from "cors"
+import cors from "cors";
 
 function Home() {
   return (
@@ -22,7 +22,6 @@ function Home() {
             <div className="flex justify-around flex-wrap">
               <Container />
             </div>
-            
             <Footer />
           </div>
         </div>

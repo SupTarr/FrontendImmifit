@@ -5,6 +5,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/register";
 import Passreset from "./pages/password-reset/password-reset";
 import Forgotpassword from "./pages/forgot-password/forgot-password";
+import Profilesform from "./pages/profiles-form/profiles-form";
 
 function App() {
   
@@ -17,6 +18,7 @@ function App() {
         <Route path="/register/" element={<Register />} />
         <Route path="/password_reset/" element={<Passreset />} />
         <Route path="/forget_password/" element={<Forgotpassword/>} />
+        <Route path="/form_profile/" element={<Profilesform/>} />
         {/* <Route path="/form/:id" element={<Form />} />
         <Route path="/login/:id" element={<Login />} />
         <Route path="/register/:id" element={<Register />} /> */}
