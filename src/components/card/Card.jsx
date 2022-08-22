@@ -26,6 +26,7 @@ const Card = ({ user }) => {
     try {
       e.preventDefault();
     axios.delete(`https://immifit-backend.vercel.app/activities/${user.activity_id}`, config)
+    axios.get('https://immifit-backend.vercel.app/activities', config)
     console.log(user.activity_id)
     } catch (error) {
       console.log(error)
