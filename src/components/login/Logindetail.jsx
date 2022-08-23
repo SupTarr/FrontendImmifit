@@ -62,9 +62,10 @@ const Logindetail = () => {
       console.log(JSON.stringify(response?.data));
       console.log(JSON.stringify(response));
       console.log(response);
+      const user_id = response?.data?.user_id;
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
-      setAuth({ user, password, roles, accessToken });
+      setAuth({ user, user_id, password, roles, accessToken });
       setUser("");
       setPassword("");
       navigate(from, { replace: true });

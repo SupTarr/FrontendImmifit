@@ -2,9 +2,9 @@ import { React, useState } from "react";
 import "./formDetail.css";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
-
 function FormDetail() {
   const { auth } = useAuth();
+ 
 
   const [imgInputState, setImgInputState] = useState("");
   const [previewImgSource, setPreviewImgSource] = useState("");
@@ -55,6 +55,7 @@ function FormDetail() {
     setDescription(e.target.value);
   };
 
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selectedImgFile) return;
@@ -69,7 +70,7 @@ function FormDetail() {
         },
         // Need to create usename first
         username: auth.user,
-        // user_id: "e13d37d1-d693-4398-8c16-30a6d354a202",
+        user_id: auth.user_id,
         title: title,
         activity_type: type,
         date: date,
@@ -94,6 +95,7 @@ function FormDetail() {
     setStartTime("");
     setEndTime("");
     setDescription("");
+    // navigate("/");
   };
 
   return (
