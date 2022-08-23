@@ -56,10 +56,10 @@ const Header = ({user, allUsers, setUsers}) => {
         </button>
         <div className="Button rounded-full">
           <div className="dropdown inline-block relative">
-            <button className="hover:bg-[#005B97] hover:text-white bg-white bg-opacity-50 backdrop-blur-sm drop-shadow-lg text-black font-semibold py-2 px-4 rounded-full inline-flex items-center">
+            <div className="hover:bg-[#005B97] hover:text-white bg-white bg-opacity-50 backdrop-blur-sm drop-shadow-lg text-black font-semibold py-2 px-4 rounded-full inline-flex items-center">
               <button className="mr-1" value="Bike" onClick={handleBtns}>Bike</button>
               <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /> </svg>
-            </button>
+            </div>
             <div className="dropdown-menu absolute hidden text-gray-700 pt-1">
               <button className="rounded-t bg-white hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#" value="Hockey" onClick={handleBtns}>Hockey</button>
               <button className=" bg-white hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#" value="Sleep" onClick={handleBtns}>Sleep</button>
