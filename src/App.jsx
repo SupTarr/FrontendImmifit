@@ -19,14 +19,14 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+
         {/* we want to protect these routes */}
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
           <Route path="/" element={<Home />} />
-          <Route path="/form" element={<Form />} />
-          <Route path="/form_profile" element={<Profilesform />} />
+          <Route path="form" element={<Form />} />
+          <Route path="form_profile" element={<Profilesform />} />
         </Route>
 
         {/* 
