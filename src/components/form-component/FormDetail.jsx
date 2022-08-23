@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import "./formDetail.css";
-import axios from "axios";
+import axios from "../../api/axios";
 
 function FormDetail() {
   const [imgInputState, setImgInputState] = useState("");
@@ -76,7 +76,7 @@ function FormDetail() {
       };
       console.log(activity);
       axios
-        .post("https://immifit-backend.vercel.app/activities", activity)
+        .post("/activities", activity)
         .then((res) => console.log(res.data));
     };
     reader.onerror = () => {

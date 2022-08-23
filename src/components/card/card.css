@@ -22,8 +22,8 @@ figure.snip1174 img {
     transform: scale(1.1);
     vertical-align: top;
     opacity: 0.3;
-    -webkit-filter: grayscale(100%);
-    filter: grayscale(100%);
+    /* -webkit-filter: grayscale(100%);
+    filter: grayscale(100%); */
 
 }
 
@@ -31,7 +31,7 @@ figure.snip1174 h5 img {
     max-width: 100%;
     width: 40px;
     height: 40px;
-    color: #222f3d
+    /* color: #222f3d */
 }
 
 figure.snip1174 figcaption {
