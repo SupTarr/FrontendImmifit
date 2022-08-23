@@ -2,10 +2,15 @@ import { React, useState } from "react";
 import "./formDetail.css";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
-function FormDetail() {
-  const { auth } = useAuth();
- 
+// import { useNavigate } from "react-router-dom";
 
+function FormDetail() {
+
+  // const navigate = useNavigate();
+  // const from = location.state?.from?.pathname || "/";
+  
+
+  const { auth } = useAuth();
   const [imgInputState, setImgInputState] = useState("");
   const [previewImgSource, setPreviewImgSource] = useState("");
   const [selectedImgFile, setSelectedImgFile] = useState();
@@ -81,7 +86,7 @@ function FormDetail() {
       console.log(activity);
       axios
         .post("/activities", activity)
-        .then((res) => console.log(res.data));
+        .then((res) => console.log(res.data))
     };
     reader.onerror = () => {
       console.error("Fail!!");
@@ -95,6 +100,7 @@ function FormDetail() {
     setStartTime("");
     setEndTime("");
     setDescription("");
+    // navigate(from, { replace: true });
     // navigate("/");
   };
 
