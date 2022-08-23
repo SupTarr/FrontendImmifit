@@ -53,13 +53,13 @@ function Profileform() {
 	};
 	return (
 		<div className="h-[100%] w-[100%] mx-auto bg-[#fbc3bc] rounded-xl tablet:mx-[2.5%]">
-			<div className="flex items-end w-[100%] h-[300px] mx-auto bg-[#5F576C] rounded-t-xl"></div>
+			<div className="flex items-end w-[100%] h-[300px] mx-auto bg-[#5F576C] rounded-t-xl" ></div>
 			<div className="pt-10">
 				<form onSubmit={handleSubmit} action="" method="POST">
 					<div>
 						<label
 							className="block ml-5 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-							for="file_input"
+							htmlFor="file_input"
 						>
 							Upload Profile
 						</label>
@@ -80,7 +80,7 @@ function Profileform() {
 					<div className="py-5">
 						<label
 							className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-							for="file_input"
+							htmlFor="file_input"
 						>
 							Upload Cover
 						</label>
@@ -101,7 +101,7 @@ function Profileform() {
 					<div className="py-5">
 						<label
 							className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-							for="file_input"
+							htmlFor="file_input"
 						>
 							Profile Name
 						</label>
@@ -161,7 +161,7 @@ function Profileform() {
 					<div>
 						<label
 							className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-							for="file_input"
+							htmlFor="file_input"
 						>
 							Age
 						</label>
