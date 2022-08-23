@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import "./container.css";
 import Card from "../card/Card";
 
-const Container = () => {
+const Container = (props) => {
 
   const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
@@ -12,9 +12,9 @@ const Container = () => {
   useEffect(() => {
 
     async function getUsers() {
-      const response = await fetch('https://immifit-backend.vercel.app/activities', {
-        method: 'GET',
-        headers: {
+      const response = await fetch(`https://immifit-backend.vercel.app/activities/${props.username}`, {
+          method: 'GET',
+          headers: {
           accept: 'application/json',
         },
       });
