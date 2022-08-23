@@ -5,7 +5,7 @@ import "./container.css";
 import Card from "../card/Card";
 import Header from "../header/Header";
 
-const Container = () => {
+const Container = (props) => {
   const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
