@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import './card.css'
 import moment from 'moment';
+import { useEffect } from 'react';
 
 const config = {
   headers: {
@@ -22,6 +23,10 @@ const Card = ({ user }) => {
   var duration = (now - then) / 60000;
   // console.log(duration)
  
+  useEffect(() => {
+    axios.get('https://immifit-backend.vercel.app/activities', config)
+  }, [user])
+  
   function handleDeleteClick(e) {
     try {
       e.preventDefault();
@@ -29,10 +34,8 @@ const Card = ({ user }) => {
       console.log(user.activity_id)
     } catch (error) {
       console.log(error)
-    }
-      
-  }
-    
+    }      
+  }   
   
 
   return (
