@@ -1,9 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
-// import axios from 'axios';
+import axios from 'axios';
 import "./container.css";
 import Card from "../card/Card";
-
+import Header from "../header/Header";
 const Container = () => {
 
   const [users, setUsers] = useState([]);
@@ -11,17 +11,16 @@ const Container = () => {
 
   useEffect(() => {
 
+
     async function getUsers() {
-      const response = await fetch('https://immifit-backend.vercel.app/activities', {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-        },
-      });
-      const data = await response.json();
+      const response = await axios.get('https://immifit-backend.vercel.app/activities/Tata')
+      .then(res => {
+        const data = res.data;
+
+      // const data = await response.json();
 
       setAllUsers(data)
-      setUsers(data)
+      setUsers(data)})
 
     } getUsers();
   }, []);
@@ -67,7 +66,7 @@ const Container = () => {
     <div >
       {/* ✅ check if array before calling `map()` */}
 
-      <h1>Social Cards</h1>
+      {/* <h1>Social Cards</h1>
       <button value="All" onClick={handleBtns}>
         All
       </button>
@@ -76,8 +75,13 @@ const Container = () => {
       </button>
       <button value="Swim" onClick={handleBtns}>
         Swim
-      </button>
-      <div className="flex flex-wrap mx-7">
+      </button> */}
+      <div>
+        <Header user={users} allUsers={allUsers} setUsers={setUsers}/>
+      </div>
+      
+
+      <div className="flex flex-wrap justify-center">
         {Array.isArray(users)
           ? users.map((user, index) => (
             <Card key={index} user={user} />

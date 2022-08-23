@@ -18,7 +18,7 @@ const Card = ({ user }) => {
   var datetime = new Date(user.date);
   var date = moment(datetime).format('DD/MM/YYYY');
   // console.log(datetime)
-  console.log(user.activity_id)
+  // console.log(user.activity_id)
   var duration = (now - then) / 60000;
   // console.log(duration)
  
@@ -38,7 +38,7 @@ const Card = ({ user }) => {
   return (
     <div>
 
-      <div className="flex justify-around" >
+      <div className="flex justify-around mx-auto" >
       <figure className="snip1174 hover:bg-white rounded-[40px]">
             <img src={user.img.url} alt="imgcard" className='block rounded-[40px] border shadow-md hover:bg-white dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto ' />
             <figcaption>
