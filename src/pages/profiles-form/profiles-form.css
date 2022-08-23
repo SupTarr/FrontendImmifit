@@ -1,0 +1,29 @@
+/* .home {
+    background-image: linear-gradient(to right top, #fbc3bc, #fcc5c0, #fdc7c3, #fdcac7, #feccca, #fec6c5, #fdc1c0, #fdbbbb, #fbacac, #f89e9d, #f48f8f, #f08080);
+}  */
+
+.home {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #f08080);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	/* height: 100vh; */
+	
+}
+.header {
+	z-index: 2;
+}
+.container {
+	z-index: -1;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}

@@ -2,11 +2,13 @@
   font-size: 16px;
 }
 
+/* 
 @media screen and (max-width: 550px) {
     .Header .Container .Button {
     display: none;
   }
-}
+} 
+*/
 
 .Header {
   display: flex;
@@ -36,7 +38,8 @@
     margin: 0px 0px;
     padding: 0px 0px;
     height: 80px;
-    width: 1047px;
+    width: 100%;
+    min-width: 300px;
     border-radius: 40px;
 }
 
