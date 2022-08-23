@@ -20,7 +20,7 @@ const Container = () => {
       const data = await response.json();
 
       setAllUsers(data)
-      setUsers(data)})
+      setUsers(data)
 
     } getUsers();
   }, []);
