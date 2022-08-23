@@ -4,20 +4,20 @@ import axios from 'axios';
 import "./container.css";
 import Card from "../card/Card";
 import Header from "../header/Header";
-const Container = () => {
 
+const Container = () => {
   const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
-
-
     async function getUsers() {
-      const response = await axios.get('https://immifit-backend.vercel.app/activities/Tata')
-      .then(res => {
-        const data = res.data;
-
-      // const data = await response.json();
+      const response = await fetch(`https://immifit-backend.vercel.app/activities/${props.username}`, {
+          method: 'GET',
+          headers: {
+          accept: 'application/json',
+        },
+      });
+      const data = await response.json();
 
       setAllUsers(data)
       setUsers(data)})
