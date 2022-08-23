@@ -2,6 +2,27 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 function Profileform() {
+	const [about, setAbout] = useState("");
+	const [gender, setGender] = useState("Male");
+	const [age, setAge] = useState("");
+	const [height, setHeight] = useState("");
+
+	const onChangeAbout = (e) => {
+		setAbout(e.target.value);
+	};
+
+	const onChangeGender = (e) => {
+		setGender(e.target.value);
+	};
+
+	const onChangeAge = (e) => {
+		setAge(e.target.value);
+	};
+
+	const onChangeHeight = (e) => {
+		setHeight(e.target.value);
+	};
+
 	const initialValues = {
 		first_name: "",
 		age: "",
@@ -9,6 +30,7 @@ function Profileform() {
 		weight: "",
 		bmi: "",
 	};
+
 	const [formValues, setFormValues] = useState(initialValues);
 	const [formErrors, setFormErrors] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
@@ -53,12 +75,12 @@ function Profileform() {
 	};
 	return (
 		<div className="h-[100%] w-[100%] mx-auto bg-[#fbc3bc] rounded-xl tablet:mx-[2.5%]">
-			<div className="flex items-end w-[100%] h-[300px] mx-auto bg-[#5F576C] rounded-t-xl" ></div>
-			<div className="pt-10">
-				<form onSubmit={handleSubmit} action="" method="POST">
+			<div className="flex items-end w-[100%] h-[300px] mx-auto bg-[#5F576C] rounded-t-xl"></div>
+			<div className="pt-10 ml-5 mx-auto">
+				<form onSubmit={handleSubmit}>
 					<div>
 						<label
-							className="block ml-5 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+							className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
 							htmlFor="file_input"
 						>
 							Upload Profile
@@ -98,25 +120,6 @@ function Profileform() {
 						</p>
 					</div>
 
-					<div className="py-5">
-						<label
-							className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-							htmlFor="file_input"
-						>
-							Profile Name
-						</label>
-						<input
-							type="text"
-							name="first_name"
-							id="first_name"
-							autoComplete="given-name"
-							value={formValues.first_name}
-							onChange={handleChange}
-							className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-2/4 shadow-sm sm:text-sm border-gray-300 rounded-md"
-						/>
-						<p>{formErrors.first_name}</p>
-					</div>
-					
 					<div>
 						<label
 							htmlFor="about"
@@ -169,6 +172,8 @@ function Profileform() {
 							type="number"
 							name="age"
 							id="age"
+							min="1"
+							max="100"
 							autoComplete="your_age"
 							value={formValues.age}
 							onChange={handleChange}
@@ -176,7 +181,7 @@ function Profileform() {
 						/>
 						<p>{formErrors.age}</p>
 					</div>
-					
+
 					<div className=" overflow-hidden sm:rounded-md">
 						<div className="px-4 py-5 sm:p-6">
 							<div className="grid grid-cols-6 gap-6">
@@ -191,6 +196,8 @@ function Profileform() {
 										type="number"
 										name="height"
 										id="height"
+										min="1"
+										max="300"
 										autoComplete="your_height"
 										value={formValues.height}
 										onChange={handleChange}
@@ -198,7 +205,7 @@ function Profileform() {
 									/>
 									<p>{formErrors.height}</p>
 								</div>
-								
+
 								<div className="col-span-6 sm:col-span-3">
 									<label
 										htmlFor="weight"
@@ -210,6 +217,8 @@ function Profileform() {
 										type="number"
 										name="weight"
 										id="weight"
+										min="1"
+										max="200"
 										autoComplete="your_weight"
 										value={formValues.weight}
 										onChange={handleChange}
@@ -217,7 +226,7 @@ function Profileform() {
 									/>
 									<p>{formErrors.weight}</p>
 								</div>
-								
+
 							</div>
 						</div>
 					</div>
@@ -240,19 +249,13 @@ function Profileform() {
 						/>
 						<p>{formErrors.bmi}</p>
 					</div>
-					
+
 					<div className="px-4 py-4 text-right sm:px-6">
 						<button
 							type="submit"
 							className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 						>
 							Save
-						</button>
-						<button
-							type="reset"
-							className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-						>
-							Reset
 						</button>
 					</div>
 				</form>
