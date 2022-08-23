@@ -4,6 +4,7 @@ import './card.css'
 import moment from 'moment';
 import { useEffect } from 'react';
 
+
 const config = {
   headers: {
     'Content-Type': 'application/json',
@@ -20,17 +21,21 @@ const Card = ({ user, users, setUsers }) => {
   var date = moment(datetime).format('DD/MM/YYYY');
   // console.log(datetime)
   // console.log(user.activity_id)
+  
   console.log(user)
   var duration = (now - then) / 60000;
   // console.log(duration)
 
-  
-  function handleDeleteClick(e) {
+ 
+  const handleDeleteClick  = async (id) => {
     try {
       // e.preventDefault();
-      axios.delete(`/activities/${user.activity_id}`, config)
-      // const newActivity = users.filter((user) => user.activity_id !== user.activity_id);
-      // setUsers(newActivity); 
+      // console.log(id)
+      const id = user.activity_id;
+      await axios.delete(`/activities/${user.activity_id}`, config)      
+      const newActivity = users.filter((user) => user.activity_id !== id);
+      setUsers(newActivity); 
+      
       console.log(user.activity_id)
       
     } catch (error) {
