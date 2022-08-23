@@ -1,16 +1,15 @@
 import React from "react";
 import { useEffect, useState } from "react";
-// import axios from 'axios';
+import axios from 'axios';
 import "./container.css";
 import Card from "../card/Card";
+import Header from "../header/Header";
 
-const Container = (props) => {
-
+const Container = () => {
   const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
-
     async function getUsers() {
       const response = await fetch(`https://immifit-backend.vercel.app/activities/${props.username}`, {
           method: 'GET',
@@ -26,6 +25,7 @@ const Container = (props) => {
     } getUsers();
   }, []);
 
+  // filter buttons
   const handleBtns = (event) => {
 
     const value = event.target.value;
@@ -66,7 +66,7 @@ const Container = (props) => {
     <div >
       {/* ✅ check if array before calling `map()` */}
 
-      <h1>Social Cards</h1>
+      {/* <h1>Social Cards</h1>
       <button value="All" onClick={handleBtns}>
         All
       </button>
@@ -75,8 +75,13 @@ const Container = (props) => {
       </button>
       <button value="Swim" onClick={handleBtns}>
         Swim
-      </button>
-      <div className="flex flex-wrap mx-7">
+      </button> */}
+      <div>
+        <Header user={users} allUsers={allUsers} setUsers={setUsers}/>
+      </div>
+      
+
+      <div className="flex flex-wrap justify-center">
         {Array.isArray(users)
           ? users.map((user, index) => (
             <Card key={index} user={user} />
