@@ -20,11 +20,11 @@ function Home() {
             <Profile username={user} />
           </div>
           <div className="Activities w-[60%] tablet:w-[95%] tablet:mx-[2.5%] mx-5 mb-5 bg-[#fbc3bc] rounded-xl">
-            <Header />
+            {/* <Header /> */}
             <div className="flex justify-around flex-wrap">
               <Container username={user} />
             </div>
-            <Footer />
+            {/* <Footer /> */}
           </div>
         </div>
       </div>
