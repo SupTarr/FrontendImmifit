@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef, useContext, useNavigate } from 'react'
-import AuthContext from "../../context/AuthProvider";
+import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom';
+import useAuth from "../../hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import './logindetail.css'
-import axios from "axios";
+import axios from "../../api/axios";
 // import Facebook from './facebook.png'
 // import Line from './line.png'
 // import Tel from './telephone.png'
@@ -15,13 +16,18 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const config = {
   headers: {
     "Content-Type": "application/json",
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': ['http://127.0.0.1:5173', 'https://immifit.vercel.app/'],
     'withCredentials': 'true'
   }
 }
 
 const Logindetail = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const userRef = useRef();
   const errRef = useRef();
 
@@ -34,7 +40,6 @@ const Logindetail = () => {
   const [passwordFocus, setPasswordFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     setValidUser(USER_REGEX.test(user));
@@ -51,18 +56,18 @@ const Logindetail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://immifit-backend.vercel.app/auth',
+      const response = await axios.post('/auth',
         JSON.stringify({ username: user, password: password }), config
       );
       console.log(JSON.stringify(response?.data));
       console.log(JSON.stringify(response));
+      console.log(response);
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
-      setAuth({ user, pwd, roles, accessToken });
+      setAuth({ user, password, roles, accessToken });
       setUser("");
       setPassword("");
-      setSuccess(true);
-      useNavigate('/');
+      navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
