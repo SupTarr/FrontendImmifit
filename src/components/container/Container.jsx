@@ -14,7 +14,8 @@ const Container = (props) => {
       const response = await fetch(`https://immifit-backend.vercel.app/activities/${props.username}`, {
           method: 'GET',
           headers: {
-          accept: 'application/json',
+            accept: 'application/json',
+            
         },
       });
       const data = await response.json();
