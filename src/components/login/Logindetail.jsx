@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import './logindetail.css'
-import axios from "axios";
+import axios from "../../api/axios";
 // import Facebook from './facebook.png'
 // import Line from './line.png'
 // import Tel from './telephone.png'
@@ -16,7 +16,7 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const config = {
   headers: {
     "Content-Type": "application/json",
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': ['http://127.0.0.1:5173', 'https://immifit.vercel.app/'],
     'withCredentials': 'true'
   }
 }
@@ -56,7 +56,7 @@ const Logindetail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://immifit-backend.vercel.app/auth',
+      const response = await axios.post('/auth',
         JSON.stringify({ username: user, password: password }), config
       );
       console.log(JSON.stringify(response?.data));
