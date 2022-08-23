@@ -26,40 +26,40 @@ const Container = (props) => {
   }, []);
 
   // filter buttons
-  const handleBtns = (event) => {
+  // const handleBtns = (event) => {
 
-    const value = event.target.value;
-    if (value === "All") {
-      const filteredUsers = allUsers
-      setUsers(filteredUsers)
-    } else if (value === "Run") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Running")
-      setUsers(filteredUsers)
-    } else if (value === "Swim") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Swimming")
-      setUsers(filteredUsers)
-    } else if (value === "Bike") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Biking")
-      setUsers(filteredUsers)
-    } else if (value === "Hockey") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Hockey")
-      setUsers(filteredUsers)
-    } else if (value === "Sleep") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Sleeping")
-      setUsers(filteredUsers)
-    } else if (value === "Eat") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Eat")
-      setUsers(filteredUsers);
+  //   const value = event.target.value;
+  //   if (value === "All") {
+  //     const filteredUsers = allUsers
+  //     setUsers(filteredUsers)
+  //   } else if (value === "Run") {
+  //     const filteredUsers = allUsers.filter(user => user.
+  //       activity_type === "Running")
+  //     setUsers(filteredUsers)
+  //   } else if (value === "Swim") {
+  //     const filteredUsers = allUsers.filter(user => user.
+  //       activity_type === "Swimming")
+  //     setUsers(filteredUsers)
+  //   } else if (value === "Bike") {
+  //     const filteredUsers = allUsers.filter(user => user.
+  //       activity_type === "Biking")
+  //     setUsers(filteredUsers)
+  //   } else if (value === "Hockey") {
+  //     const filteredUsers = allUsers.filter(user => user.
+  //       activity_type === "Hockey")
+  //     setUsers(filteredUsers)
+  //   } else if (value === "Sleep") {
+  //     const filteredUsers = allUsers.filter(user => user.
+  //       activity_type === "Sleeping")
+  //     setUsers(filteredUsers)
+  //   } else if (value === "Eat") {
+  //     const filteredUsers = allUsers.filter(user => user.
+  //       activity_type === "Eat")
+  //     setUsers(filteredUsers);
 
-    }
+  //   }
 
-  };
+  // };
 
   return (
     
@@ -84,7 +84,7 @@ const Container = (props) => {
       <div className="flex flex-wrap justify-center">
         {Array.isArray(users)
           ? users.map((user, index) => (
-            <Card key={index} user={user} />
+            <Card key={index} user={user} users={users} setUsers={setUsers}/>
           ))
 
           : console.log("no data")}
