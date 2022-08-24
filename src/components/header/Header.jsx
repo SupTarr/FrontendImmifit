@@ -14,19 +14,19 @@ import { useEffect, useState } from "react";
 const Header = ({ item, allUsers, getUsers }) => {
   // const { newActivity, setNewActivity} = useContext(NewActContext);
 
-  // const [isDeleted, setIsDeleted] = useState([])
+  const [newActivity, setNewActivity] = useState([])
 
 
   const handleBtns = (event) => {
     // console.log(users)
     console.log(allUsers)
-    // const allUsers = ["Running", "Cycling", "Swimming", "Weight training", "Walking", "Biking", "Hockey", "Sleeping", "Eat" ]
-    // console.log(users)
+    
     event.preventDefault();
     const value = event.target.value;
     if (value === "All") {
       const users = allUsers.filter((user) => user.activity_type)
-      users.map((user, index) => {<Card key={index} user={user} />})
+      // setNewActivity(users)
+      // users.map((user, index) => {<Card key={index} user={user} />})
       console.log(users)
     }
     else if (value === "Run") {
@@ -83,15 +83,12 @@ const Header = ({ item, allUsers, getUsers }) => {
       </div>
 
 
-     {/* ✅ check if array before calling `map()`
+      {/* ✅ check if array before calling `map()` */}
       <div className="Card flex flex-row flex-wrap ">
-        {allUsers.map((user, index) => (
-            <Card 
-            key={index} 
-            user={user}
-             />
+        {newActivity.map((user, index) => (
+           <Card key={index} user={user} setAllUsers={setAllUsers} newActivity={newActivity} allUsers={allUsers} />
           ))}
-      </div>  */}
+      </div>  
     </div>
 
   );
