@@ -51,16 +51,18 @@ function Profileform() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setFormErrors(validate({about, gender, age, height, weight, bmi}));
-		const profile = {
-			username: auth.user,
-			about: about,
-            gender: gender,
-            age: age,
-            height: height,
-            weight: weight,
-            bmi: bmi
+		if (validate({about, gender, age, height, weight, bmi}) === {})  {
+			const profile = {
+				username: auth.user,
+				about: about,
+				gender: gender,
+				age: age,
+				height: height,
+				weight: weight,
+				bmi: bmi
+			}
+			await axios.post(`/users/profile`, profile);
 		}
-		await axios.post(`/users/profile`, profile);
 	};
 
 	const validate = (values) => {
@@ -253,8 +255,7 @@ function Profileform() {
 					<div className="px-4 py-4 text-right sm:px-6">
 						<button
 							type="submit"
-							className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-						>
+							className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#F08080] hover:bg-[#ff5757]">
 							Save
 						</button>
 					</div>
