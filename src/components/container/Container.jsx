@@ -5,94 +5,43 @@ import "./container.css";
 import Card from "../card/Card";
 import Header from "../header/Header";
 
-const Container = (props) => {
-  const [users, setUsers] = useState([]);
+const Container = (props, {newActivity}) => {
+  // const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
+  async function getUsers() {
+    const response = await fetch(`https://immifit-backend.vercel.app/activities/${props.username}`, {
+        method: 'GET',
+        headers: {
+        accept: 'application/json',
+      },
+    });
+    const data = await response.json();
+
+    setAllUsers(data)
+    // setUsers(data)
+    
+  } 
   useEffect(() => {
-    async function getUsers() {
-      const response = await fetch(`https://immifit-backend.vercel.app/activities/${props.username}`, {
-          method: 'GET',
-          headers: {
-            accept: 'application/json',
-            
-        },
-      });
-      const data = await response.json();
-
-      setAllUsers(data)
-      setUsers(data)
-
-    } getUsers();
+    getUsers();
   }, []);
-
-  // filter buttons
-  const handleBtns = (event) => {
-
-    const value = event.target.value;
-    if (value === "All") {
-      const filteredUsers = allUsers
-      setUsers(filteredUsers)
-    } else if (value === "Run") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Running")
-      setUsers(filteredUsers)
-    } else if (value === "Swim") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Swimming")
-      setUsers(filteredUsers)
-    } else if (value === "Bike") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Biking")
-      setUsers(filteredUsers)
-    } else if (value === "Hockey") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Hockey")
-      setUsers(filteredUsers)
-    } else if (value === "Sleep") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Sleeping")
-      setUsers(filteredUsers)
-    } else if (value === "Eat") {
-      const filteredUsers = allUsers.filter(user => user.
-        activity_type === "Eat")
-      setUsers(filteredUsers);
-
-    }
-
-  };
 
   return (
     
     <div >
-      {/* ✅ check if array before calling `map()` */}
-
-      {/* <h1>Social Cards</h1>
-      <button value="All" onClick={handleBtns}>
-        All
-      </button>
-      <button value="Run" onClick={handleBtns}>
-        Run
-      </button>
-      <button value="Swim" onClick={handleBtns}>
-        Swim
-      </button> */}
       <div>
-        <Header user={users} allUsers={allUsers} setUsers={setUsers}/>
+        <Header allUsers={allUsers} getUsers={getUsers}/>
       </div>
-      
 
+      {/* ✅ check if array before calling `map()` */}
       <div className="flex flex-wrap justify-center">
-        {Array.isArray(users)
-          ? users.map((user, index) => (
-            <Card key={index} user={user} />
+        {Array.isArray(allUsers)
+          ? allUsers.map((item, index) => (
+            <Card key={index} item={item} setAllUsers={setAllUsers} newActivity={newActivity} allUsers={allUsers}/>
           ))
 
           : console.log("no data")}
-      
       </div>
-      
-
     </div>
      
   );
@@ -100,4 +49,3 @@ const Container = (props) => {
 
 
 export default Container;
-// export {handleBtns};
