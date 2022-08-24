@@ -5,38 +5,39 @@ import "./container.css";
 import Card from "../card/Card";
 import Header from "../header/Header";
 
-const Container = (props) => {
-  const [users, setUsers] = useState([]);
+const Container = (props, {newActivity}) => {
+  // const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
-  useEffect(() => {
-    async function getUsers() {
-      const response = await fetch(`https://immifit-backend.vercel.app/activities/${props.username}`, {
-          method: 'GET',
-          headers: {
-          accept: 'application/json',
-        },
-      });
-      const data = await response.json();
+  async function getUsers() {
+    const response = await fetch(`https://immifit-backend.vercel.app/activities/${props.username}`, {
+        method: 'GET',
+        headers: {
+        accept: 'application/json',
+      },
+    });
+    const data = await response.json();
 
-      setAllUsers(data)
-      setUsers(data)
-      
-    } getUsers();
+    setAllUsers(data)
+    // setUsers(data)
+    
+  } 
+  useEffect(() => {
+    getUsers();
   }, []);
 
   return (
     
     <div >
       <div>
-        <Header user={users} allUsers={allUsers} setUsers={setUsers}/>
+        <Header allUsers={allUsers} getUsers={getUsers}/>
       </div>
 
       {/* ✅ check if array before calling `map()` */}
       <div className="flex flex-wrap justify-center">
-        {Array.isArray(users)
-          ? users.map((user, index) => (
-            <Card key={index} user={user} users={users} setUsers={setUsers}/>
+        {Array.isArray(allUsers)
+          ? allUsers.map((item, index) => (
+            <Card key={index} item={item} setAllUsers={setAllUsers} newActivity={newActivity} allUsers={allUsers}/>
           ))
 
           : console.log("no data")}
