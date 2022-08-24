@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate, useLocation } from 'react-router-dom';
 import validator from 'validator'
 import axios from "axios";
 import "./registerForm.css";
@@ -19,6 +20,10 @@ const config = {
 const Registerdetail = () => {
 	const userRef = useRef();
 	const errRef = useRef();
+
+	const navigate = useNavigate();
+  	const location = useLocation();
+  	const from = location.state?.from?.pathname || "/login";
 
 	const [allEmail, setAllEmail] = useState([]);
 	const [allUsername, setAllUsername] = useState([]);
@@ -91,6 +96,7 @@ const Registerdetail = () => {
 			setEmail("");
 			setPassword("");
 			setConPass("");
+			navigate(from, { replace: true });
 		} catch (err) {
 			if (!err?.response) {
 				setErrMsg('No Server Response');
