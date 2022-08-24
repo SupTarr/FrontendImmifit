@@ -12,8 +12,8 @@
 
 .Header {
   display: flex;
-  justify-content: space-between;
-  margin: 0px 40px;
+  justify-content: space-around;
+  margin: 0px 0px;
 }
 
 .Container .Button {
@@ -59,3 +59,5 @@
     display: block;
   }
 
+/* .Header .Card {
+} */
