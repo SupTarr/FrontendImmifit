@@ -145,7 +145,7 @@ function FormDetail() {
             <select name="type" onChange={onChangeType} value={type}>
               <option value="Running">Running</option>
               <option value="Cycling">Cycling</option>
-              <option value="Swimmimg">Swimmimg</option>
+              <option value="Swimmimg">Swimming</option>
               <option value="Weight training">Weight training</option>
               <option value="Walking">Walking</option>
             </select>
