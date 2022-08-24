@@ -18,6 +18,7 @@ const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
   // const [isDeleted, setIsDeleted] = useState([])
   console.log("this is allusers",allUsers)
 
+
   const fetchDataByType =  async (type) => {
     console.log("this is users",allUsers)
     console.log("This is type",type)
@@ -32,6 +33,7 @@ const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
       // setAllUsers(filterType);
     } catch (e) {
       console.log(e);
+
     }
   };
   
@@ -89,15 +91,15 @@ const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
       </div>
 
 
-     {/* ✅ check if array before calling `map()`
-      <div className="Card flex flex-row flex-wrap ">
+      {/* ✅ check if array before calling `map()` */}
+      {/* <div className="Card flex flex-row flex-wrap ">
         {allUsers.map((user, index) => (
             <Card 
             key={index} 
             user={user}
              />
           ))}
-      </div>  */}
+      </div>   */}
     </div>
 
   );
