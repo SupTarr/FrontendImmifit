@@ -34,14 +34,14 @@ const Container = (props, {newActivity}) => {
       </div>
 
       {/* ✅ check if array before calling `map()` */}
-      {/* <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center">
         {Array.isArray(allUsers)
           ? allUsers.map((item, index) => (
             <Card key={index} item={item} setAllUsers={setAllUsers} newActivity={newActivity} allUsers={allUsers}/>
           ))
 
           : console.log("no data")}
-      </div> */}
+      </div>
     </div>
      
   );
