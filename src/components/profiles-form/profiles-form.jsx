@@ -18,33 +18,19 @@ function Profileform() {
 	const [bmi, setBmi] = useState("");
 
 	const [formErrors, setFormErrors] = useState({});
-	const [profile, setProfile] = useState({});
 
 	console.log(about, gender, age, height, weight, bmi);
-	console.log(profile);
 
 	useEffect(() => {
 		axios.get(`/users/${auth.user_id}`).then((res) => {
-			setProfile(res.data.profile);
+			setAbout(res.data.profile.about || '');
+			setGender(res.data.profile.gender || '');
+			setAge(res.data.profile.age || '');
+			setHeight(res.data.profile.height || '');
+			setWeight(res.data.profile.weight || '');
+			setBmi(res.data.profile.bmi || '');
 		})
-		if (profile !== {}) {
-			setAbout(profile.about);
-			setGender(profile.gender);
-			setAge(profile.age);
-			setHeight(profile.height);
-			setWeight(profile.weight);
-		}
 	}, []);
-
-	useEffect(() => {
-		if (profile !== {}) {
-			setAbout(profile.about);
-			setGender(profile.gender);
-			setAge(profile.age);
-			setHeight(profile.height);
-			setWeight(profile.weight);
-		}
-	}, [profile]);
 
 	const onChangeAbout = (e) => {
 		setAbout(e.target.value);
@@ -180,12 +166,14 @@ function Profileform() {
 							<textarea
 								id="about"
 								name="about"
-								rows="3"
-								cols="4"
+								rows="4"
+								cols="10"
 								onChange={onChangeAbout}
 								value={about}
-								className="focus:ring-indigo-500 py-2 px-3 focus:border-indigo-500 mt-1 block w-[75%] sm:text-sm border border-gray-300 rounded-md resize-none"
+								className="focus:ring-indigo-500 py-2 px-3 focus:border-indigo-500 mt-1 block w-[50%] sm:text-sm border border-gray-300 rounded-md resize-none"
 								placeholder="Brief description for your profile"
+								white-space="pre"
+								word-wrap="break-word"
 							/>
 						</div>
 						<p className="text-red-700 font-bold mt-3">{formErrors.about}</p>

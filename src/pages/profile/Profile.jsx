@@ -22,8 +22,8 @@ function Profile(props) {
       {
         props.createdProfile ? (
           <div className="h-[100%] bg-[#fbc3bc] rounded-xl md:ml-5 tablet:mx-[2.5%] relative pb-10 tablet:mb-5">
-            <p className="text-gray-700 p-5"><b>Username</b> : {props.username} </p>
-            <p className="text-gray-700 px-5 pb-5"><b>About</b> : {props.profile.about} </p>
+            <p className="text-gray-700 p-5 max-w-[100%]"><b>Username</b> : {props.username} </p>
+            <p className="text-gray-700 px-5 pb-5 max-w-[750px]"><b>About</b> : {props.profile.about} </p>
             <p className="text-gray-700 px-5 pb-5"><b>Gender</b> : {props.profile.gender} </p>
             <p className="text-gray-700 px-5 pb-5"><b>Age</b> : {props.profile.age} years </p>
             <p className="text-gray-700 px-5 pb-5"><b>Height</b> : {props.profile.height} centimeters </p>
