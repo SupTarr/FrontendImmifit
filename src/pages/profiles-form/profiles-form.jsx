@@ -7,14 +7,12 @@ import cors from "cors";
 
 function Profilesform() {
   return (
-    <div className="home">
-      <div>
-        <Navbar />
-        <div className="Activities max-w-[750px] w-[100%] tablet:w-[95%] tablet:mx-[2.5%] mx-auto mb-5 bg-[#fbc3bc] rounded-xl">
-          <Profileform />
-        </div>
+    <div className="home min-h-[100vh] max-h-[1000px] pb-5">
+      <Navbar />
+      <div className="Activities max-w-[750px] w-[100%] tablet:w-[95%] tablet:mx-[2.5%] mx-auto my-10 bg-[#fbc3bc] rounded-xl">
+        <Profileform />
       </div>
-      </div>
+    </div>
   );
 }
 

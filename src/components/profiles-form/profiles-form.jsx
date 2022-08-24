@@ -1,11 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import axios from "../../api/axios";
+import useAuth from "../../hooks/useAuth";
 
 function Profileform() {
+	const { auth } = useAuth();
 	const [about, setAbout] = useState("");
 	const [gender, setGender] = useState("Male");
 	const [age, setAge] = useState("");
 	const [height, setHeight] = useState("");
+	const [weight, setWeight] = useState("");
+	const [bmi, setBmi] = useState("");
+
+	const [formErrors, setFormErrors] = useState({});
+
+	console.log(about, gender, age, height, weight, bmi)
 
 	const onChangeAbout = (e) => {
 		setAbout(e.target.value);
@@ -16,83 +25,81 @@ function Profileform() {
 	};
 
 	const onChangeAge = (e) => {
-		setAge(e.target.value);
+		if (e.target.value > 0 && e.target.value <= 150) {
+			setAge(e.target.value);
+		}
 	};
 
 	const onChangeHeight = (e) => {
-		setHeight(e.target.value);
+		if (e.target.value > 0 && e.target.value <= 300) {
+			setHeight(e.target.value);
+		}
 	};
 
-	const initialValues = {
-		first_name: "",
-		age: "",
-		height: "",
-		weight: "",
-		bmi: "",
-	};
-
-	const [formValues, setFormValues] = useState(initialValues);
-	const [formErrors, setFormErrors] = useState({});
-	const [isSubmit, setIsSubmit] = useState(false);
-
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setFormValues({ ...formValues, [name]: value });
-	};
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		setFormErrors(validate(formValues));
-		setIsSubmit(true);
+	const onChangeWeight = (e) => {
+		if (e.target.value > 0 && e.target.value <= 200) {
+			setWeight(e.target.value);
+		}
 	};
 
 	useEffect(() => {
-		console.log(formErrors);
-		if (Object.keys(formErrors).length === 0 && isSubmit) {
-			console.log(formValues);
+		if (height > 0 && weight > 0) {
+			setBmi(Math.round(weight / (height / 100) ** 2));
 		}
-	}, [formErrors]);
+	}, [weight, height]);
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setFormErrors(validate({about, gender, age, height, weight, bmi}));
+		const profile = {
+			username: auth.user,
+			about: about,
+            gender: gender,
+            age: age,
+            height: height,
+            weight: weight,
+            bmi: bmi
+		}
+		await axios.post(`/users/profile`, profile);
+	};
 
 	const validate = (values) => {
 		const errors = {};
-		const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-		if (!values.first_name) {
-			errors.first_name = "first-name is required!";
+		if (!values.about) {
+			errors.about = "About is required!";
 		}
 		if (!values.age) {
-			errors.age = "Age is required!";
+			errors.age = "Age is required! and between 1-150";
 		}
 		if (!values.height) {
-			errors.height = "height is required";
+			errors.height = "Height is required and between 1-300";
 		}
 		if (!values.weight) {
-			errors.weight = "weight is required";
-		}
-		if (!values.bmi) {
-			errors.bmi = "bmi is required";
+			errors.weight = "Weight is required and between 1-200";
 		}
 		return errors;
 	};
+
 	return (
-		<div className="h-[100%] w-[100%] mx-auto bg-[#fbc3bc] rounded-xl tablet:mx-[2.5%]">
-			<div className="flex items-end w-[100%] h-[300px] mx-auto bg-[#5F576C] rounded-t-xl"></div>
+		<div className="h-[100%] w-[100%] mx-auto bg-[#fbc3bc] rounded-xl my-5">
+			{/* <div className="flex items-end w-[100%] h-[300px] mx-auto bg-[#5F576C] rounded-t-xl"></div> */}
 			<div className="pt-10 ml-5 mx-auto">
 				<form onSubmit={handleSubmit}>
-					<div>
+					{/* <div >
 						<label
-							className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+							className="block mb-2 text-sm font-medium text-gray-900"
 							htmlFor="file_input"
 						>
 							Upload Profile
 						</label>
 						<input
-							className="block w-2/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+							className="block w-[75%] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
 							aria-describedby="file_input_help"
 							id="profle_pic"
 							type="file"
 						></input>
 						<p
-							className="mt-1 text-sm text-gray-500 dark:text-gray-300"
+							className="mt-1 text-sm text-gray-500"
 							id="file_input_help"
 						>
 							SVG, PNG, JPG or GIF (MAX. 800x400px).
@@ -101,29 +108,29 @@ function Profileform() {
 
 					<div className="py-5">
 						<label
-							className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+							className="block mb-2 text-sm font-medium text-gray-900"
 							htmlFor="file_input"
 						>
 							Upload Cover
 						</label>
 						<input
-							className="block w-2/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+							className="block w-[75%] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
 							aria-describedby="file_input_help"
 							id="profile_cover"
 							type="file"
 						></input>
 						<p
-							className="mt-1 text-sm text-gray-500 dark:text-gray-300"
+							className="mt-1 text-sm text-gray-500"
 							id="file_input_help"
 						>
 							SVG, PNG, JPG or GIF (MAX. 1980x1080px).
 						</p>
-					</div>
+					</div> */}
 
 					<div>
 						<label
 							htmlFor="about"
-							className="block text-sm font-medium text-gray-700"
+							className="block text-sm font-bold text-gray-700"
 						>
 							About
 						</label>
@@ -131,21 +138,21 @@ function Profileform() {
 							<textarea
 								id="about"
 								name="about"
-								rows={3}
-								className="focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-2/4 sm:text-sm border border-gray-300 rounded-md"
-								placeholder="About you"
-								defaultValue={""}
+								rows="3"
+								cols="4"
+								onChange={onChangeAbout}
+								value={about}
+								className="focus:ring-indigo-500 py-2 px-3 focus:border-indigo-500 mt-1 block w-[75%] sm:text-sm border border-gray-300 rounded-md resize-none"
+								placeholder="Brief description for your profile"
 							/>
 						</div>
-						<p className="mt-2 text-sm text-gray-500">
-							Brief description for your profile. URLs are hyperlinked.
-						</p>
+						<p className="text-red-700 font-bold mt-3">{formErrors.about}</p>
 					</div>
 
 					<div className="col-span-6 py-5 sm:col-span-3">
 						<label
 							htmlFor="country"
-							className="block text-sm font-medium text-gray-700"
+							className="block text-sm font-bold text-gray-700"
 						>
 							Gender
 						</label>
@@ -153,7 +160,9 @@ function Profileform() {
 							id="gender"
 							name="gender"
 							autoComplete="gender"
-							className="mt-1 block w-50 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+							onChange={onChangeGender}
+							value={gender}
+							className="mt-1 block w-[150px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 						>
 							<option>Male</option>
 							<option>Female</option>
@@ -163,7 +172,7 @@ function Profileform() {
 
 					<div>
 						<label
-							className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+							className="block mb-2 text-sm font-bold text-gray-900"
 							htmlFor="file_input"
 						>
 							Age
@@ -173,22 +182,23 @@ function Profileform() {
 							name="age"
 							id="age"
 							min="1"
-							max="100"
+							max="150"
 							autoComplete="your_age"
-							value={formValues.age}
-							onChange={handleChange}
-							className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-60 shadow-sm sm:text-sm border-gray-300 rounded-md"
+							placeholder="Years"
+							value={age}
+							onChange={onChangeAge}
+							className="mt-1 py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 block w-[150px] shadow-sm sm:text-sm border-gray-300 rounded-md"
 						/>
-						<p>{formErrors.age}</p>
+						<p className="text-red-700 font-bold mt-3">{formErrors.age}</p>
 					</div>
 
 					<div className=" overflow-hidden sm:rounded-md">
-						<div className="px-4 py-5 sm:p-6">
+						<div className="py-5">
 							<div className="grid grid-cols-6 gap-6">
 								<div className="col-span-6 sm:col-span-3">
 									<label
 										htmlFor="height"
-										className="block text-sm font-medium text-gray-700"
+										className="block text-sm font-bold text-gray-700"
 									>
 										Height
 									</label>
@@ -198,18 +208,18 @@ function Profileform() {
 										id="height"
 										min="1"
 										max="300"
-										autoComplete="your_height"
-										value={formValues.height}
-										onChange={handleChange}
-										className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 shadow-sm sm:text-sm border-gray-300 rounded-md"
+										placeholder="Centimeters"
+										value={height}
+										onChange={onChangeHeight}
+										className="mt-1 py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 block w-[150px] shadow-sm sm:text-sm border-gray-300 rounded-md"
 									/>
-									<p>{formErrors.height}</p>
+									<p className="text-red-700 font-bold mt-3">{formErrors.height}</p>
 								</div>
 
 								<div className="col-span-6 sm:col-span-3">
 									<label
 										htmlFor="weight"
-										className="block text-sm font-medium text-gray-700"
+										className="block text-sm font-bold text-gray-700"
 									>
 										Weight
 									</label>
@@ -219,35 +229,25 @@ function Profileform() {
 										id="weight"
 										min="1"
 										max="200"
-										autoComplete="your_weight"
-										value={formValues.weight}
-										onChange={handleChange}
-										className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 shadow-sm sm:text-sm border-gray-300 rounded-md"
+										placeholder="Kilograms"
+										value={weight}
+										onChange={onChangeWeight}
+										className="mt-1 py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 block w-[150px] shadow-sm sm:text-sm border-gray-300 rounded-md"
 									/>
-									<p>{formErrors.weight}</p>
+									<p className="text-red-700 font-bold mt-3">{formErrors.weight}</p>
 								</div>
-
 							</div>
 						</div>
 					</div>
-
+					
 					<div>
 						<label
-							className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-							for="bmi"
+							className="block mb-2 text-sm font-bold text-gray-900"
+							htmlFor="bmi"
 						>
 							BMI
 						</label>
-						<input
-							type="number"
-							name="bmi"
-							id="bmi"
-							autoComplete="bmi"
-							value={formValues.bmi}
-							onChange={handleChange}
-							className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-1/4 shadow-sm sm:text-sm border-gray-300 rounded-md"
-						/>
-						<p>{formErrors.bmi}</p>
+						<p className="text-gray-700">{bmi}</p>
 					</div>
 
 					<div className="px-4 py-4 text-right sm:px-6">
