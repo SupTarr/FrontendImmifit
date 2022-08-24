@@ -2,9 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function Profileform() {
 	const { auth } = useAuth();
+	const navigate = useNavigate();
+	const location = useLocation();
+	const from = location.state?.from?.pathname || "/";
+
 	const [about, setAbout] = useState("");
 	const [gender, setGender] = useState("Male");
 	const [age, setAge] = useState("");
@@ -14,7 +19,18 @@ function Profileform() {
 
 	const [formErrors, setFormErrors] = useState({});
 
-	console.log(about, gender, age, height, weight, bmi)
+	console.log(about, gender, age, height, weight, bmi);
+
+	useEffect(() => {
+		axios.get(`/users/${auth.user_id}`).then((res) => {
+			setAbout(res.data.profile.about || '');
+			setGender(res.data.profile.gender || '');
+			setAge(res.data.profile.age || '');
+			setHeight(res.data.profile.height || '');
+			setWeight(res.data.profile.weight || '');
+			setBmi(res.data.profile.bmi || '');
+		})
+	}, []);
 
 	const onChangeAbout = (e) => {
 		setAbout(e.target.value);
@@ -48,19 +64,31 @@ function Profileform() {
 		}
 	}, [weight, height]);
 
+	useEffect(() => {
+		setFormErrors(validate({ about, gender, age, height, weight }));
+	}, [about, gender, age, height, weight]);
+
 	const handleSubmit = async (e) => {
-		e.preventDefault();
-		setFormErrors(validate({about, gender, age, height, weight, bmi}));
-		const profile = {
-			username: auth.user,
-			about: about,
-            gender: gender,
-            age: age,
-            height: height,
-            weight: weight,
-            bmi: bmi
+		if (about && gender && age && height && weight) {
+			e.preventDefault();
+			const profile = {
+				username: auth.user,
+				about: about,
+				gender: gender,
+				age: age,
+				height: height,
+				weight: weight,
+				bmi: bmi
+			}
+			await axios.post(`/users/profile`, profile);
+			setAbout("");
+			setGender("");
+			setAge("");
+			setHeight("");
+			setWeight("");
+			setBmi("");
+			navigate(from, { replace: true });
 		}
-		await axios.post(`/users/profile`, profile);
 	};
 
 	const validate = (values) => {
@@ -138,12 +166,14 @@ function Profileform() {
 							<textarea
 								id="about"
 								name="about"
-								rows="3"
-								cols="4"
+								rows="4"
+								cols="10"
 								onChange={onChangeAbout}
 								value={about}
-								className="focus:ring-indigo-500 py-2 px-3 focus:border-indigo-500 mt-1 block w-[75%] sm:text-sm border border-gray-300 rounded-md resize-none"
+								className="focus:ring-indigo-500 py-2 px-3 focus:border-indigo-500 mt-1 block w-[50%] sm:text-sm border border-gray-300 rounded-md resize-none"
 								placeholder="Brief description for your profile"
+								white-space="pre"
+								word-wrap="break-word"
 							/>
 						</div>
 						<p className="text-red-700 font-bold mt-3">{formErrors.about}</p>
@@ -239,7 +269,7 @@ function Profileform() {
 							</div>
 						</div>
 					</div>
-					
+
 					<div>
 						<label
 							className="block mb-2 text-sm font-bold text-gray-900"
@@ -253,8 +283,8 @@ function Profileform() {
 					<div className="px-4 py-4 text-right sm:px-6">
 						<button
 							type="submit"
-							className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-						>
+							className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#F08080] hover:bg-[#ff5757]"
+							disabled={formErrors.about || formErrors.age || formErrors.weight || formErrors.weight ? true : false}>
 							Save
 						</button>
 					</div>
