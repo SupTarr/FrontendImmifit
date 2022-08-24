@@ -1,8 +1,9 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "./formDetail.css";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import moment from 'moment';
 
 const config = {
   headers: {
@@ -12,12 +13,11 @@ const config = {
 }
 
 function FormDetail() {
-
-
-  // const navigate = useNavigate();
-  // const from = location.state?.from?.pathname || "/";
-  
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  let [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams.get("activity_id"))
   const { auth } = useAuth();
   const [imgInputState, setImgInputState] = useState("");
   const [previewImgSource, setPreviewImgSource] = useState("");
@@ -28,6 +28,37 @@ function FormDetail() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [description, setDescription] = useState("");
+
+  const [isEdit, setIsEdit] = useState(false);
+
+  // Editing
+  useEffect(() => {
+    axios.get(`/activities/byid/${searchParams.get("activity_id")}`).then(res => {
+      console.log(res.data.date)
+      // const date = new Date(res.data.date);
+      // setImgInputState(res.data.img.name || '')
+      // setPreviewImgSource(res.data.img.name || '')
+      // setSelectedImgFile(res.data.img.name || '')
+      var date = new Date(res.data.date);
+
+      var day = ("0" + date.getDate()).slice(-2);
+      var month = ("0" + (date.getMonth() + 1)).slice(-2);
+
+      date = date.getFullYear()+"-"+(month)+"-"+(day);
+
+      setTitle(res.data.title || '')
+      setType(res.data.activity_type || '')
+      setDate(date || '')
+      setStartTime(moment(res.data.start_time).format("HH:mm") || '')
+      setEndTime(moment(res.data.end_time).format("HH:mm") || '')
+      setDescription(res.data.description || '')
+
+      setIsEdit(true);
+    })
+  }, [])
+  
+
+ 
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -92,8 +123,14 @@ function FormDetail() {
       };
       console.log(activity);
 
-      await axios.post("/activities", activity).then((res) => console.log(res.data));
-
+      
+      if (isEdit) {
+        await axios.put(`/activities/${searchParams.get("activity_id")}`, activity).then((res) => console.log(res.data));
+      } else {
+        await axios.post("/activities", activity).then((res) => console.log(res.data));
+      }
+      
+      
     };
     reader.onerror = () => {
       console.error("Fail!!");
