@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
-import { resolveBaseUrl } from "vite";
 
 function Profileform() {
 	const { auth } = useAuth();
@@ -20,16 +18,33 @@ function Profileform() {
 	const [bmi, setBmi] = useState("");
 
 	const [formErrors, setFormErrors] = useState({});
-	// const [profile, setProfile] = useState({});
+	const [profile, setProfile] = useState({});
 
 	console.log(about, gender, age, height, weight, bmi);
-	// console.log(profile);
+	console.log(profile);
 
-	// useEffect(() => {
-	// 	axios.get(`/users/${auth.user_id}`).then((res) => {
-	// 		setProfile(res.data.profile);
-	// 	})
-	// }, []);
+	useEffect(() => {
+		axios.get(`/users/${auth.user_id}`).then((res) => {
+			setProfile(res.data.profile);
+		})
+		if (profile !== {}) {
+			setAbout(profile.about);
+			setGender(profile.gender);
+			setAge(profile.age);
+			setHeight(profile.height);
+			setWeight(profile.weight);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (profile !== {}) {
+			setAbout(profile.about);
+			setGender(profile.gender);
+			setAge(profile.age);
+			setHeight(profile.height);
+			setWeight(profile.weight);
+		}
+	}, [profile]);
 
 	const onChangeAbout = (e) => {
 		setAbout(e.target.value);
