@@ -13,9 +13,6 @@ const config = {
 
 function FormDetail() {
 
-  const { auth } = useAuth();
-  console.log(auth);
-
 
   // const navigate = useNavigate();
   // const from = location.state?.from?.pathname || "/";
