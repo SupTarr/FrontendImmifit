@@ -55,7 +55,7 @@ const Header = ({ item, allUsers, getUsers }) => {
 
     // filter
     // ["Running", "Cycling", "Swimming", "Weight training", "Walking"]
-    <div className="Header mt-5 flex justify-between flex-wrap xl:w-[800px] md:w-[500px] relative z-40">
+    <div className="Header mt-5 flex justify-between flex-wrap xl:w-[700px] md:w-[450px] relative z-40">
       <div className="Container bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg">
         <button className="Button hover:bg-[#005B97] hover:text-white py-2 px-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg font-semibold" value="All" onClick={handleBtns} getUsers={getUsers}>
           ALL

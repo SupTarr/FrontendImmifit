@@ -11,6 +11,11 @@ function Profile(props) {
     const from = location.state?.from?.pathname || "/form_profile";
     navigate(from, { replace: true });
   }
+  
+  const handleClickEditProfile = () => {
+    const from = location.state?.from?.pathname || "/form_profile";
+    navigate(from, { replace: true });
+  }
 
   return (
     <div>
@@ -24,7 +29,7 @@ function Profile(props) {
             <p className="text-gray-700 px-5 pb-5"><b>Height</b> : {props.profile.height} centimeters </p>
             <p className="text-gray-700 px-5 pb-5"><b>Weight</b> : {props.profile.weight} kilograms </p>
             <p className="text-gray-700 px-5 pb-5"><b>BMI</b> : {props.profile.bmi} </p>
-            <button className="bg-[#ff5757] p-3 rounded-lg mx-5">Edit</button>
+            <button className="bg-[#ff5757] p-3 rounded-lg mx-5" onClick={handleClickEditProfile}>Edit</button>
           </div>
         ) : (
           <div className="h-[100%] bg-[#fbc3bc] rounded-xl md:ml-5 tablet:mx-[2.5%] relative pb-10 tablet:mb-5">
