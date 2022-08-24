@@ -4,7 +4,18 @@ import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 // import { useNavigate } from "react-router-dom";
 
+const config = {
+  headers: {
+    "Content-Type": "application/json",
+    'Access-Control-Allow-Origin': '*',
+  }
+}
+
 function FormDetail() {
+
+  const { auth } = useAuth();
+  console.log(auth);
+
 
   // const navigate = useNavigate();
   // const from = location.state?.from?.pathname || "/";
@@ -66,14 +77,13 @@ function FormDetail() {
     if (!selectedImgFile) return;
     const reader = new FileReader();
     reader.readAsDataURL(selectedImgFile);
-    reader.onloadend = () => {
+    reader.onloadend = async () => {
       const activity = {
         img: {
           name: selectedImgFile.name,
           data: reader.result,
           contentType: selectedImgFile.type,
         },
-        // Need to create usename first
         username: auth.user,
         user_id: auth.user_id,
         title: title,
@@ -84,7 +94,9 @@ function FormDetail() {
         description: description,
       };
       console.log(activity);
-      axios.post("/activities", activity).then((res) => console.log(res.data))
+
+      await axios.post("/activities", activity).then((res) => console.log(res.data));
+
     };
     reader.onerror = () => {
       console.error("Fail!!");
