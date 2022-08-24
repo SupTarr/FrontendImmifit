@@ -170,7 +170,7 @@ function Profileform() {
 								cols="10"
 								onChange={onChangeAbout}
 								value={about}
-								className="focus:ring-indigo-500 py-2 px-3 focus:border-indigo-500 mt-1 block w-[50%] sm:text-sm border border-gray-300 rounded-md resize-none"
+								className="focus:ring-indigo-500 py-2 px-3 focus:border-indigo-500 mt-1 block w-[75%] sm:text-sm border border-gray-300 rounded-md resize-none"
 								placeholder="Brief description for your profile"
 								white-space="pre"
 								word-wrap="break-word"
