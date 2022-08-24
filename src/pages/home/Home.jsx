@@ -19,7 +19,7 @@ function Home() {
           <div className="Profile w-[40%] tablet:w-[100%] mb-5">
             <Profile username={user} />
           </div>
-          <div className="Activities w-[60%] tablet:w-[95%] tablet:mx-[2.5%] mx-5 mb-5 bg-[#fbc3bc] rounded-xl">
+          <div className="Activities w-[60%] tablet:w-[95%] tablet:mx-[2.5%] mx-5 bg-[#fbc3bc] rounded-xl">
             {/* <Header /> */}
             <div className="flex justify-around flex-wrap">
               <Container username={user} />
