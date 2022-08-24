@@ -3,8 +3,16 @@ import "./formDetail.css";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 
+const config = {
+  headers: {
+    "Content-Type": "application/json",
+    'Access-Control-Allow-Origin': '*',
+  }
+}
+
 function FormDetail() {
   const { auth } = useAuth();
+  console.log(auth);
 
   const [imgInputState, setImgInputState] = useState("");
   const [previewImgSource, setPreviewImgSource] = useState("");
@@ -60,7 +68,7 @@ function FormDetail() {
     if (!selectedImgFile) return;
     const reader = new FileReader();
     reader.readAsDataURL(selectedImgFile);
-    reader.onloadend = () => {
+    reader.onloadend = async () => {
       const activity = {
         img: {
           name: selectedImgFile.name,
@@ -77,9 +85,7 @@ function FormDetail() {
         description: description,
       };
       console.log(activity);
-      axios
-        .post("/activities", activity)
-        .then((res) => console.log(res.data));
+      await axios.post("/activities", activity).then((res) => console.log(res.data));
     };
     reader.onerror = () => {
       console.error("Fail!!");
