@@ -2,9 +2,16 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { resolveBaseUrl } from "vite";
 
 function Profileform() {
 	const { auth } = useAuth();
+	const navigate = useNavigate();
+	const location = useLocation();
+	const from = location.state?.from?.pathname || "/";
+
 	const [about, setAbout] = useState("");
 	const [gender, setGender] = useState("Male");
 	const [age, setAge] = useState("");
@@ -13,8 +20,16 @@ function Profileform() {
 	const [bmi, setBmi] = useState("");
 
 	const [formErrors, setFormErrors] = useState({});
+	// const [profile, setProfile] = useState({});
 
-	console.log(about, gender, age, height, weight, bmi)
+	console.log(about, gender, age, height, weight, bmi);
+	// console.log(profile);
+
+	// useEffect(() => {
+	// 	axios.get(`/users/${auth.user_id}`).then((res) => {
+	// 		setProfile(res.data.profile);
+	// 	})
+	// }, []);
 
 	const onChangeAbout = (e) => {
 		setAbout(e.target.value);
@@ -48,10 +63,13 @@ function Profileform() {
 		}
 	}, [weight, height]);
 
+	useEffect(() => {
+		setFormErrors(validate({ about, gender, age, height, weight }));
+	}, [about, gender, age, height, weight]);
+
 	const handleSubmit = async (e) => {
-		e.preventDefault();
-		setFormErrors(validate({about, gender, age, height, weight, bmi}));
-		if (validate({about, gender, age, height, weight, bmi}) === {})  {
+		if (about && gender && age && height && weight) {
+			e.preventDefault();
 			const profile = {
 				username: auth.user,
 				about: about,
@@ -62,6 +80,13 @@ function Profileform() {
 				bmi: bmi
 			}
 			await axios.post(`/users/profile`, profile);
+			setAbout("");
+			setGender("");
+			setAge("");
+			setHeight("");
+			setWeight("");
+			setBmi("");
+			navigate(from, { replace: true });
 		}
 	};
 
@@ -241,7 +266,7 @@ function Profileform() {
 							</div>
 						</div>
 					</div>
-					
+
 					<div>
 						<label
 							className="block mb-2 text-sm font-bold text-gray-900"
@@ -255,7 +280,8 @@ function Profileform() {
 					<div className="px-4 py-4 text-right sm:px-6">
 						<button
 							type="submit"
-							className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#F08080] hover:bg-[#ff5757]">
+							className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#F08080] hover:bg-[#ff5757]"
+							disabled={formErrors.about || formErrors.age || formErrors.weight || formErrors.weight ? true : false}>
 							Save
 						</button>
 					</div>
