@@ -13,7 +13,7 @@ const config = {
 
 function FormDetail() {
 
-
+  
   // const navigate = useNavigate();
   // const from = location.state?.from?.pathname || "/";
   
