@@ -84,9 +84,7 @@ function FormDetail() {
         description: description,
       };
       console.log(activity);
-      axios
-        .post("/activities", activity)
-        .then((res) => console.log(res.data))
+      axios.post("/activities", activity).then((res) => console.log(res.data))
     };
     reader.onerror = () => {
       console.error("Fail!!");
