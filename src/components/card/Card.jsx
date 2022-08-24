@@ -3,11 +3,7 @@ import axios from "../../api/axios";
 import './card.css'
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import Header from '../header/Header';
-// Context
-// import { createContext, useContext} from 'react';
-
-
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const config = {
   headers: {
@@ -17,18 +13,8 @@ const config = {
   }
 }
 
-
-// const NewActContext = React.createContext();
-
-
-
-const Card = ({
-  item,
-  setAllUsers,
-  allUsers,
-  getUsers }) => {
+const Card = ({item, setAllUsers, allUsers, getUsers }, props) => {
   // const [newActivity, setNewActivity] = useState([]);
-
   // const title_name = item.start
   var now = new Date(item.end_time);
   var then = new Date(item.start_time);
@@ -41,7 +27,17 @@ const Card = ({
   var duration = (now - then) / 60000;
   // console.log(duration)
 
-  
+  // navigate
+  const navigate = useNavigate();
+  const location = useLocation();
+
+
+
+  const handleClickEditCard = () => {
+    const from = location.state?.from?.pathname || `/form?activity_id=${item.activity_id}`;
+    navigate(from, { replace: true });
+  }
+
   const handleDeleteClick  = async (id) => {
     try {
       // e.preventDefault();
@@ -63,7 +59,6 @@ const Card = ({
   
 
   return (
-    // <NewActContext value={{newActivity, setNewActivity}}>
     <div>
       <div className="flex justify-around mx-auto" >
         <figure className="snip1174 hover:bg-white rounded-[40px]">
@@ -102,7 +97,7 @@ const Card = ({
               </div>
 
               <div className="grid grid-cols-2 gap-24">
-                <button href="/form/" className="bg-[#F08080] hover:bg-[#ff5757] text-white font-bold px-10 py-2 shadow-md hover:shadow-lg rounded flex justify-center">
+                <button href="/form/" className="bg-[#F08080] hover:bg-[#ff5757] text-white font-bold px-10 py-2 shadow-md hover:shadow-lg rounded flex justify-center" onClick={handleClickEditCard} >
                   Edit
                 </button>
                 <button className="
@@ -114,17 +109,13 @@ const Card = ({
             </div>
           </figcaption>
         </figure>
-
       </div>
     </div>
-    // {children}
-    // </NewActContext>
   )
 };
 
 
 
-// export {NewActContext}
 export default Card
 
 

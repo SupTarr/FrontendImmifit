@@ -7,63 +7,68 @@ import "./header.css";
 // import {handleBtns} from "../../components/container/Container";
 import Card from "../card/Card";
 import { useEffect, useState } from "react";
+import axios from "../../api/axios";
 
 
 
 
-const Header = ({ item, allUsers, getUsers }) => {
+const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
   // const { newActivity, setNewActivity} = useContext(NewActContext);
 
   // const [isDeleted, setIsDeleted] = useState([])
+  console.log("this is allusers",allUsers)
 
-
-  const handleBtns = (event) => {
-    // console.log(users)
-    console.log(allUsers)
-    // const allUsers = ["Running", "Cycling", "Swimming", "Weight training", "Walking", "Biking", "Hockey", "Sleeping", "Eat" ]
-    // console.log(users)
-    event.preventDefault();
-    const value = event.target.value;
-    if (value === "All") {
-      const users = allUsers.filter((user) => user.activity_type)
-      users.map((user, index) => {<Card key={index} user={user} />})
-      console.log(users)
+  const fetchDataByType =  async (type) => {
+    console.log("this is users",allUsers)
+    console.log("This is type",type)
+  
+    try {
+      
+      // 
+      // const filterType = allUsers
+      const res = await axios.get(`/activities/${props.username}`)
+      console.log("fetchDatabyType", res.data);
+      setAllUsers(res.data);
+      // setAllUsers(filterType);
+    } catch (e) {
+      console.log(e);
     }
-    else if (value === "Run") {
-      const users = allUsers.filter((user) => user.activity_type === "Running")
-      console.log(users)
-    }
-    else if (value === "Swim") {
-      const users = allUsers.filter((user) => user.activity_type === "Swimming")
-      console.log(users)
-    }
-    else if (value === "Walk") {
-      const users = allUsers.filter((user) => user.activity_type === "Walking")
-      console.log(users)
-    }
-    else if (value === "Cycling") {
-      const users = allUsers.filter((user) => user.activity_type === "Cycling")
-      console.log(users)
-    }
-    else if (value === "Weight") {
-      const users = allUsers.filter((user) => user.activity_type === "Weight training")
-      console.log(users)
-    }
-
   };
+  
+  useEffect(() => {
+    fetchDataByType();
+  }, []);
+
+    const handleClickSortAll = (e) => {
+      e.preventDefault();
+      getUsers();
+    }
+    const handleClickSortRun = (e) => {
+      e.preventDefault();
+      fetchDataByType("Running")
+    }
+    const handleClickSortSwim = (e) => {
+      e.preventDefault();
+      fetchDataByType("Swimming")
+    }
+    const handleClickSortOther = (e) => {
+      e.preventDefault();
+      fetchDataByType(e.target.value)
+    }
+
   return (
 
     // filter
     // ["Running", "Cycling", "Swimming", "Weight training", "Walking"]
     <div className="Header mt-5 flex justify-between flex-wrap xl:w-[700px] md:w-[450px] relative z-40">
       <div className="Container bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg">
-        <button className="Button hover:bg-[#005B97] hover:text-white py-2 px-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg font-semibold" value="All" onClick={handleBtns} getUsers={getUsers}>
+        <button className="Button hover:bg-[#005B97] hover:text-white py-2 px-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg font-semibold" value="All" onClick={handleClickSortAll} >
           ALL
         </button>
-        <button className="Button hover:bg-[#005B97] hover:text-white py-2 px-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg font-semibold" value="Run" onClick={handleBtns} getUsers={getUsers}>
+        <button className="Button hover:bg-[#005B97] hover:text-white py-2 px-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg font-semibold" value="Running" onClick={handleClickSortRun} >
           RUN
         </button>
-        <button className="Button hover:bg-[#005B97] hover:text-white py-2 px-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg font-semibold" value="Swim" onClick={handleBtns} getUsers={getUsers}>
+        <button className="Button hover:bg-[#005B97] hover:text-white py-2 px-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg font-semibold" value="Swimming" onClick={handleClickSortSwim} >
           SWIM
         </button>
         <div className="Button rounded-full">
@@ -72,10 +77,11 @@ const Header = ({ item, allUsers, getUsers }) => {
               <button className="mr-1" value="Bike">Other</button>
               <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /> </svg>
             </div>
+
             <div className="dropdown-menu absolute hidden text-gray-700 pt-1">
-              <button className=" bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap" href="#" value="Weight" onClick={handleBtns} getUsers={getUsers}>Weight training</button>
-              <button className=" bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap" href="#" value="Cycling" onClick={handleBtns} getUsers={getUsers}>Cycling</button>
-              <button className="rounded-b bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap" href="#" value="Walk" onClick={handleBtns} getUsers={getUsers}>Walking</button>
+              <button className=" bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap" href="#" value="Weight" onClick={handleClickSortOther} >Weight training</button>
+              <button className=" bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap" href="#" value="Cycling" onClick={handleClickSortOther} >Cycling</button>
+              <button className="rounded-b bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap" href="#" value="Walk" onClick={handleClickSortOther} >Walking</button>
 
             </div>
           </div>
