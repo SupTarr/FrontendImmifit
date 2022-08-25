@@ -64,24 +64,22 @@ const Card = ({item, setAllUsers, allUsers, getUsers }, props) => {
         <figure className="snip1174 hover:bg-white rounded-[40px]">
           <img src={item.img.url} alt="imgcard" className='block rounded-[40px] border shadow-md hover:bg-white dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto ' />
           <figcaption>
-            <div className="grid grid-cols-5 ">
-              <h5 className="mb-2 text-sm tracking-tight text-black font-bold">{item.title}</h5>
-            </div>
+            <h5 className="mb-2 tracking-tight text-md text-black font-bold">{item.title}</h5>
             <div className="grid grid-cols-2">
               <h5 className="mb-2 text-sm tracking-tight text-black">
-                <span classname="text-sm !font-extrabold text-black">Date</span> : {date}</h5>
+                <b className="text-sm">Date</b> : {date}</h5>
               <h5 className="mb-2 text-sm tracking-tight text-black">
-                <span classname="!font-bold">Duration</span> : {duration} Minutes
+              <b className="text-sm">Duration</b> : {duration} Minutes
               </h5>
             </div>
             <div className="grid">
               <h5 className="mb-2 text-sm tracking-tight text-black">
-                Type : {item.activity_type}
+              <b className="text-sm">Type</b> : {item.activity_type}
               </h5>
             </div>
             <div className="grid">
               <h5 className="mb-2 text-sm tracking-tight text-black">
-                Description : {item.description}
+              <b className="text-sm">Description</b> : {item.description}
               </h5>
             </div>
 
