@@ -17,19 +17,88 @@ function FormDetail() {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   let [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams.get("activity_id"));
+
   const { auth } = useAuth();
   const [imgInputState, setImgInputState] = useState("");
   const [previewImgSource, setPreviewImgSource] = useState("");
   const [selectedImgFile, setSelectedImgFile] = useState();
+  const [validImage, setValidImage] = useState(false);
+
   const [title, setTitle] = useState("");
+  const [validTitle, setValidTitle] = useState(false);
+
   const [type, setType] = useState("Running");
+  const [validType, setValidType] = useState(false);
+
   const [date, setDate] = useState("");
+  const [validDate, setValidDate] = useState(false);
+
   const [startTime, setStartTime] = useState("");
+  const [validStartTime, setValidStartTime] = useState(false);
+
   const [endTime, setEndTime] = useState("");
+  const [validEndTime, setValidEndTime] = useState(false);
+
   const [description, setDescription] = useState("");
+  const [validDescription, setValidDescription] = useState(false);
 
   const [isEdit, setIsEdit] = useState(false);
+
+  useEffect(() => {
+    if (imgInputState) {
+      setValidImage(true);
+    } else {
+      setValidImage(false);
+    }
+  }, [imgInputState])
+
+  useEffect(() => {
+    if (title) {
+      setValidTitle(true);
+    } else {
+      setValidTitle(false);
+    }
+  }, [title])
+
+  useEffect(() => {
+    if (type) {
+      setValidType(true);
+    } else {
+      setValidType(false);
+    }
+  }, [type])
+
+  useEffect(() => {
+    if (date) {
+      setValidDate(true);
+    } else {
+      setValidDate(false);
+    }
+  }, [date])
+
+  useEffect(() => {
+    if (startTime) {
+      setValidStartTime(true);
+    } else {
+      setValidStartTime(false);
+    }
+  }, [startTime])
+
+  useEffect(() => {
+    if (endTime) {
+      setValidEndTime(true);
+    } else {
+      setValidEndTime(false);
+    }
+  }, [endTime])
+
+  useEffect(() => {
+    if (description) {
+      setValidDescription(true);
+    } else {
+      setValidDescription(false);
+    }
+  }, [description])
 
   // Editing
   useEffect(() => {
@@ -159,6 +228,9 @@ function FormDetail() {
             onChange={onChangeImage}
             value={imgInputState}
           />
+          <p id="uidnote" className={(!validImage) ? "instructions" : "offscreen"}>
+            Please insert photo.
+          </p>
           {previewImgSource && (
             <img
               src={previewImgSource}
@@ -174,6 +246,9 @@ function FormDetail() {
               value={title}
               onChange={onChangeTitle}
             />
+            <p id="uidnote" className={(!validTitle) ? "instructions" : "offscreen"}>
+              Invalid Title.
+            </p>
           </div>
 
           <div className="form-type-select">
@@ -195,6 +270,9 @@ function FormDetail() {
               onChange={onChangeDate}
               value={date}
             />
+            <h5 id="uidnote" className={(!validDate) ? "instructions w-[100%]" : "offscreen"}>
+              Invalid Date.
+            </h5>
           </div>
 
           <div className="form-duration">
@@ -206,6 +284,9 @@ function FormDetail() {
               onChange={onChangeStartTime}
               value={startTime}
             />
+            <h5 id="uidnote" className={(!validStartTime) ? "instructions w-[100%] mb-5" : "offscreen"}>
+              Invalid Start Time.
+            </h5>
             <span>End</span>
             <input
               type="time"
@@ -213,6 +294,9 @@ function FormDetail() {
               onChange={onChangeEndTime}
               value={endTime}
             />
+            <h5 id="uidnote" className={(!validEndTime) ? "instructions w-[100%]" : "offscreen"}>
+              Invalid End Time.
+            </h5>
           </div>
 
           <div className="form-desc">
@@ -225,9 +309,16 @@ function FormDetail() {
               onChange={onChangeDescription}
               value={description}
             ></textarea>
+            <h5 id="uidnote" className={(!validDescription) ? "instructions w-[100%]" : "offscreen"}>
+              Invalid Description.
+            </h5>
           </div>
 
-          <button type="submit" value="Submit">
+          <button 
+            type="submit" 
+            value="Submit"
+            disabled={!validImage || !validTitle || !validDate || !validStartTime || !validEndTime || !validDescription ? true : false}
+          >
             Submit
           </button>
         </form>
