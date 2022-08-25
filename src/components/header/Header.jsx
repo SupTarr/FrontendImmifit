@@ -8,26 +8,26 @@ import "./header.css";
 import Card from "../card/Card";
 import { useEffect, useState } from "react";
 import axios from "../../api/axios";
-
-
+import useAuth from "../../hooks/useAuth";
 
 
 const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
   // const { newActivity, setNewActivity} = useContext(NewActContext);
+  const { auth } = useAuth();
 
   // const [isDeleted, setIsDeleted] = useState([])
-  console.log("this is allusers",allUsers)
+  console.log("this is allusers", allUsers)
 
 
   const fetchDataByType =  async (type) => {
-    console.log("this is users",allUsers)
-    console.log("This is type",type)
+    console.log("this is users", allUsers)
+    console.log("This is type", type)
   
     try {
-      
+      console.log(props, type, allUsers)
       // 
       // const filterType = allUsers
-      const res = await axios.get(`/activities/${props.username}`)
+      const res = await axios.get(`/activities/bytype/${auth.user}/${type}`);
       console.log("fetchDatabyType", res.data);
       setAllUsers(res.data);
       // setAllUsers(filterType);
@@ -38,6 +38,7 @@ const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
   };
   
   useEffect(() => {
+    getUsers();
     fetchDataByType();
   }, []);
 
@@ -81,9 +82,9 @@ const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
             </div>
 
             <div className="dropdown-menu absolute hidden text-gray-700 pt-1">
-              <button className=" bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap" href="#" value="Weight" onClick={handleClickSortOther} >Weight training</button>
+              <button className=" bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap" href="#" value="Weight training" onClick={handleClickSortOther} >Weight training</button>
               <button className=" bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap" href="#" value="Cycling" onClick={handleClickSortOther} >Cycling</button>
-              <button className="rounded-b bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap" href="#" value="Walk" onClick={handleClickSortOther} >Walking</button>
+              <button className="rounded-b bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap" href="#" value="Walking" onClick={handleClickSortOther} >Walking</button>
 
             </div>
           </div>

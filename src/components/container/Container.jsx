@@ -18,6 +18,7 @@ const Container = (props, {newActivity}) => {
       },
     });
     const data = await response.json();
+    console.log(data);
     setAllUsers(data)
     // setUsers(data)
   } 
@@ -56,7 +57,7 @@ const Container = (props, {newActivity}) => {
   return (
     
     <div >
-      <div>
+      <div className="w-[100%] mx-auto flex justify-center">
         <Header allUsers={allUsers} getUsers={getUsers} setAllUsers={setAllUsers}/>
       </div>
 
