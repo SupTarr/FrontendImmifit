@@ -65,25 +65,23 @@ const Card = ({item, setAllUsers, allUsers, getUsers }, props) => {
           <img src={item.img.url} alt="imgcard" className='block rounded-[40px] border shadow-md hover:bg-white dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto ' />
           <figcaption>
             <div className="grid grid-cols-5 ">
-              <h5 className="mb-2 text-sm tracking-tight text-black dark:text-white col-span-1">
-
-              </h5>
-              <h5 className="col-span-4 mb-2 text-sm tracking-tight text-black dark:text-white">{item.title}</h5>
+              <h5 className="mb-2 text-sm tracking-tight text-black font-bold">{item.title}</h5>
             </div>
             <div className="grid grid-cols-2">
-              <h5 className="mb-2 text-sm tracking-tight text-black dark:text-white">Date: {date}</h5>
-              <h5 className="mb-2 text-sm tracking-tight text-black dark:text-white">
-                Duration: {duration} Minutes
+              <h5 className="mb-2 text-sm tracking-tight text-black">
+                <span classname="text-sm !font-extrabold text-black">Date</span> : {date}</h5>
+              <h5 className="mb-2 text-sm tracking-tight text-black">
+                <span classname="!font-bold">Duration</span> : {duration} Minutes
               </h5>
             </div>
             <div className="grid">
-              <h5 className="mb-2 text-sm tracking-tight text-black dark:text-white">
-                Type: {item.activity_type}
+              <h5 className="mb-2 text-sm tracking-tight text-black">
+                Type : {item.activity_type}
               </h5>
             </div>
             <div className="grid">
-              <h5 className="mb-2 text-sm tracking-tight text-black dark:text-white">
-                Description: {item.description}
+              <h5 className="mb-2 text-sm tracking-tight text-black">
+                Description : {item.description}
               </h5>
             </div>
 
