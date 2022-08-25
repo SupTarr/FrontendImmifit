@@ -3,21 +3,21 @@ import "./formDetail.css";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
-import moment from 'moment';
+import moment from "moment";
 
 const config = {
   headers: {
     "Content-Type": "application/json",
-    'Access-Control-Allow-Origin': '*',
-  }
-}
+    "Access-Control-Allow-Origin": "*",
+  },
+};
 
 function FormDetail() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   let [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams.get("activity_id"))
+  console.log(searchParams.get("activity_id"));
   const { auth } = useAuth();
   const [imgInputState, setImgInputState] = useState("");
   const [previewImgSource, setPreviewImgSource] = useState("");
@@ -33,32 +33,31 @@ function FormDetail() {
 
   // Editing
   useEffect(() => {
-    axios.get(`/activities/byid/${searchParams.get("activity_id")}`).then(res => {
-      console.log(res.data.date)
-      // const date = new Date(res.data.date);
-      // setImgInputState(res.data.img.name || '')
-      // setPreviewImgSource(res.data.img.name || '')
-      // setSelectedImgFile(res.data.img.name || '')
-      var date = new Date(res.data.date);
+    axios
+      .get(`/activities/byid/${searchParams.get("activity_id")}`)
+      .then((res) => {
+        console.log(res.data.date);
+        // const date = new Date(res.data.date);
+        // setImgInputState(res.data.img.name || '')
+        // setPreviewImgSource(res.data.img.name || '')
+        // setSelectedImgFile(res.data.img.name || '')
+        var date = new Date(res.data.date);
 
-      var day = ("0" + date.getDate()).slice(-2);
-      var month = ("0" + (date.getMonth() + 1)).slice(-2);
+        var day = ("0" + date.getDate()).slice(-2);
+        var month = ("0" + (date.getMonth() + 1)).slice(-2);
 
-      date = date.getFullYear()+"-"+(month)+"-"+(day);
+        date = date.getFullYear() + "-" + month + "-" + day;
 
-      setTitle(res.data.title || '')
-      setType(res.data.activity_type || '')
-      setDate(date || '')
-      setStartTime(moment(res.data.start_time).format("HH:mm") || '')
-      setEndTime(moment(res.data.end_time).format("HH:mm") || '')
-      setDescription(res.data.description || '')
+        setTitle(res.data.title || "");
+        setType(res.data.activity_type || "");
+        setDate(date || "");
+        setStartTime(moment(res.data.start_time).format("HH:mm") || "");
+        setEndTime(moment(res.data.end_time).format("HH:mm") || "");
+        setDescription(res.data.description || "");
 
-      setIsEdit(true);
-    })
-  }, [])
-  
-
- 
+        setIsEdit(true);
+      });
+  }, []);
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -99,7 +98,6 @@ function FormDetail() {
     setDescription(e.target.value);
   };
 
- 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!selectedImgFile) return;
@@ -123,29 +121,30 @@ function FormDetail() {
       };
       console.log(activity);
 
-      
       if (isEdit) {
-        await axios.put(`/activities/${searchParams.get("activity_id")}`, activity).then((res) => console.log(res.data));
+        await axios
+          .put(`/activities/${searchParams.get("activity_id")}`, activity)
+          .then((res) => console.log(res.data));
       } else {
-        await axios.post("/activities", activity).then((res) => console.log(res.data));
+        await axios
+          .post("/activities", activity)
+          .then((res) => console.log(res.data));
       }
-      
-      
+      setImgInputState("");
+      setPreviewImgSource("");
+      setSelectedImgFile("");
+      setTitle("");
+      setType("");
+      setDate("");
+      setStartTime("");
+      setEndTime("");
+      setDescription("");
+      navigate(from, { replace: true });
+      navigate("/");
     };
     reader.onerror = () => {
       console.error("Fail!!");
     };
-    setImgInputState("");
-    setPreviewImgSource("");
-    setSelectedImgFile("");
-    setTitle("");
-    setType("");
-    setDate("");
-    setStartTime("");
-    setEndTime("");
-    setDescription("");
-    // navigate(from, { replace: true });
-    // navigate("/");
   };
 
   return (
