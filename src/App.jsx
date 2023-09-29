@@ -8,14 +8,13 @@ import RequireAuth from "./components/requireAuth/RequireAuth";
 // import Forgotpassword from "./pages/forgot-password/forgot-password";
 import Profilesform from "./pages/profiles-form/profiles-form";
 
-import Layout from './components/layout/Layout';
+import Layout from "./components/layout/Layout";
 
 const ROLES = {
-  'User': 1000,
-  'Editor': 2000,
-  'Admin': 3000
-}
-
+  User: 1000,
+  Editor: 2000,
+  Admin: 3000,
+};
 
 function App() {
   return (
