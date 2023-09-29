@@ -1,27 +1,30 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import "./container.css";
 import Card from "../card/Card";
 import Header from "../header/Header";
-import FormDetail from "../form-component/FormDetail"
+import FormDetail from "../form-component/FormDetail";
 
-const Container = (props, {newActivity}) => {
+const Container = (props, { newActivity }) => {
   // const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
   async function getUsers() {
-    const response = await fetch(`https://immifit-backend.vercel.app/activities/${props.username}`, {
-        method: 'GET',
+    const response = await fetch(
+      `https://immifit-backend.vercel.app/activities/${props.username}`,
+      {
+        method: "GET",
         headers: {
-        accept: 'application/json',
+          accept: "application/json",
+        },
       },
-    });
+    );
     const data = await response.json();
     console.log(data);
-    setAllUsers(data)
+    setAllUsers(data);
     // setUsers(data)
-  } 
+  }
   useEffect(() => {
     getUsers();
   }, []);
@@ -53,28 +56,32 @@ const Container = (props, {newActivity}) => {
   //   }
   // };
 
-
   return (
-    
-    <div >
+    <div>
       <div className="w-[100%] mx-auto flex justify-center">
-        <Header allUsers={allUsers} getUsers={getUsers} setAllUsers={setAllUsers}/>
+        <Header
+          allUsers={allUsers}
+          getUsers={getUsers}
+          setAllUsers={setAllUsers}
+        />
       </div>
 
       {/* ✅ check if array before calling `map()` */}
       <div className="flex flex-wrap justify-center">
         {Array.isArray(allUsers)
           ? allUsers.map((item, index) => (
-            <Card key={index} item={item} setAllUsers={setAllUsers} newActivity={newActivity} allUsers={allUsers}/>
-          ))
-
+              <Card
+                key={index}
+                item={item}
+                setAllUsers={setAllUsers}
+                newActivity={newActivity}
+                allUsers={allUsers}
+              />
+            ))
           : console.log("no data")}
       </div>
-     
     </div>
-     
   );
-}
-
+};
 
 export default Container;

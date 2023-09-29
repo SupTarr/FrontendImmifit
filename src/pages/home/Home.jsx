@@ -18,13 +18,13 @@ function Home() {
   useEffect(() => {
     axios.get(`/users/${auth.user_id}`).then((res) => {
       if (res.data.profile !== undefined) {
-        setProfile(res.data.profile)
+        setProfile(res.data.profile);
         if (profile !== null) {
           setCreatedProfile(true);
         }
       }
-    })
-  }, [])
+    });
+  }, []);
 
   console.log(profile);
 
@@ -34,7 +34,11 @@ function Home() {
         <Navbar createdProfile={createdProfile} />
         <div className="flex tablet:flex-col max-w-[1450px] mx-auto">
           <div className="Profile w-[40%] tablet:w-[100%] max-h-[700px]">
-            <Profile username={user} createdProfile={createdProfile} profile={profile} />
+            <Profile
+              username={user}
+              createdProfile={createdProfile}
+              profile={profile}
+            />
           </div>
           <div className="Activities w-[60%] tablet:w-[95%] tablet:mx-[2.5%] mx-5 bg-[#fbc3bc] rounded-xl">
             {/* <Header /> */}
@@ -46,7 +50,6 @@ function Home() {
         </div>
       </div>
     </div>
-
   );
 }
 
