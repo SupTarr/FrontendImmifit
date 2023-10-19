@@ -104,7 +104,7 @@ const Card = ({ item, setAllUsers, allUsers, getUsers }, props) => {
                 </button>
                 <button
                   className="
-                bg-[#F08080] hover:bg-[#ff5757] text-white font-bold px-10 py-2 
+                bg-[#F08080] hover:bg-[#ff5757] text-white font-bold px-10 py-2
                 shadow-md hover:shadow-lg rounded flex justify-center"
                   onClick={handleDeleteClick}
                   getUsers={getUsers}

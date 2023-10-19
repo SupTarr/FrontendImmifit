@@ -30,12 +30,12 @@ function App() {
           <Route path="form_profile" element={<Profilesform />} />
         </Route>
 
-        {/* 
+        {/*
         <Route path="/password_reset/" element={<Passreset />} />
         <Route path="/forget_password/" element={<Forgotpassword />} />
         <Route path="/form/:id" element={<Form />} />
         <Route path="/login/:id" element={<Login />} />
-        <Route path="/register/:id" element={<Register />} /> 
+        <Route path="/register/:id" element={<Register />} />
         */}
       </Route>
     </Routes>

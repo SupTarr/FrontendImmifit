@@ -130,8 +130,8 @@ const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
       {/* ✅ check if array before calling `map()` */}
       {/* <div className="Card flex flex-row flex-wrap ">
         {allUsers.map((user, index) => (
-            <Card 
-            key={index} 
+            <Card
+            key={index}
             user={user}
              />
           ))}
