@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FiChevronLeft } from "react-icons/fi";
 import { FiChevronRight } from "react-icons/fi";
-import "./footer.css";
 
 function Footer() {
   let [number, setNumber] = useState(1);
