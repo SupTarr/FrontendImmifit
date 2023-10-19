@@ -1,44 +1,41 @@
 * {
-    font-family: sans-serif;
+  font-family: sans-serif;
 }
 
-
 figure.snip1174 {
-    font-family: 'Raleway', Arial, sans-serif;
-    position: relative;
-    overflow: hidden;
-    margin: 10px;
-    min-width: 310px;
-    max-width: 384px;
-    width: 100%;
-
+  font-family: "Raleway", Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  min-width: 310px;
+  max-width: 384px;
+  width: 100%;
 }
 
 figure.snip1174 img {
-    max-width: 100%;
-    width: 400px;
-    height: 285px;
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-    vertical-align: top;
-    opacity: 0.3;
-    /* -webkit-filter: grayscale(100%);
+  max-width: 100%;
+  width: 400px;
+  height: 285px;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  vertical-align: top;
+  opacity: 0.3;
+  /* -webkit-filter: grayscale(100%);
     filter: grayscale(100%); */
-
 }
 
 figure.snip1174 h5 img {
-    max-width: 100%;
-    width: 40px;
-    height: 40px;
-    /* color: #222f3d */
+  max-width: 100%;
+  width: 40px;
+  height: 40px;
+  /* color: #222f3d */
 }
 
 figure.snip1174 figcaption {
-    position: absolute;
-    padding: 40px 25px;
-    top: 0;
-    left: 0;
+  position: absolute;
+  padding: 40px 25px;
+  top: 0;
+  left: 0;
 }
 
 /* figure.snip1174 a {
@@ -57,21 +54,21 @@ figure.snip1174 figcaption {
 */
 
 figure.snip1174.blue {
-    background-color: #20638f;
+  background-color: #20638f;
 }
 
 figure.snip1174.yellow {
-    background-color: #c87f0a;
+  background-color: #c87f0a;
 }
 
 figure.snip1174.green {
-    background-color: #1e8449;
+  background-color: #1e8449;
 }
 
 figure.snip1174.navy {
-    background-color: #222f3d;
+  background-color: #222f3d;
 }
 
 figure.snip1174.red {
-    background-color: #962d22;
+  background-color: #962d22;
 }

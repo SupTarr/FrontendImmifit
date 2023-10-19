@@ -50,7 +50,7 @@ function FormDetail() {
     } else {
       setValidImage(false);
     }
-  }, [imgInputState])
+  }, [imgInputState]);
 
   useEffect(() => {
     if (title) {
@@ -58,7 +58,7 @@ function FormDetail() {
     } else {
       setValidTitle(false);
     }
-  }, [title])
+  }, [title]);
 
   useEffect(() => {
     if (type) {
@@ -66,7 +66,7 @@ function FormDetail() {
     } else {
       setValidType(false);
     }
-  }, [type])
+  }, [type]);
 
   useEffect(() => {
     if (date) {
@@ -74,7 +74,7 @@ function FormDetail() {
     } else {
       setValidDate(false);
     }
-  }, [date])
+  }, [date]);
 
   useEffect(() => {
     if (startTime) {
@@ -82,7 +82,7 @@ function FormDetail() {
     } else {
       setValidStartTime(false);
     }
-  }, [startTime])
+  }, [startTime]);
 
   useEffect(() => {
     if (endTime) {
@@ -90,7 +90,7 @@ function FormDetail() {
     } else {
       setValidEndTime(false);
     }
-  }, [endTime])
+  }, [endTime]);
 
   useEffect(() => {
     if (description) {
@@ -98,7 +98,7 @@ function FormDetail() {
     } else {
       setValidDescription(false);
     }
-  }, [description])
+  }, [description]);
 
   // Editing
   useEffect(() => {
@@ -228,7 +228,10 @@ function FormDetail() {
             onChange={onChangeImage}
             value={imgInputState}
           />
-          <p id="uidnote" className={(!validImage) ? "instructions" : "offscreen"}>
+          <p
+            id="uidnote"
+            className={!validImage ? "instructions" : "offscreen"}
+          >
             Please insert photo.
           </p>
           {previewImgSource && (
@@ -246,7 +249,10 @@ function FormDetail() {
               value={title}
               onChange={onChangeTitle}
             />
-            <p id="uidnote" className={(!validTitle) ? "instructions" : "offscreen"}>
+            <p
+              id="uidnote"
+              className={!validTitle ? "instructions" : "offscreen"}
+            >
               Invalid Title.
             </p>
           </div>
@@ -270,7 +276,10 @@ function FormDetail() {
               onChange={onChangeDate}
               value={date}
             />
-            <h5 id="uidnote" className={(!validDate) ? "instructions w-[100%]" : "offscreen"}>
+            <h5
+              id="uidnote"
+              className={!validDate ? "instructions w-[100%]" : "offscreen"}
+            >
               Invalid Date.
             </h5>
           </div>
@@ -284,7 +293,12 @@ function FormDetail() {
               onChange={onChangeStartTime}
               value={startTime}
             />
-            <h5 id="uidnote" className={(!validStartTime) ? "instructions w-[100%] mb-5" : "offscreen"}>
+            <h5
+              id="uidnote"
+              className={
+                !validStartTime ? "instructions w-[100%] mb-5" : "offscreen"
+              }
+            >
               Invalid Start Time.
             </h5>
             <span>End</span>
@@ -294,7 +308,10 @@ function FormDetail() {
               onChange={onChangeEndTime}
               value={endTime}
             />
-            <h5 id="uidnote" className={(!validEndTime) ? "instructions w-[100%]" : "offscreen"}>
+            <h5
+              id="uidnote"
+              className={!validEndTime ? "instructions w-[100%]" : "offscreen"}
+            >
               Invalid End Time.
             </h5>
           </div>
@@ -309,15 +326,29 @@ function FormDetail() {
               onChange={onChangeDescription}
               value={description}
             ></textarea>
-            <h5 id="uidnote" className={(!validDescription) ? "instructions w-[100%]" : "offscreen"}>
+            <h5
+              id="uidnote"
+              className={
+                !validDescription ? "instructions w-[100%]" : "offscreen"
+              }
+            >
               Invalid Description.
             </h5>
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             value="Submit"
-            disabled={!validImage || !validTitle || !validDate || !validStartTime || !validEndTime || !validDescription ? true : false}
+            disabled={
+              !validImage ||
+              !validTitle ||
+              !validDate ||
+              !validStartTime ||
+              !validEndTime ||
+              !validDescription
+                ? true
+                : false
+            }
           >
             Submit
           </button>
