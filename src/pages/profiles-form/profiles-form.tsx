@@ -2,10 +2,8 @@ import React from "react";
 import Navbar from "../../components/navbar/Navbar";
 import "./profiles-form.css";
 import Profileform from "../../components/profiles-form/profiles-form";
-import axios from "axios";
-import cors from "cors";
 
-function Profilesform() {
+const Profilesform: React.FC = () => {
   return (
     <div className="home min-h-[100vh] max-h-[1000px] pb-5">
       <Navbar />
@@ -14,6 +12,6 @@ function Profilesform() {
       </div>
     </div>
   );
-}
+};
 
 export default Profilesform;

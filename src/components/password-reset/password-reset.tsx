@@ -1,30 +1,40 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import "./password-reset.css";
 
-const Passwordreset = () => {
+const Passwordreset: React.FC = () => {
+  // Function to handle form submission
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    // Add form submission logic here
+    console.log("Password reset form submitted");
+  };
+
   return (
     <div className="passwordReset relative sm:h-screen">
       <div className="flex flex-col justify-center items-center sm:pt-16 h-[100vh]">
         <div className="max-w-5xl flex flex-col justify-center sm:flex-row mobile:m-10">
           <img
-            className="shadow-md sm:rounded-l-xl object-cover  sm:max-w-[200px] md:max-w-sm lg:max-w-lg xl:max-w-xl"
+            className="shadow-md sm:rounded-l-xl object-cover sm:max-w-[200px] md:max-w-sm lg:max-w-lg xl:max-w-xl"
             src="../../public/imagecard2.jpg"
             alt="imagecard"
-          ></img>
-          <form className="flex flex-col justify-center bg-white shadow-md sm:rounded-r-xl px-5 md:max-w-[250px] xl:max-w-[350px] py-5">
+          />
+          <form 
+            className="flex flex-col justify-center bg-white shadow-md sm:rounded-r-xl px-5 md:max-w-[250px] xl:max-w-[350px] py-5"
+            onSubmit={handleSubmit}
+          >
             <div className="flex text-gray-700 text-2xl font-bold mb-10">
               Password Reset
             </div>
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="password"
+                htmlFor="new-password"
               >
                 New Password
               </label>
               <input
                 className="appearance-non rounded border-b border-[#32312d] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
+                id="new-password"
                 type="password"
                 placeholder="******************"
               />
@@ -35,13 +45,13 @@ const Passwordreset = () => {
             <div className="mb-6">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                for="password"
+                htmlFor="confirm-password"
               >
                 Confirm New Password
               </label>
               <input
                 className="appearance-non rounded border-b border-[#32312d] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                id="password"
+                id="confirm-password"
                 type="password"
                 placeholder="******************"
               />
@@ -52,7 +62,7 @@ const Passwordreset = () => {
             <div className="flex items-center justify-between align-middle">
               <button
                 className="bg-[#E4665F] hover:bg-[#EDC8D5] text-white font-bold w-full py-2 rounded focus:outline-none focus:shadow-outline"
-                type="button"
+                type="submit"
               >
                 Reset Password
               </button>

@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import { FiChevronLeft } from "react-icons/fi";
 import { FiChevronRight } from "react-icons/fi";
 
-function Footer() {
-  let [number, setNumber] = useState(1);
-  const pages = [{ page: number }, { page: number + 1 }, { page: number + 2 }];
+interface PageItem {
+  page: number;
+}
 
-  const Next = () => {
+const Footer: React.FC = () => {
+  let [number, setNumber] = useState<number>(1);
+  const pages: PageItem[] = [{ page: number }, { page: number + 1 }, { page: number + 2 }];
+
+  const Next = (): void => {
     setNumber(++number);
   };
 
-  const Back = () => {
+  const Back = (): void => {
     number > 1 && setNumber(--number);
   };
 
@@ -53,6 +57,6 @@ function Footer() {
       </button>
     </div>
   );
-}
+};
 
 export default Footer;

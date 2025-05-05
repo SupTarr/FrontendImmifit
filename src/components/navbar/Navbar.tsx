@@ -1,36 +1,46 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./navbar.css";
 import Logo from "./immifit.svg";
-import { useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Location, NavigateFunction } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faPlus, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
-function Navbar() {
-  const { setAuth } = useContext(AuthContext);
+interface AuthContextType {
+  auth: any;
+  setAuth: React.Dispatch<React.SetStateAction<any>>;
+}
 
-  const navigate = useNavigate();
-  const location = useLocation();
+interface LocationState {
+  from?: {
+    pathname?: string;
+  };
+}
 
-  const handleClickHome = () => {
-    const from = location.state?.from?.pathname || "/";
+function Navbar(): JSX.Element {
+  const { setAuth } = useContext(AuthContext) as AuthContextType;
+
+  const navigate: NavigateFunction = useNavigate();
+  const location: Location = useLocation();
+  const state = location.state as LocationState;
+
+  const handleClickHome = (): void => {
+    const from: string = state?.from?.pathname || "/";
     navigate(from, { replace: true });
   };
 
-  const handleClickAddAc = () => {
-    const from = location.state?.from?.pathname || "/form";
+  const handleClickAddAc = (): void => {
+    const from: string = state?.from?.pathname || "/form";
     navigate(from, { replace: true });
   };
 
-  const handleClickLogout = () => {
+  const handleClickLogout = (): void => {
     setAuth({});
-    const from = location.state?.from?.pathname || "/login";
+    const from: string = state?.from?.pathname || "/login";
     navigate(from, { replace: true });
   };
-
+  
   return (
     <div className="bg-[#fbc3bc] rounded-b-xl">
       <div className="navbar flex flex-col-2 mx-auto max-w-[1200px] mb-5">
@@ -59,22 +69,22 @@ function Navbar() {
         <div className="navbar-text-mobile flex sm:hidden content-center">
           <button onClick={handleClickHome}>
             <FontAwesomeIcon
-              icon={faHouse}
-              size="xl"
+              icon={faHouse as IconDefinition}
+              size="1x"
               className="text-[#ff5757] mr-7"
             />
           </button>
           <button onClick={handleClickAddAc}>
             <FontAwesomeIcon
-              icon={faPlus}
-              size="xl"
+              icon={faPlus as IconDefinition}
+              size="1x"
               className="text-[#ff5757] mr-7"
             />
           </button>
           <button onClick={handleClickLogout}>
             <FontAwesomeIcon
-              icon={faRightFromBracket}
-              size="xl"
+              icon={faRightFromBracket as IconDefinition}
+              size="1x"
               className="text-[#ff5757]"
             />
           </button>
@@ -85,3 +95,4 @@ function Navbar() {
 }
 
 export default Navbar;
+

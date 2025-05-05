@@ -10,13 +10,20 @@ import Profilesform from "./pages/profiles-form/profiles-form";
 
 import Layout from "./components/layout/Layout";
 
-const ROLES = {
-  User: 1000,
-  Editor: 2000,
-  Admin: 3000,
+// Define role types using an interface
+interface RolesType {
+  User: string;
+  Editor: string;
+  Admin: string;
+}
+
+const ROLES: RolesType = {
+  User: "1000",
+  Editor: "2000",
+  Admin: "3000",
 };
 
-function App() {
+const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -40,6 +47,6 @@ function App() {
       </Route>
     </Routes>
   );
-}
+};
 
 export default App;

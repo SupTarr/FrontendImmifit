@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../../components/navbar/Navbar";
 import FormDetail from "../../components/form-component/FormDetail";
 
-function Form() {
+const Form: React.FC = () => {
   return (
     <div>
       <Navbar />
@@ -11,6 +11,6 @@ function Form() {
       </div>
     </div>
   );
-}
+};
 
 export default Form;

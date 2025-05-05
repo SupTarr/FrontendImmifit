@@ -7,26 +7,53 @@ import "./home.css";
 import Profile from "../profile/Profile";
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
+import { AxiosResponse } from "axios";
 
-function Home() {
-  const { auth } = useAuth();
+// Define interfaces for the data types
+interface UserAuth {
+  user: string;
+  user_id: string;
+  // Add other auth properties that might be used
+}
+
+interface ProfileData {
+  // Define profile properties based on your API response
+  id?: number;
+  name?: string;
+  email?: string;
+  // Add other profile fields as needed
+  [key: string]: any; // Allow for additional dynamic properties
+}
+
+interface UserResponse {
+  profile?: ProfileData;
+  // Add other response properties if needed
+}
+
+const Home: React.FC = () => {
+  const { auth } = useAuth() as { auth: UserAuth };
   const user = auth.user;
 
-  const [createdProfile, setCreatedProfile] = useState(false);
-  const [profile, setProfile] = useState({});
+  const [createdProfile, setCreatedProfile] = useState<boolean>(false);
+  const [profile, setProfile] = useState<ProfileData>({});
 
   useEffect(() => {
-    axios.get(`/users/${auth.user_id}`).then((res) => {
-      if (res.data.profile !== undefined) {
-        setProfile(res.data.profile);
-        if (profile !== null) {
-          setCreatedProfile(true);
+    const fetchUserProfile = async (): Promise<void> => {
+      try {
+        const res: AxiosResponse<UserResponse> = await axios.get(`/users/${auth.user_id}`);
+        if (res.data.profile !== undefined) {
+          setProfile(res.data.profile);
+          if (res.data.profile !== null) {
+            setCreatedProfile(true);
+          }
         }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
       }
-    });
-  }, []);
+    };
 
-  console.log(profile);
+    fetchUserProfile();
+  }, [auth.user_id]); // Add auth.user_id as dependency
 
   return (
     <div className="home min-h-screen">
@@ -51,6 +78,6 @@ function Home() {
       </div>
     </div>
   );
-}
+};
 
 export default Home;

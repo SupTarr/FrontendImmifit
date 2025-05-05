@@ -1,48 +1,77 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import "./formDetail.css";
 import axios from "../../api/axios";
+import { AxiosResponse } from "axios";
 import useAuth from "../../hooks/useAuth";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import {
+  useNavigate,
+  useLocation,
+  useSearchParams,
+  Location,
+  NavigateFunction,
+} from "react-router-dom";
 import moment from "moment";
 
-const config = {
-  headers: {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-  },
-};
+interface ActivityImage {
+  name: string;
+  data: string | ArrayBuffer | null;
+  contentType: string;
+}
 
-function FormDetail() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-  let [searchParams, setSearchParams] = useSearchParams();
+interface Activity {
+  img: ActivityImage;
+  username: string;
+  user_id: string;
+  title: string;
+  activity_type: string;
+  date: string;
+  start_time: Date;
+  end_time: Date;
+  description: string;
+}
 
-  const { auth } = useAuth();
-  const [imgInputState, setImgInputState] = useState("");
-  const [previewImgSource, setPreviewImgSource] = useState("");
-  const [selectedImgFile, setSelectedImgFile] = useState();
-  const [validImage, setValidImage] = useState(false);
+interface ActivityResponse {
+  title: string;
+  activity_type: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  description: string;
+  [key: string]: any;
+}
 
-  const [title, setTitle] = useState("");
-  const [validTitle, setValidTitle] = useState(false);
+const FormDetail: React.FC = () => {
+  const navigate: NavigateFunction = useNavigate();
+  const location: Location = useLocation();
+  const state = location.state as { from?: { pathname?: string } } | null;
+  const from: string = state?.from?.pathname || "/";
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [type, setType] = useState("Running");
-  const [validType, setValidType] = useState(false);
+  const { auth } = useAuth() as any;
+  const [imgInputState, setImgInputState] = useState<string>("");
+  const [previewImgSource, setPreviewImgSource] = useState<string>("");
+  const [selectedImgFile, setSelectedImgFile] = useState<File | undefined>();
+  const [validImage, setValidImage] = useState<boolean>(false);
 
-  const [date, setDate] = useState("");
-  const [validDate, setValidDate] = useState(false);
+  const [title, setTitle] = useState<string>("");
+  const [validTitle, setValidTitle] = useState<boolean>(false);
 
-  const [startTime, setStartTime] = useState("");
-  const [validStartTime, setValidStartTime] = useState(false);
+  const [type, setType] = useState<string>("Running");
+  const [validType, setValidType] = useState<boolean>(false);
 
-  const [endTime, setEndTime] = useState("");
-  const [validEndTime, setValidEndTime] = useState(false);
+  const [date, setDate] = useState<string>("");
+  const [validDate, setValidDate] = useState<boolean>(false);
 
-  const [description, setDescription] = useState("");
-  const [validDescription, setValidDescription] = useState(false);
+  const [startTime, setStartTime] = useState<string>("");
+  const [validStartTime, setValidStartTime] = useState<boolean>(false);
 
-  const [isEdit, setIsEdit] = useState(false);
+  const [endTime, setEndTime] = useState<string>("");
+  const [validEndTime, setValidEndTime] = useState<boolean>(false);
+
+  const [description, setDescription] = useState<string>("");
+  const [validDescription, setValidDescription] = useState<boolean>(false);
+
+  const [isEdit, setIsEdit] = useState<boolean>(false);
 
   useEffect(() => {
     if (imgInputState) {
@@ -102,78 +131,85 @@ function FormDetail() {
 
   // Editing
   useEffect(() => {
+    const activityId = searchParams.get("activity_id");
+    if (!activityId) return;
+
     axios
-      .get(`/activities/byid/${searchParams.get("activity_id")}`)
-      .then((res) => {
+      .get<ActivityResponse>(`/activities/byid/${activityId}`)
+      .then((res: AxiosResponse<ActivityResponse>) => {
         console.log(res.data.date);
         // const date = new Date(res.data.date);
         // setImgInputState(res.data.img.name || '')
         // setPreviewImgSource(res.data.img.name || '')
         // setSelectedImgFile(res.data.img.name || '')
-        var date = new Date(res.data.date);
+        var dateObj = new Date(res.data.date);
 
-        var day = ("0" + date.getDate()).slice(-2);
-        var month = ("0" + (date.getMonth() + 1)).slice(-2);
+        var day = ("0" + dateObj.getDate()).slice(-2);
+        var month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
 
-        date = date.getFullYear() + "-" + month + "-" + day;
+        const formattedDate = dateObj.getFullYear() + "-" + month + "-" + day;
 
         setTitle(res.data.title || "");
         setType(res.data.activity_type || "");
-        setDate(date || "");
+        setDate(formattedDate || "");
         setStartTime(moment(res.data.start_time).format("HH:mm") || "");
         setEndTime(moment(res.data.end_time).format("HH:mm") || "");
         setDescription(res.data.description || "");
 
         setIsEdit(true);
+      })
+      .catch((error) => {
+        console.error("Error fetching activity:", error);
       });
-  }, []);
+  }, [searchParams]);
 
-  const previewFile = (file) => {
+  const previewFile = (file: File): void => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setPreviewImgSource(reader.result);
+      setPreviewImgSource(reader.result as string);
     };
   };
 
-  const onChangeImage = (e) => {
+  const onChangeImage = (e: ChangeEvent<HTMLInputElement>): void => {
+    if (!e.target.files || e.target.files.length === 0) return;
     const file = e.target.files[0];
     previewFile(file);
     setSelectedImgFile(file);
     setImgInputState(e.target.value);
   };
 
-  const onChangeTitle = (e) => {
+  const onChangeTitle = (e: ChangeEvent<HTMLInputElement>): void => {
     setTitle(e.target.value);
   };
 
-  const onChangeType = (e) => {
+  const onChangeType = (e: ChangeEvent<HTMLSelectElement>): void => {
     setType(e.target.value);
   };
 
-  const onChangeDate = (e) => {
+  const onChangeDate = (e: ChangeEvent<HTMLInputElement>): void => {
     setDate(e.target.value);
   };
 
-  const onChangeStartTime = (e) => {
+  const onChangeStartTime = (e: ChangeEvent<HTMLInputElement>): void => {
     setStartTime(e.target.value);
   };
 
-  const onChangeEndTime = (e) => {
+  const onChangeEndTime = (e: ChangeEvent<HTMLInputElement>): void => {
     setEndTime(e.target.value);
   };
 
-  const onChangeDescription = (e) => {
+  const onChangeDescription = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     setDescription(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (!selectedImgFile) return;
     const reader = new FileReader();
     reader.readAsDataURL(selectedImgFile);
     reader.onloadend = async () => {
-      const activity = {
+      const activity: Activity = {
         img: {
           name: selectedImgFile.name,
           data: reader.result,
@@ -190,29 +226,32 @@ function FormDetail() {
       };
       console.log(activity);
 
-      if (isEdit) {
-        await axios
-          .put(`/activities/${searchParams.get("activity_id")}`, activity)
-          .then((res) => console.log(res.data));
-      } else {
-        await axios
-          .post("/activities", activity)
-          .then((res) => console.log(res.data));
+      try {
+        const activityId = searchParams.get("activity_id");
+        if (isEdit && activityId) {
+          await axios.put(`/activities/${activityId}`, activity);
+        } else {
+          await axios.post("/activities", activity);
+        }
+
+        // Reset form state
+        setImgInputState("");
+        setPreviewImgSource("");
+        setSelectedImgFile(undefined);
+        setTitle("");
+        setType("");
+        setDate("");
+        setStartTime("");
+        setEndTime("");
+        setDescription("");
+        navigate(from, { replace: true });
+        navigate("/");
+      } catch (error) {
+        console.error("Error submitting form:", error);
       }
-      setImgInputState("");
-      setPreviewImgSource("");
-      setSelectedImgFile("");
-      setTitle("");
-      setType("");
-      setDate("");
-      setStartTime("");
-      setEndTime("");
-      setDescription("");
-      navigate(from, { replace: true });
-      navigate("/");
     };
     reader.onerror = () => {
-      console.error("Fail!!");
+      console.error("Failed to read file!");
     };
   };
 
@@ -321,8 +360,7 @@ function FormDetail() {
             <textarea
               id="activity_descrip"
               name="description"
-              rows="4"
-              cols="50"
+              rows={4}
               onChange={onChangeDescription}
               value={description}
             ></textarea>
@@ -356,6 +394,6 @@ function FormDetail() {
       </section>
     </div>
   );
-}
+};
 
 export default FormDetail;

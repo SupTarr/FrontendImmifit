@@ -5,7 +5,13 @@ import "./index.css";
 import { AuthProvider } from "./context/AuthProvider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+const rootElement = document.getElementById("root") as HTMLElement;
+
+if (!rootElement) {
+  throw new Error("Failed to find the root element");
+}
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>

@@ -1,19 +1,43 @@
 import React from "react";
 import useAuth from "../../hooks/useAuth";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavigateFunction, Location } from "react-router-dom";
 
-function Profile(props) {
-  const { auth } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
+// Define interfaces for the Profile props and data structures
+interface ProfileData {
+  about?: string;
+  gender?: string;
+  age?: number;
+  height?: number;
+  weight?: number;
+  bmi?: number;
+  [key: string]: any; // For any additional properties
+}
 
-  const handleClickCreateProfile = () => {
-    const from = location.state?.from?.pathname || "/form_profile";
+interface AuthState {
+  user: string;
+  user_id?: string;
+  accessToken?: string;
+  // Add other auth properties as needed
+}
+
+interface ProfileProps {
+  username: string;
+  createdProfile: boolean;
+  profile: ProfileData;
+}
+
+const Profile: React.FC<ProfileProps> = (props) => {
+  const { auth } = useAuth() as { auth: AuthState };
+  const navigate: NavigateFunction = useNavigate();
+  const location: Location = useLocation();
+
+  const handleClickCreateProfile = (): void => {
+    const from: string = location.state?.from?.pathname || "/form_profile";
     navigate(from, { replace: true });
   };
 
-  const handleClickEditProfile = () => {
-    const from = location.state?.from?.pathname || "/form_profile";
+  const handleClickEditProfile = (): void => {
+    const from: string = location.state?.from?.pathname || "/form_profile";
     navigate(from, { replace: true });
   };
 
@@ -66,6 +90,6 @@ function Profile(props) {
       )}
     </div>
   );
-}
+};
 
 export default Profile;
