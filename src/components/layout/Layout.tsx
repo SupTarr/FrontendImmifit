@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 
 const Layout = (): JSX.Element => {
@@ -10,4 +9,3 @@ const Layout = (): JSX.Element => {
 };
 
 export default Layout;
-

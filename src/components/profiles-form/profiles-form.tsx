@@ -1,9 +1,15 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import axios, { AxiosResponse } from "../../api/axios";
+import axios from "../../api/axios";
+import { AxiosResponse } from "axios";
 import useAuth from "../../hooks/useAuth";
-import { useNavigate, useLocation, NavigateFunction, Location } from "react-router-dom";
+import {
+  useNavigate,
+  useLocation,
+  NavigateFunction,
+  Location,
+} from "react-router-dom";
+import { AuthState } from "../../context/AuthProvider";
 
-// Define interfaces
 interface ProfileData {
   username: string;
   about: string;
@@ -35,13 +41,6 @@ interface FormErrors {
   [key: string]: string | undefined;
 }
 
-interface AuthState {
-  user: string;
-  user_id: string;
-  accessToken?: string;
-  // Add other auth properties as needed
-}
-
 interface FormValues {
   about: string;
   gender: string;
@@ -50,10 +49,16 @@ interface FormValues {
   weight: string | number;
 }
 
+interface LocationState {
+  from?: {
+    pathname: string;
+  };
+}
+
 const Profileform: React.FC = () => {
   const { auth } = useAuth() as { auth: AuthState };
   const navigate: NavigateFunction = useNavigate();
-  const location: Location = useLocation();
+  const location = useLocation() as Location & { state: LocationState };
   const from: string = location.state?.from?.pathname || "/";
 
   const [about, setAbout] = useState<string>("");
@@ -68,7 +73,8 @@ const Profileform: React.FC = () => {
   console.log(about, gender, age, height, weight, bmi);
 
   useEffect(() => {
-    axios.get<ProfileResponse>(`/users/${auth.user_id}`)
+    axios
+      .get<ProfileResponse>(`/users/${auth.user_id}`)
       .then((res: AxiosResponse<ProfileResponse>) => {
         setAbout(res.data.profile?.about || "");
         setGender(res.data.profile?.gender || "Male");
@@ -128,7 +134,7 @@ const Profileform: React.FC = () => {
     e.preventDefault();
     if (about && gender && age && height && weight) {
       const profile: ProfileData = {
-        username: auth.user,
+        username: auth.user || "",
         about: about,
         gender: gender,
         age: age,
@@ -136,7 +142,7 @@ const Profileform: React.FC = () => {
         weight: weight,
         bmi: bmi,
       };
-      
+
       try {
         await axios.post(`/users/profile`, profile);
         // Reset form
@@ -171,9 +177,9 @@ const Profileform: React.FC = () => {
   };
 
   return (
-    <div className="h-[100%] w-[100%] mx-auto bg-[#fbc3bc] rounded-xl my-5">
+    <div className="mx-auto my-5 h-[100%] w-[100%] rounded-xl bg-[#fbc3bc]">
       {/* <div className="flex items-end w-[100%] h-[300px] mx-auto bg-[#5F576C] rounded-t-xl"></div> */}
-      <div className="pt-10 ml-5 mx-auto">
+      <div className="mx-auto ml-5 pt-10">
         <form onSubmit={handleSubmit}>
           {/* <div >
 						<label
@@ -228,17 +234,17 @@ const Profileform: React.FC = () => {
               <textarea
                 id="about"
                 name="about"
-                rows="4"
-                cols="10"
+                rows={4}
+                cols={10}
                 onChange={onChangeAbout}
                 value={about}
-                className="focus:ring-indigo-500 py-2 px-3 focus:border-indigo-500 mt-1 block w-[75%] sm:text-sm border border-gray-300 rounded-md resize-none"
+                className="mt-1 block w-[75%] resize-none rounded-md border border-gray-300 py-2 px-3 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 placeholder="Brief description for your profile"
                 white-space="pre"
                 word-wrap="break-word"
               />
             </div>
-            <p className="text-red-700 font-bold mt-3">{formErrors.about}</p>
+            <p className="mt-3 font-bold text-red-700">{formErrors.about}</p>
           </div>
 
           <div className="col-span-6 py-5 sm:col-span-3">
@@ -254,7 +260,7 @@ const Profileform: React.FC = () => {
               autoComplete="gender"
               onChange={onChangeGender}
               value={gender}
-              className="mt-1 block w-[150px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-[150px] rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             >
               <option>Male</option>
               <option>Female</option>
@@ -264,7 +270,7 @@ const Profileform: React.FC = () => {
 
           <div>
             <label
-              className="block mb-2 text-sm font-bold text-gray-900"
+              className="mb-2 block text-sm font-bold text-gray-900"
               htmlFor="file_input"
             >
               Age
@@ -279,12 +285,12 @@ const Profileform: React.FC = () => {
               placeholder="Years"
               value={age}
               onChange={onChangeAge}
-              className="mt-1 py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 block w-[150px] shadow-sm sm:text-sm border-gray-300 rounded-md"
+              className="mt-1 block w-[150px] rounded-md border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
-            <p className="text-red-700 font-bold mt-3">{formErrors.age}</p>
+            <p className="mt-3 font-bold text-red-700">{formErrors.age}</p>
           </div>
 
-          <div className=" overflow-hidden sm:rounded-md">
+          <div className="overflow-hidden sm:rounded-md">
             <div className="py-5">
               <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-3">
@@ -303,9 +309,9 @@ const Profileform: React.FC = () => {
                     placeholder="Centimeters"
                     value={height}
                     onChange={onChangeHeight}
-                    className="mt-1 py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 block w-[150px] shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 block w-[150px] rounded-md border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
-                  <p className="text-red-700 font-bold mt-3">
+                  <p className="mt-3 font-bold text-red-700">
                     {formErrors.height}
                   </p>
                 </div>
@@ -326,9 +332,9 @@ const Profileform: React.FC = () => {
                     placeholder="Kilograms"
                     value={weight}
                     onChange={onChangeWeight}
-                    className="mt-1 py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500 block w-[150px] shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 block w-[150px] rounded-md border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
-                  <p className="text-red-700 font-bold mt-3">
+                  <p className="mt-3 font-bold text-red-700">
                     {formErrors.weight}
                   </p>
                 </div>
@@ -338,7 +344,7 @@ const Profileform: React.FC = () => {
 
           <div>
             <label
-              className="block mb-2 text-sm font-bold text-gray-900"
+              className="mb-2 block text-sm font-bold text-gray-900"
               htmlFor="bmi"
             >
               BMI
@@ -349,7 +355,7 @@ const Profileform: React.FC = () => {
           <div className="px-4 py-4 text-right sm:px-6">
             <button
               type="submit"
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#F08080] hover:bg-[#ff5757]"
+              className="inline-flex justify-center rounded-md border border-transparent bg-[#F08080] py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#ff5757]"
               disabled={
                 formErrors.about ||
                 formErrors.age ||

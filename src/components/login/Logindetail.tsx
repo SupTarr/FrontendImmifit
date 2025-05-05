@@ -1,5 +1,10 @@
-import React, { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
-import { useNavigate, useLocation, Location, NavigateFunction } from "react-router-dom";
+import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
+import {
+  useNavigate,
+  useLocation,
+  Location,
+  NavigateFunction,
+} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,7 +13,8 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import "./logindetail.css";
-import axios, { AxiosError, AxiosResponse, AxiosRequestConfig } from "../../api/axios";
+import axios from "../../api/axios";
+import { AxiosError, AxiosResponse, AxiosRequestConfig } from "axios";
 // import Facebook from './facebook.png'
 // import Line from './line.png'
 // import Tel from './telephone.png'
@@ -26,19 +32,23 @@ interface AuthResponse {
 const config: AxiosRequestConfig = {
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": [
-      "http://127.0.0.1:5173",
-      "https://immifit.vercel.app/",
-    ],
+    "Access-Control-Allow-Origin":
+      "http://127.0.0.1:5173,https://immifit.vercel.app/",
     withCredentials: "true",
   },
 };
+
+interface LocationState {
+  from?: {
+    pathname: string;
+  };
+}
 
 const Logindetail = (): JSX.Element => {
   const { setAuth } = useAuth();
 
   const navigate: NavigateFunction = useNavigate();
-  const location: Location = useLocation();
+  const location = useLocation() as Location & { state: LocationState };
   const from: string = location.state?.from?.pathname || "/";
 
   const userRef = useRef<HTMLInputElement>(null);
@@ -104,30 +114,30 @@ const Logindetail = (): JSX.Element => {
       {/* <button className='w-[50px]'>
           <img src={Back} alt="" />
         </button> */}
-      <div className="flex flex-col justify-center items-center sm:pt-16 h-[100%]">
-        <div className="max-w-5xl flex flex-col justify-center sm:flex-row mobile:m-10">
+      <div className="flex h-[100%] flex-col items-center justify-center sm:pt-16">
+        <div className="flex max-w-5xl flex-col justify-center mobile:m-10 sm:flex-row">
           <img
-            className="shadow-md sm:rounded-l-xl object-cover  sm:max-w-[200px] md:max-w-sm lg:max-w-lg xl:max-w-xl"
+            className="object-cover shadow-md sm:max-w-[200px] sm:rounded-l-xl md:max-w-sm lg:max-w-lg xl:max-w-xl"
             src="../../imagecard2.jpg"
             alt="imagecard"
           ></img>
           <form
-            className="flex flex-col justify-center bg-white shadow-md sm:rounded-r-xl px-5 md:max-w-[250px] xl:max-w-[350px] py-5"
+            className="flex flex-col justify-center bg-white px-5 py-5 shadow-md sm:rounded-r-xl md:max-w-[250px] xl:max-w-[350px]"
             onSubmit={handleSubmit}
           >
-            <div className="flex text-gray-700 text-2xl font-bold mb-10">
+            <div className="mb-10 flex text-2xl font-bold text-gray-700">
               Log in
             </div>
             <p
               ref={errRef}
-              className={errMsg ? "errmsg text-red-500 mb-5" : "offscreen"}
+              className={errMsg ? "errmsg mb-5 text-red-500" : "offscreen"}
               aria-live="assertive"
             >
               {errMsg}
             </p>
             <div className="mb-4">
               <label
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className="mb-2 block text-sm font-bold text-gray-700"
                 htmlFor="username"
               >
                 Username :
@@ -141,7 +151,7 @@ const Logindetail = (): JSX.Element => {
                 />
               </label>
               <input
-                className="shadow appearance-none border-b border-[#32312d] rounded w-full py-2 px-3 mb-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline mb-3 w-full appearance-none rounded border-b border-[#32312d] py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                 value={user}
                 ref={userRef}
                 id="username"
@@ -153,7 +163,9 @@ const Logindetail = (): JSX.Element => {
                 aria-describedby="uidnote"
                 onFocus={() => setUserFocus(true)}
                 onBlur={() => setUserFocus(false)}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setUser(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setUser(e.target.value)
+                }
               />
               <p
                 id="uidnote"
@@ -172,7 +184,7 @@ const Logindetail = (): JSX.Element => {
             </div>
             <div className="mb-4">
               <label
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className="mb-2 block text-sm font-bold text-gray-700"
                 htmlFor="password"
               >
                 Password :
@@ -186,7 +198,7 @@ const Logindetail = (): JSX.Element => {
                 />
               </label>
               <input
-                className="appearance-non rounded border-b border-[#32312d] w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-non focus:shadow-outline mb-3 w-full rounded border-b border-[#32312d] py-2 px-3 leading-tight text-gray-700 focus:outline-none"
                 id="password"
                 value={password}
                 type="password"
@@ -196,7 +208,9 @@ const Logindetail = (): JSX.Element => {
                 aria-describedby="pwdnote"
                 onFocus={() => setPasswordFocus(true)}
                 onBlur={() => setPasswordFocus(false)}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setPassword(e.target.value)
+                }
               />
               <p
                 id="pwdnote"
@@ -213,12 +227,12 @@ const Logindetail = (): JSX.Element => {
                 - Must include uppercase and lowercase letters, a number and a
                 special character.
                 <br />- Allowed special characters:{" "}
-                <span className="font-semibold text-xs">@ # $ %</span>
+                <span className="text-xs font-semibold">@ # $ %</span>
               </p>
             </div>
             <div className="flex items-center justify-between align-middle">
               <button
-                className="bg-[#6971f2] hover:bg-[#5960cc] text-white font-bold w-full py-2 rounded focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline w-full rounded bg-[#6971f2] py-2 font-bold text-white hover:bg-[#5960cc] focus:outline-none"
                 type="submit"
               >
                 Log in
@@ -245,4 +259,3 @@ const Logindetail = (): JSX.Element => {
 };
 
 export default Logindetail;
-

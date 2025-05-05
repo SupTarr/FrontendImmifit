@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useNavigate, useLocation, NavigateFunction, Location } from "react-router-dom";
+import {
+  useNavigate,
+  useLocation,
+  NavigateFunction,
+  Location,
+} from "react-router-dom";
 import { AxiosInstance, AxiosResponse, AxiosError } from "axios";
 
 // Define interface for user data
@@ -23,11 +28,14 @@ const Users: React.FC = () => {
     // AbortController : cancel our request if the component unmounts
     const controller = new AbortController();
 
-  const getUsers = async (): Promise<void> => {
+    const getUsers = async (): Promise<void> => {
       try {
-        const response: AxiosResponse<User[]> = await axiosPrivate.get("/users", {
-          signal: controller.signal,
-        });
+        const response: AxiosResponse<User[]> = await axiosPrivate.get(
+          "/users",
+          {
+            signal: controller.signal,
+          },
+        );
         console.log(response.data);
         isMounted && setUsers(response.data);
       } catch (err) {

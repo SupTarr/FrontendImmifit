@@ -45,7 +45,7 @@ const FormDetail: React.FC = () => {
   const location: Location = useLocation();
   const state = location.state as { from?: { pathname?: string } } | null;
   const from: string = state?.from?.pathname || "/";
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const { auth } = useAuth() as any;
   const [imgInputState, setImgInputState] = useState<string>("");
@@ -205,6 +205,7 @@ const FormDetail: React.FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    console.log(validType);
     if (!selectedImgFile) return;
     const reader = new FileReader();
     reader.readAsDataURL(selectedImgFile);
@@ -335,7 +336,7 @@ const FormDetail: React.FC = () => {
             <h5
               id="uidnote"
               className={
-                !validStartTime ? "instructions w-[100%] mb-5" : "offscreen"
+                !validStartTime ? "instructions mb-5 w-[100%]" : "offscreen"
               }
             >
               Invalid Start Time.

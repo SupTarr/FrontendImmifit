@@ -5,9 +5,9 @@ import Profileform from "../../components/profiles-form/profiles-form";
 
 const Profilesform: React.FC = () => {
   return (
-    <div className="home min-h-[100vh] max-h-[1000px] pb-5">
+    <div className="home max-h-[1000px] min-h-[100vh] pb-5">
       <Navbar />
-      <div className="Activities max-w-[750px] w-[100%] tablet:w-[95%] tablet:mx-[2.5%] mx-auto my-10 bg-[#fbc3bc] rounded-xl">
+      <div className="Activities mx-auto my-10 w-[100%] max-w-[750px] rounded-xl bg-[#fbc3bc] tablet:mx-[2.5%] tablet:w-[95%]">
         <Profileform />
       </div>
     </div>

@@ -5,6 +5,7 @@ export interface AuthState {
   user?: string;
   accessToken?: string;
   roles?: string[];
+  user_id?: string;
   [key: string]: any; // Allow for additional properties
 }
 
@@ -35,4 +36,3 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
 };
 
 export default AuthContext;
-
