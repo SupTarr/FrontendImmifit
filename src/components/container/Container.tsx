@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import "./container.css";
 import Card from "../card/Card";
 import Header from "../header/Header";
-import FormDetail from "../form-component/FormDetail";
 
-// Interface for Activity, matching the one in Card.tsx
 interface ActivityItem {
   activity_id: string;
   title: string;
@@ -21,14 +18,12 @@ interface ActivityItem {
   [key: string]: any;
 }
 
-// Interface for Container component props
 interface ContainerProps {
   username: string;
   newActivity?: ActivityItem[];
 }
 
 const Container = (props: ContainerProps): JSX.Element => {
-  // const [users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState<ActivityItem[]>([]);
 
   async function getUsers(): Promise<void> {
@@ -88,7 +83,7 @@ const Container = (props: ContainerProps): JSX.Element => {
 
   return (
     <div>
-      <div className="w-[100%] mx-auto flex justify-center">
+      <div className="mx-auto flex w-[100%] justify-center">
         <Header
           allUsers={allUsers}
           getUsers={getUsers}
@@ -96,23 +91,22 @@ const Container = (props: ContainerProps): JSX.Element => {
         />
       </div>
 
-      {/* ✅ check if array before calling `map()` */}
       <div className="flex flex-wrap justify-center">
-        {Array.isArray(allUsers)
-          ? allUsers.map((item, index) => (
-              <Card
-                key={index}
-                item={item}
-                setAllUsers={setAllUsers}
-                allUsers={allUsers}
-                getUsers={getUsers}
-              />
-            ))
-          : console.log("no data")}
+        {Array.isArray(allUsers) && allUsers.length > 0 ? (
+          allUsers.map((item, index) => (
+            <Card
+              key={index}
+              item={item}
+              setAllUsers={setAllUsers}
+              allUsers={allUsers}
+            />
+          ))
+        ) : (
+          <p>No data available</p>
+        )}
       </div>
     </div>
   );
 };
 
 export default Container;
-

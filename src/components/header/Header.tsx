@@ -1,12 +1,9 @@
-import React, { useContext, useEffect, useState, MouseEvent } from "react";
-import { Route, Link, BrowserRouter as Router } from "react-router-dom";
+import React, { useEffect, MouseEvent } from "react";
 import "./header.css";
-import Card from "../card/Card";
-import axios, { AxiosResponse } from "../../api/axios";
+import axios from "../../api/axios";
+import { AxiosResponse } from "axios";
 import useAuth from "../../hooks/useAuth";
-import { AuthContextType } from "../../context/AuthProvider";
 
-// Interface for Activity
 interface ActivityItem {
   activity_id: string;
   title: string;
@@ -22,14 +19,17 @@ interface ActivityItem {
   [key: string]: any;
 }
 
-// Interface for Header component props
 interface HeaderProps {
   allUsers: ActivityItem[];
   getUsers: () => Promise<void>;
   setAllUsers: React.Dispatch<React.SetStateAction<ActivityItem[]>>;
 }
 
-const Header = ({ allUsers, getUsers, setAllUsers }: HeaderProps): JSX.Element => {
+const Header = ({
+  allUsers,
+  getUsers,
+  setAllUsers,
+}: HeaderProps): JSX.Element => {
   const { auth } = useAuth();
 
   console.log("this is allusers", allUsers);
@@ -42,7 +42,9 @@ const Header = ({ allUsers, getUsers, setAllUsers }: HeaderProps): JSX.Element =
 
     try {
       console.log(type, allUsers);
-      const res: AxiosResponse<ActivityItem[]> = await axios.get(`/activities/bytype/${auth.user}/${type}`);
+      const res: AxiosResponse<ActivityItem[]> = await axios.get(
+        `/activities/bytype/${auth.user}/${type}`,
+      );
       console.log("fetchDatabyType", res.data);
       setAllUsers(res.data);
     } catch (error) {
@@ -78,37 +80,37 @@ const Header = ({ allUsers, getUsers, setAllUsers }: HeaderProps): JSX.Element =
   return (
     // filter
     // ["Running", "Cycling", "Swimming", "Weight training", "Walking"]
-    <div className="Header mt-5 flex justify-between flex-wrap xl:w-[700px] md:w-[450px] relative z-40">
-      <div className="Container bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg">
+    <div className="Header relative z-40 mt-5 flex flex-wrap justify-between md:w-[450px] xl:w-[700px]">
+      <div className="Container rounded-full bg-white bg-opacity-50 drop-shadow-lg backdrop-blur-sm">
         <button
-          className="Button hover:bg-[#005B97] hover:text-white py-2 px-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg font-semibold"
+          className="Button rounded-full bg-white bg-opacity-50 py-2 px-4 font-semibold drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white"
           value="All"
           onClick={handleClickSortAll}
         >
           ALL
         </button>
         <button
-          className="Button hover:bg-[#005B97] hover:text-white py-2 px-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg font-semibold"
+          className="Button rounded-full bg-white bg-opacity-50 py-2 px-4 font-semibold drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white"
           value="Running"
           onClick={handleClickSortRun}
         >
           RUN
         </button>
         <button
-          className="Button hover:bg-[#005B97] hover:text-white py-2 px-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-full drop-shadow-lg font-semibold"
+          className="Button rounded-full bg-white bg-opacity-50 py-2 px-4 font-semibold drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white"
           value="Swimming"
           onClick={handleClickSortSwim}
         >
           SWIM
         </button>
         <div className="Button rounded-full">
-          <div className="dropdown inline-block relative">
-            <div className="hover:bg-[#005B97] hover:text-white bg-white bg-opacity-50 backdrop-blur-sm drop-shadow-lg text-black font-semibold py-2 px-4 rounded-full inline-flex items-center">
+          <div className="dropdown relative inline-block">
+            <div className="inline-flex items-center rounded-full bg-white bg-opacity-50 py-2 px-4 font-semibold text-black drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white">
               <button className="mr-1" value="Bike">
                 Other
               </button>
               <svg
-                className="fill-current h-4 w-4"
+                className="h-4 w-4 fill-current"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
               >
@@ -116,23 +118,23 @@ const Header = ({ allUsers, getUsers, setAllUsers }: HeaderProps): JSX.Element =
               </svg>
             </div>
 
-            <div className="dropdown-menu absolute hidden text-gray-700 pt-1">
+            <div className="dropdown-menu absolute hidden pt-1 text-gray-700">
               <button
-                className=" bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap"
+                className="whitespace-no-wrap block w-[150px] bg-white py-2 px-4 hover:bg-gray-400"
                 value="Weight training"
                 onClick={handleClickSortOther}
               >
                 Weight training
               </button>
               <button
-                className=" bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap"
+                className="whitespace-no-wrap block w-[150px] bg-white py-2 px-4 hover:bg-gray-400"
                 value="Cycling"
                 onClick={handleClickSortOther}
               >
                 Cycling
               </button>
               <button
-                className="rounded-b bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap"
+                className="whitespace-no-wrap block w-[150px] rounded-b bg-white py-2 px-4 hover:bg-gray-400"
                 value="Walking"
                 onClick={handleClickSortOther}
               >
@@ -157,4 +159,3 @@ const Header = ({ allUsers, getUsers, setAllUsers }: HeaderProps): JSX.Element =
 };
 
 export default Header;
-

@@ -8,7 +8,11 @@ interface PageItem {
 
 const Footer: React.FC = () => {
   let [number, setNumber] = useState<number>(1);
-  const pages: PageItem[] = [{ page: number }, { page: number + 1 }, { page: number + 2 }];
+  const pages: PageItem[] = [
+    { page: number },
+    { page: number + 1 },
+    { page: number + 2 },
+  ];
 
   const Next = (): void => {
     setNumber(++number);
@@ -19,20 +23,19 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-[100%] mb-5">
+    <div className="mb-5 flex w-[100%] items-center justify-center">
       <button
         onClick={Back}
-        className="bg-white bg-opacity-50 backdrop-blur-xl rounded-l-lg border-r-0 flex content-center justify-center h-12 border-2 w-12
-      hover:bg-[#f08080] hover:text-white"
+        className="flex h-12 w-12 content-center justify-center rounded-l-lg border-2 border-r-0 bg-white bg-opacity-50 backdrop-blur-xl hover:bg-[#f08080] hover:text-white"
       >
-        <FiChevronLeft className="w-4 h-4 mt-3" />
+        <FiChevronLeft className="mt-3 h-4 w-4" />
       </button>
       {pages.map((page, index) => {
         if (page.page === number) {
           return (
             <button
               key={index}
-              className="bg-white bg-opacity-50 backdrop-blur-xl h-12 border-2 border-r-0 w-12"
+              className="h-12 w-12 border-2 border-r-0 bg-white bg-opacity-50 backdrop-blur-xl"
             >
               {page.page}
             </button>
@@ -41,7 +44,7 @@ const Footer: React.FC = () => {
           return (
             <button
               key={index}
-              className="bg-white bg-opacity-50 backdrop-blur-xl h-12 border-2 border-r-0 w-12"
+              className="h-12 w-12 border-2 border-r-0 bg-white bg-opacity-50 backdrop-blur-xl"
             >
               {page.page}
             </button>
@@ -50,10 +53,9 @@ const Footer: React.FC = () => {
       })}
       <button
         onClick={Next}
-        className="bg-white bg-opacity-50 backdrop-blur-xl rounded-r-lg flex content-center justify-center h-12 border-2 border-r-2 w-12
-      hover:bg-[#f08080] hover:text-white"
+        className="flex h-12 w-12 content-center justify-center rounded-r-lg border-2 border-r-2 bg-white bg-opacity-50 backdrop-blur-xl hover:bg-[#f08080] hover:text-white"
       >
-        <FiChevronRight className="w-4 h-4 mt-3" />
+        <FiChevronRight className="mt-3 h-4 w-4" />
       </button>
     </div>
   );

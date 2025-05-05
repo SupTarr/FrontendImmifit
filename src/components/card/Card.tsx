@@ -1,11 +1,10 @@
 import React from "react";
-import axios, { AxiosResponse, AxiosRequestConfig } from "../../api/axios";
+import axios from "../../api/axios";
+import { AxiosRequestConfig } from "axios";
 import "./card.css";
 import moment from "moment";
-import { useEffect, useState, MouseEvent } from "react";
-import { useNavigate, useLocation, Location, NavigateFunction } from "react-router-dom";
+import { useNavigate, useLocation, NavigateFunction } from "react-router-dom";
 
-// Interface for Activity
 interface ActivityItem {
   activity_id: string;
   title: string;
@@ -17,10 +16,9 @@ interface ActivityItem {
   img: {
     url: string;
   };
-  [key: string]: any; // Allow for additional properties
+  [key: string]: any;
 }
 
-// Interface for Card component props
 interface CardProps {
   item: ActivityItem;
   setAllUsers: React.Dispatch<React.SetStateAction<ActivityItem[]>>;
@@ -36,7 +34,13 @@ const config: AxiosRequestConfig = {
   },
 };
 
-const Card = ({ item, setAllUsers, allUsers, getUsers }: CardProps): JSX.Element => {
+interface LocationState {
+  from?: {
+    pathname: string;
+  };
+}
+
+const Card = ({ item, setAllUsers, allUsers }: CardProps): JSX.Element => {
   // const [newActivity, setNewActivity] = useState([]);
   // const title_name = item.start
   const now: Date = new Date(item.end_time);
@@ -52,7 +56,9 @@ const Card = ({ item, setAllUsers, allUsers, getUsers }: CardProps): JSX.Element
 
   // navigate
   const navigate: NavigateFunction = useNavigate();
-  const location: Location = useLocation();
+  const location = useLocation() as unknown as Location & {
+    state: LocationState;
+  };
 
   const handleClickEditCard = (): void => {
     const from: string =
@@ -65,7 +71,9 @@ const Card = ({ item, setAllUsers, allUsers, getUsers }: CardProps): JSX.Element
       // e.preventDefault();
       const activityId: string = item.activity_id;
       await axios.delete(`/activities/${activityId}`, config);
-      const newActivity: ActivityItem[] = allUsers.filter((item) => item.activity_id !== activityId);
+      const newActivity: ActivityItem[] = allUsers.filter(
+        (item) => item.activity_id !== activityId,
+      );
       // console.log(setAllUsers)
       setAllUsers(newActivity);
       // setNewActivity(newActivity);
@@ -79,15 +87,15 @@ const Card = ({ item, setAllUsers, allUsers, getUsers }: CardProps): JSX.Element
 
   return (
     <div>
-      <div className="flex justify-around mx-auto">
-        <figure className="snip1174 hover:bg-white rounded-[40px]">
+      <div className="mx-auto flex justify-around">
+        <figure className="snip1174 rounded-[40px] hover:bg-white">
           <img
             src={item.img.url}
             alt="imgcard"
-            className="block rounded-[40px] border shadow-md hover:bg-white dark:bg-gray-800 dark:border-gray-700  dark:hover:bg-gray-700 sm:mx-auto "
+            className="block rounded-[40px] border shadow-md hover:bg-white dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 sm:mx-auto"
           />
           <figcaption>
-            <h5 className="mb-2 tracking-tight text-md text-black font-bold">
+            <h5 className="text-md mb-2 font-bold tracking-tight text-black">
               {item.title}
             </h5>
             <div className="grid grid-cols-2">
@@ -119,15 +127,13 @@ const Card = ({ item, setAllUsers, allUsers, getUsers }: CardProps): JSX.Element
 
               <div className="grid grid-cols-2 gap-24">
                 <button
-                  className="bg-[#F08080] hover:bg-[#ff5757] text-white font-bold px-10 py-2 shadow-md hover:shadow-lg rounded flex justify-center"
+                  className="flex justify-center rounded bg-[#F08080] px-10 py-2 font-bold text-white shadow-md hover:bg-[#ff5757] hover:shadow-lg"
                   onClick={handleClickEditCard}
                 >
                   Edit
                 </button>
                 <button
-                  className="
-                bg-[#F08080] hover:bg-[#ff5757] text-white font-bold px-10 py-2 
-                shadow-md hover:shadow-lg rounded flex justify-center"
+                  className="flex justify-center rounded bg-[#F08080] px-10 py-2 font-bold text-white shadow-md hover:bg-[#ff5757] hover:shadow-lg"
                   onClick={handleDeleteClick}
                 >
                   Delete
@@ -142,4 +148,3 @@ const Card = ({ item, setAllUsers, allUsers, getUsers }: CardProps): JSX.Element
 };
 
 export default Card;
-

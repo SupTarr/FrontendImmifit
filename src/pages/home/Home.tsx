@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../components/header/Header";
 import Container from "../../components/container/Container";
-import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/navbar/Navbar";
 import "./home.css";
 import Profile from "../profile/Profile";
@@ -40,7 +38,9 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchUserProfile = async (): Promise<void> => {
       try {
-        const res: AxiosResponse<UserResponse> = await axios.get(`/users/${auth.user_id}`);
+        const res: AxiosResponse<UserResponse> = await axios.get(
+          `/users/${auth.user_id}`,
+        );
         if (res.data.profile !== undefined) {
           setProfile(res.data.profile);
           if (res.data.profile !== null) {
@@ -58,18 +58,18 @@ const Home: React.FC = () => {
   return (
     <div className="home min-h-screen">
       <div>
-        <Navbar createdProfile={createdProfile} />
-        <div className="flex tablet:flex-col max-w-[1450px] mx-auto">
-          <div className="Profile w-[40%] tablet:w-[100%] max-h-[700px]">
+        <Navbar />
+        <div className="mx-auto flex max-w-[1450px] tablet:flex-col">
+          <div className="Profile max-h-[700px] w-[40%] tablet:w-[100%]">
             <Profile
               username={user}
               createdProfile={createdProfile}
               profile={profile}
             />
           </div>
-          <div className="Activities w-[60%] tablet:w-[95%] tablet:mx-[2.5%] mx-5 bg-[#fbc3bc] rounded-xl">
+          <div className="Activities mx-5 w-[60%] rounded-xl bg-[#fbc3bc] tablet:mx-[2.5%] tablet:w-[95%]">
             {/* <Header /> */}
-            <div className="flex justify-around flex-wrap">
+            <div className="flex flex-wrap justify-around">
               <Container username={user} />
             </div>
             {/* <Footer /> */}

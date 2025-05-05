@@ -2,9 +2,9 @@ import { axiosPrivate } from "../api/axios";
 import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
 import useAuth from "./useAuth";
-import { AxiosError, AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
+import { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 
-interface ExtendedAxiosRequestConfig extends InternalAxiosRequestConfig {
+interface ExtendedAxiosRequestConfig extends AxiosRequestConfig {
   sent?: boolean;
 }
 
@@ -14,13 +14,17 @@ const useAxiosPrivate = (): AxiosInstance => {
 
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
-      (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+      (config: AxiosRequestConfig): AxiosRequestConfig => {
+        if (!config.headers) {
+          config.headers = {};
+        }
+
         if (!config.headers["Authorization"]) {
           config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
         }
         return config;
       },
-      (error: AxiosError): Promise<AxiosError> => Promise.reject(error)
+      (error: AxiosError): Promise<AxiosError> => Promise.reject(error),
     );
 
     const responseIntercept = axiosPrivate.interceptors.response.use(
@@ -30,11 +34,15 @@ const useAxiosPrivate = (): AxiosInstance => {
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true;
           const newAccessToken = await refresh();
+          if (!prevRequest.headers) {
+            prevRequest.headers = {};
+          }
+
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return axiosPrivate(prevRequest);
         }
         return Promise.reject(error);
-      }
+      },
     );
 
     return () => {
@@ -47,4 +55,3 @@ const useAxiosPrivate = (): AxiosInstance => {
 };
 
 export default useAxiosPrivate;
-

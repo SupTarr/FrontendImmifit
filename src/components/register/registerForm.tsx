@@ -1,11 +1,16 @@
-import React, { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
+import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
   faTimes,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate, useLocation, Location, NavigateFunction } from "react-router-dom";
+import {
+  useNavigate,
+  useLocation,
+  Location,
+  NavigateFunction,
+} from "react-router-dom";
 import validator from "validator";
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from "axios";
 import "./registerForm.css";
@@ -28,16 +33,22 @@ const config: AxiosRequestConfig = {
   },
 };
 
+interface LocationState {
+  from?: {
+    pathname: string;
+  };
+}
+
 const Registerdetail = (): JSX.Element => {
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
 
   const navigate: NavigateFunction = useNavigate();
-  const location: Location = useLocation();
+  const location = useLocation() as Location & { state: LocationState };
   const from: string = location.state?.from?.pathname || "/login";
 
-  const [allEmail, setAllEmail] = useState<string[]>([]);
-  const [allUsername, setAllUsername] = useState<string[]>([]);
+  const [allEmail] = useState<string[]>([]);
+  const [allUsername] = useState<string[]>([]);
 
   const [user, setUser] = useState<string>("");
   const [validUser, setValidUser] = useState<boolean>(false);
@@ -59,6 +70,7 @@ const Registerdetail = (): JSX.Element => {
   const [success, setSuccess] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log(success);
     userRef.current?.focus();
   }, []);
 
@@ -125,30 +137,30 @@ const Registerdetail = (): JSX.Element => {
 
   return (
     <div className="login relative sm:h-screen">
-      <div className="flex flex-col justify-center items-center sm:pt-16 h-[100%]">
-        <div className="max-w-5xl flex flex-col justify-center sm:flex-row mobile:m-10">
+      <div className="flex h-[100%] flex-col items-center justify-center sm:pt-16">
+        <div className="flex max-w-5xl flex-col justify-center mobile:m-10 sm:flex-row">
           <img
-            className="shadow-md sm:rounded-l-xl object-cover  sm:max-w-[200px] md:max-w-sm lg:max-w-lg xl:max-w-xl"
+            className="object-cover shadow-md sm:max-w-[200px] sm:rounded-l-xl md:max-w-sm lg:max-w-lg xl:max-w-xl"
             src="../../imagecard2.jpg"
             alt="imagecard"
           ></img>
           <form
-            className="flex flex-col justify-center bg-white shadow-md sm:rounded-r-xl px-5 md:max-w-[250px] xl:max-w-[350px] py-5"
+            className="flex flex-col justify-center bg-white px-5 py-5 shadow-md sm:rounded-r-xl md:max-w-[250px] xl:max-w-[350px]"
             onSubmit={handleSubmit}
           >
-            <div className="flex text-gray-700 text-2xl font-bold mb-10">
+            <div className="mb-10 flex text-2xl font-bold text-gray-700">
               Sign up
             </div>
             <p
               ref={errRef}
-              className={errMsg ? "errmsg text-red-500 mb-5" : "offscreen"}
+              className={errMsg ? "errmsg mb-5 text-red-500" : "offscreen"}
               aria-live="assertive"
             >
               {errMsg}
             </p>
             <div className="mb-4">
               <label
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className="mb-2 block text-sm font-bold text-gray-700"
                 htmlFor="username"
               >
                 Username :
@@ -162,7 +174,7 @@ const Registerdetail = (): JSX.Element => {
                 />
               </label>
               <input
-                className="shadow appearance-none border-b border-[#32312d] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline w-full appearance-none rounded border-b border-[#32312d] py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                 id="username"
                 value={user}
                 ref={userRef}
@@ -174,7 +186,9 @@ const Registerdetail = (): JSX.Element => {
                 aria-describedby="uidnote"
                 onFocus={() => setUserFocus(true)}
                 onBlur={() => setUserFocus(false)}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setUser(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setUser(e.target.value)
+                }
               />
               <p
                 id="uidnote"
@@ -191,7 +205,7 @@ const Registerdetail = (): JSX.Element => {
             </div>
             <div className="mb-4">
               <label
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className="mb-2 block text-sm font-bold text-gray-700"
                 htmlFor="email"
               >
                 Email :
@@ -205,7 +219,7 @@ const Registerdetail = (): JSX.Element => {
                 />
               </label>
               <input
-                className="appearance-non rounded border-b border-[#32312d] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-non focus:shadow-outline w-full rounded border-b border-[#32312d] py-2 px-3 leading-tight text-gray-700 focus:outline-none"
                 id="email"
                 value={email}
                 type="email"
@@ -215,7 +229,9 @@ const Registerdetail = (): JSX.Element => {
                 placeholder="example@lmmifit.com"
                 onFocus={() => setEmailFocus(true)}
                 onBlur={() => setEmailFocus(false)}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.target.value)
+                }
               />
               <p
                 id="uidnote"
@@ -231,7 +247,7 @@ const Registerdetail = (): JSX.Element => {
             </div>
             <div className="mb-4">
               <label
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className="mb-2 block text-sm font-bold text-gray-700"
                 htmlFor="password"
               >
                 Password :
@@ -245,7 +261,7 @@ const Registerdetail = (): JSX.Element => {
                 />
               </label>
               <input
-                className="appearance-non rounded border-b border-[#32312d] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-non focus:shadow-outline w-full rounded border-b border-[#32312d] py-2 px-3 leading-tight text-gray-700 focus:outline-none"
                 id="password"
                 value={password}
                 type="password"
@@ -255,7 +271,9 @@ const Registerdetail = (): JSX.Element => {
                 placeholder="******************"
                 onFocus={() => setPasswordFocus(true)}
                 onBlur={() => setPasswordFocus(false)}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setPassword(e.target.value)
+                }
               />
               <p
                 id="pwdnote"
@@ -270,12 +288,12 @@ const Registerdetail = (): JSX.Element => {
                 - Must include uppercase and lowercase letters, a number and a
                 special character.
                 <br />- Allowed special characters:{" "}
-                <span className="font-semibold text-xs">@ # $ %</span>
+                <span className="text-xs font-semibold">@ # $ %</span>
               </p>
             </div>
             <div className="mb-4">
               <label
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className="mb-2 block text-sm font-bold text-gray-700"
                 htmlFor="password"
               >
                 Confirm Password :
@@ -289,7 +307,7 @@ const Registerdetail = (): JSX.Element => {
                 />
               </label>
               <input
-                className="appearance-non rounded border-b border-[#32312d] w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-non focus:shadow-outline w-full rounded border-b border-[#32312d] py-2 px-3 leading-tight text-gray-700 focus:outline-none"
                 id="confirm_password"
                 type="password"
                 placeholder="******************"
@@ -299,7 +317,9 @@ const Registerdetail = (): JSX.Element => {
                 aria-describedby="confirmnote"
                 onFocus={() => setConPassFocus(true)}
                 onBlur={() => setConPassFocus(false)}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => setConPass(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  setConPass(e.target.value)
+                }
               />
               <p
                 id="confirmnote"
@@ -312,15 +332,15 @@ const Registerdetail = (): JSX.Element => {
                 input field.
               </p>
             </div>
-            <p className="text-gray-700 text-sm mb-6">
+            <p className="mb-6 text-sm text-gray-700">
               Already registered?{" "}
-              <a href="/login" className="font-bold text-sm">
+              <a href="/login" className="text-sm font-bold">
                 Login
               </a>
             </p>
             <div className="flex items-center justify-between align-middle">
               <button
-                className="bg-[#E4665F] hover:bg-[#EDC8D5] text-white font-bold w-full py-2 rounded focus:outline-none focus:shadow-outline"
+                className="focus:shadow-outline w-full rounded bg-[#E4665F] py-2 font-bold text-white hover:bg-[#EDC8D5] focus:outline-none"
                 type="submit"
                 disabled={
                   !validUser || !validEmail || !validPassword || !validConPass
@@ -339,4 +359,3 @@ const Registerdetail = (): JSX.Element => {
 };
 
 export default Registerdetail;
-
