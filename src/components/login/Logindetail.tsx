@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
+import { useNavigate, useLocation, Location, NavigateFunction } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,7 +8,7 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import "./logindetail.css";
-import axios from "../../api/axios";
+import axios, { AxiosError, AxiosResponse, AxiosRequestConfig } from "../../api/axios";
 // import Facebook from './facebook.png'
 // import Line from './line.png'
 // import Tel from './telephone.png'
@@ -17,7 +17,13 @@ import axios from "../../api/axios";
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const config = {
+interface AuthResponse {
+  user_id: string;
+  accessToken: string;
+  roles: string[];
+}
+
+const config: AxiosRequestConfig = {
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": [
@@ -28,25 +34,25 @@ const config = {
   },
 };
 
-const Logindetail = () => {
+const Logindetail = (): JSX.Element => {
   const { setAuth } = useAuth();
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const navigate: NavigateFunction = useNavigate();
+  const location: Location = useLocation();
+  const from: string = location.state?.from?.pathname || "/";
 
-  const userRef = useRef();
-  const errRef = useRef();
+  const userRef = useRef<HTMLInputElement>(null);
+  const errRef = useRef<HTMLParagraphElement>(null);
 
-  const [user, setUser] = useState("");
-  const [validUser, setValidUser] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
+  const [user, setUser] = useState<string>("");
+  const [validUser, setValidUser] = useState<boolean>(false);
+  const [userFocus, setUserFocus] = useState<boolean>(false);
 
-  const [password, setPassword] = useState("");
-  const [validPassword, setValidPassword] = useState(false);
-  const [passwordFocus, setPasswordFocus] = useState(false);
+  const [password, setPassword] = useState<string>("");
+  const [validPassword, setValidPassword] = useState<boolean>(false);
+  const [passwordFocus, setPasswordFocus] = useState<boolean>(false);
 
-  const [errMsg, setErrMsg] = useState("");
+  const [errMsg, setErrMsg] = useState<string>("");
 
   useEffect(() => {
     setValidUser(USER_REGEX.test(user));
@@ -60,10 +66,10 @@ const Logindetail = () => {
     setErrMsg("");
   }, [user, password]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      const response: AxiosResponse<AuthResponse> = await axios.post(
         "/auth",
         JSON.stringify({ username: user, password: password }),
         config,
@@ -79,16 +85,17 @@ const Logindetail = () => {
       setPassword("");
       navigate(from, { replace: true });
     } catch (err) {
-      if (!err?.response) {
+      const error = err as AxiosError;
+      if (!error?.response) {
         setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
+      } else if (error.response?.status === 400) {
         setErrMsg("Missing Username or Password");
-      } else if (err.response?.status === 401) {
+      } else if (error.response?.status === 401) {
         setErrMsg("Unauthorized");
       } else {
         setErrMsg("Login Failed");
       }
-      errRef.current.focus();
+      errRef.current?.focus();
     }
   };
 
@@ -146,7 +153,7 @@ const Logindetail = () => {
                 aria-describedby="uidnote"
                 onFocus={() => setUserFocus(true)}
                 onBlur={() => setUserFocus(false)}
-                onChange={(e) => setUser(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setUser(e.target.value)}
               />
               <p
                 id="uidnote"
@@ -189,7 +196,7 @@ const Logindetail = () => {
                 aria-describedby="pwdnote"
                 onFocus={() => setPasswordFocus(true)}
                 onBlur={() => setPasswordFocus(false)}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
               />
               <p
                 id="pwdnote"
@@ -238,3 +245,4 @@ const Logindetail = () => {
 };
 
 export default Logindetail;
+

@@ -1,19 +1,26 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
   faTimes,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Location, NavigateFunction } from "react-router-dom";
 import validator from "validator";
-import axios from "axios";
+import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from "axios";
 import "./registerForm.css";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const config = {
+interface RegisterResponse {
+  username: string;
+  email: string;
+  accessToken?: string;
+  id?: string;
+}
+
+const config: AxiosRequestConfig = {
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
@@ -21,38 +28,38 @@ const config = {
   },
 };
 
-const Registerdetail = () => {
-  const userRef = useRef();
-  const errRef = useRef();
+const Registerdetail = (): JSX.Element => {
+  const userRef = useRef<HTMLInputElement>(null);
+  const errRef = useRef<HTMLParagraphElement>(null);
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/login";
+  const navigate: NavigateFunction = useNavigate();
+  const location: Location = useLocation();
+  const from: string = location.state?.from?.pathname || "/login";
 
-  const [allEmail, setAllEmail] = useState([]);
-  const [allUsername, setAllUsername] = useState([]);
+  const [allEmail, setAllEmail] = useState<string[]>([]);
+  const [allUsername, setAllUsername] = useState<string[]>([]);
 
-  const [user, setUser] = useState("");
-  const [validUser, setValidUser] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
+  const [user, setUser] = useState<string>("");
+  const [validUser, setValidUser] = useState<boolean>(false);
+  const [userFocus, setUserFocus] = useState<boolean>(false);
 
-  const [email, setEmail] = useState("");
-  const [validEmail, setValidEmail] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [validEmail, setValidEmail] = useState<boolean>(false);
+  const [emailFocus, setEmailFocus] = useState<boolean>(false);
 
-  const [password, setPassword] = useState("");
-  const [validPassword, setValidPassword] = useState(false);
-  const [passwordFocus, setPasswordFocus] = useState(false);
+  const [password, setPassword] = useState<string>("");
+  const [validPassword, setValidPassword] = useState<boolean>(false);
+  const [passwordFocus, setPasswordFocus] = useState<boolean>(false);
 
-  const [conPass, setConPass] = useState("");
-  const [validConPass, setValidConPass] = useState(false);
-  const [conPassFocus, setConPassFocus] = useState(false);
+  const [conPass, setConPass] = useState<string>("");
+  const [validConPass, setValidConPass] = useState<boolean>(false);
+  const [conPassFocus, setConPassFocus] = useState<boolean>(false);
 
-  const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [errMsg, setErrMsg] = useState<string>("");
+  const [success, setSuccess] = useState<boolean>(false);
 
   useEffect(() => {
-    userRef.current.focus();
+    userRef.current?.focus();
   }, []);
 
   useEffect(() => {
@@ -61,7 +68,7 @@ const Registerdetail = () => {
       setErrMsg("Username already exists");
       setValidUser(false);
     }
-  }, [user]);
+  }, [user, allUsername]);
 
   useEffect(() => {
     setValidEmail(validator.isEmail(email));
@@ -69,7 +76,7 @@ const Registerdetail = () => {
       setErrMsg("Email already exists");
       setValidEmail(false);
     }
-  }, [email]);
+  }, [email, allEmail]);
 
   useEffect(() => {
     setValidPassword(PWD_REGEX.test(password));
@@ -80,20 +87,20 @@ const Registerdetail = () => {
     setErrMsg("");
   }, [user, password, conPass]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (!USER_REGEX.test(user) || !PWD_REGEX.test(password)) {
       setErrMsg("Invalid Entry");
       return;
     }
     try {
-      const response = await axios.post(
+      const response: AxiosResponse<RegisterResponse> = await axios.post(
         "https://immifit-backend.vercel.app/users",
         JSON.stringify({ username: user, email: email, password: password }),
         config,
       );
       console.log(response?.data);
-      console.log(response?.accessToken);
+      console.log(response?.data?.accessToken);
       console.log(response);
       setSuccess(true);
       //clear state and controlled inputs
@@ -104,14 +111,15 @@ const Registerdetail = () => {
       setConPass("");
       navigate(from, { replace: true });
     } catch (err) {
-      if (!err?.response) {
+      const error = err as AxiosError;
+      if (!error?.response) {
         setErrMsg("No Server Response");
-      } else if (err.response?.status === 409) {
+      } else if (error.response?.status === 409) {
         setErrMsg("Username Taken");
       } else {
         setErrMsg("Registration Failed");
       }
-      errRef.current.focus();
+      errRef.current?.focus();
     }
   };
 
@@ -166,7 +174,7 @@ const Registerdetail = () => {
                 aria-describedby="uidnote"
                 onFocus={() => setUserFocus(true)}
                 onBlur={() => setUserFocus(false)}
-                onChange={(e) => setUser(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setUser(e.target.value)}
               />
               <p
                 id="uidnote"
@@ -207,7 +215,7 @@ const Registerdetail = () => {
                 placeholder="example@lmmifit.com"
                 onFocus={() => setEmailFocus(true)}
                 onBlur={() => setEmailFocus(false)}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               />
               <p
                 id="uidnote"
@@ -247,7 +255,7 @@ const Registerdetail = () => {
                 placeholder="******************"
                 onFocus={() => setPasswordFocus(true)}
                 onBlur={() => setPasswordFocus(false)}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
               />
               <p
                 id="pwdnote"
@@ -291,7 +299,7 @@ const Registerdetail = () => {
                 aria-describedby="confirmnote"
                 onFocus={() => setConPassFocus(true)}
                 onBlur={() => setConPassFocus(false)}
-                onChange={(e) => setConPass(e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setConPass(e.target.value)}
               />
               <p
                 id="confirmnote"
@@ -331,3 +339,4 @@ const Registerdetail = () => {
 };
 
 export default Registerdetail;
+

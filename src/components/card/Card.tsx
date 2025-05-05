@@ -1,11 +1,34 @@
 import React from "react";
-import axios from "../../api/axios";
+import axios, { AxiosResponse, AxiosRequestConfig } from "../../api/axios";
 import "./card.css";
 import moment from "moment";
-import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState, MouseEvent } from "react";
+import { useNavigate, useLocation, Location, NavigateFunction } from "react-router-dom";
 
-const config = {
+// Interface for Activity
+interface ActivityItem {
+  activity_id: string;
+  title: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  activity_type: string;
+  description: string;
+  img: {
+    url: string;
+  };
+  [key: string]: any; // Allow for additional properties
+}
+
+// Interface for Card component props
+interface CardProps {
+  item: ActivityItem;
+  setAllUsers: React.Dispatch<React.SetStateAction<ActivityItem[]>>;
+  allUsers: ActivityItem[];
+  getUsers?: () => void;
+}
+
+const config: AxiosRequestConfig = {
   headers: {
     "Content-Type": "application/json",
     "Aceess-Control-Allow-Origin": "*",
@@ -13,41 +36,41 @@ const config = {
   },
 };
 
-const Card = ({ item, setAllUsers, allUsers, getUsers }, props) => {
+const Card = ({ item, setAllUsers, allUsers, getUsers }: CardProps): JSX.Element => {
   // const [newActivity, setNewActivity] = useState([]);
   // const title_name = item.start
-  var now = new Date(item.end_time);
-  var then = new Date(item.start_time);
-  var datetime = new Date(item.date);
-  var date = moment(datetime).format("DD/MM/YYYY");
+  const now: Date = new Date(item.end_time);
+  const then: Date = new Date(item.start_time);
+  const datetime: Date = new Date(item.date);
+  const date: string = moment(datetime).format("DD/MM/YYYY");
   // console.log(datetime)
   // console.log(item.activity_id)
 
   console.log(item);
-  var duration = (now - then) / 60000;
+  const duration: number = (now.getTime() - then.getTime()) / 60000;
   // console.log(duration)
 
   // navigate
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate: NavigateFunction = useNavigate();
+  const location: Location = useLocation();
 
-  const handleClickEditCard = () => {
-    const from =
+  const handleClickEditCard = (): void => {
+    const from: string =
       location.state?.from?.pathname || `/form?activity_id=${item.activity_id}`;
     navigate(from, { replace: true });
   };
 
-  const handleDeleteClick = async (id) => {
+  const handleDeleteClick = async (): Promise<void> => {
     try {
       // e.preventDefault();
-      const id = item.activity_id;
-      await axios.delete(`/activities/${item.activity_id}`, config);
-      const newActivity = allUsers.filter((item) => item.activity_id !== id);
+      const activityId: string = item.activity_id;
+      await axios.delete(`/activities/${activityId}`, config);
+      const newActivity: ActivityItem[] = allUsers.filter((item) => item.activity_id !== activityId);
       // console.log(setAllUsers)
       setAllUsers(newActivity);
       // setNewActivity(newActivity);
 
-      console.log(id);
+      console.log(activityId);
       // console.log(newActivity)
     } catch (error) {
       console.log(error);
@@ -96,7 +119,6 @@ const Card = ({ item, setAllUsers, allUsers, getUsers }, props) => {
 
               <div className="grid grid-cols-2 gap-24">
                 <button
-                  href="/form/"
                   className="bg-[#F08080] hover:bg-[#ff5757] text-white font-bold px-10 py-2 shadow-md hover:shadow-lg rounded flex justify-center"
                   onClick={handleClickEditCard}
                 >
@@ -107,7 +129,6 @@ const Card = ({ item, setAllUsers, allUsers, getUsers }, props) => {
                 bg-[#F08080] hover:bg-[#ff5757] text-white font-bold px-10 py-2 
                 shadow-md hover:shadow-lg rounded flex justify-center"
                   onClick={handleDeleteClick}
-                  getUsers={getUsers}
                 >
                   Delete
                 </button>
@@ -121,3 +142,4 @@ const Card = ({ item, setAllUsers, allUsers, getUsers }, props) => {
 };
 
 export default Card;
+

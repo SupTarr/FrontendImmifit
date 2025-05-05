@@ -1,59 +1,78 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useContext, useEffect, useState, MouseEvent } from "react";
 import { Route, Link, BrowserRouter as Router } from "react-router-dom";
-//  Context
-// import { NewActContext } from "../card/Card";
 import "./header.css";
-// import {handleBtns} from "../../components/container/Container";
 import Card from "../card/Card";
-import { useEffect, useState } from "react";
-import axios from "../../api/axios";
+import axios, { AxiosResponse } from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import { AuthContextType } from "../../context/AuthProvider";
 
-const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
-  // const { newActivity, setNewActivity} = useContext(NewActContext);
+// Interface for Activity
+interface ActivityItem {
+  activity_id: string;
+  title: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  activity_type: string;
+  description: string;
+  img: {
+    url: string;
+    name?: string;
+  };
+  [key: string]: any;
+}
+
+// Interface for Header component props
+interface HeaderProps {
+  allUsers: ActivityItem[];
+  getUsers: () => Promise<void>;
+  setAllUsers: React.Dispatch<React.SetStateAction<ActivityItem[]>>;
+}
+
+const Header = ({ allUsers, getUsers, setAllUsers }: HeaderProps): JSX.Element => {
   const { auth } = useAuth();
 
-  // const [isDeleted, setIsDeleted] = useState([])
   console.log("this is allusers", allUsers);
 
-  const fetchDataByType = async (type) => {
+  const fetchDataByType = async (type?: string): Promise<void> => {
     console.log("this is users", allUsers);
     console.log("This is type", type);
 
+    if (!type || !auth.user) return;
+
     try {
-      console.log(props, type, allUsers);
-      //
-      // const filterType = allUsers
-      const res = await axios.get(`/activities/bytype/${auth.user}/${type}`);
+      console.log(type, allUsers);
+      const res: AxiosResponse<ActivityItem[]> = await axios.get(`/activities/bytype/${auth.user}/${type}`);
       console.log("fetchDatabyType", res.data);
       setAllUsers(res.data);
-      // setAllUsers(filterType);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
     getUsers();
-    fetchDataByType();
   }, []);
 
-  const handleClickSortAll = (e) => {
+  const handleClickSortAll = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     getUsers();
   };
-  const handleClickSortRun = (e) => {
+
+  const handleClickSortRun = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     fetchDataByType("Running");
   };
-  const handleClickSortSwim = (e) => {
+
+  const handleClickSortSwim = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     fetchDataByType("Swimming");
   };
-  const handleClickSortOther = (e) => {
+
+  const handleClickSortOther = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    fetchDataByType(e.target.value);
+    const target = e.target as HTMLButtonElement;
+    fetchDataByType(target.value);
   };
 
   return (
@@ -100,7 +119,6 @@ const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
             <div className="dropdown-menu absolute hidden text-gray-700 pt-1">
               <button
                 className=" bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap"
-                href="#"
                 value="Weight training"
                 onClick={handleClickSortOther}
               >
@@ -108,7 +126,6 @@ const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
               </button>
               <button
                 className=" bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap"
-                href="#"
                 value="Cycling"
                 onClick={handleClickSortOther}
               >
@@ -116,7 +133,6 @@ const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
               </button>
               <button
                 className="rounded-b bg-white hover:bg-gray-400 py-2 px-4 w-[150px] block whitespace-no-wrap"
-                href="#"
                 value="Walking"
                 onClick={handleClickSortOther}
               >
@@ -127,17 +143,18 @@ const Header = ({ allUsers, getUsers, setAllUsers }, props) => {
         </div>
       </div>
 
-      {/* ✅ check if array before calling `map()` */}
-      {/* <div className="Card flex flex-row flex-wrap ">
-        {allUsers.map((user, index) => (
-            <Card 
+      {/* ✅ commented code properly typed
+      <div className="Card flex flex-row flex-wrap ">
+        {allUsers.map((user: ActivityItem, index: number) => (
+          <Card 
             key={index} 
             user={user}
-             />
-          ))}
-      </div>   */}
+          />
+        ))}
+      </div> */}
     </div>
   );
 };
 
 export default Header;
+

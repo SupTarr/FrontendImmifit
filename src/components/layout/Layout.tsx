@@ -1,6 +1,7 @@
+import React from "react";
 import { Outlet } from "react-router-dom";
 
-const Layout = () => {
+const Layout = (): JSX.Element => {
   return (
     <main className="App">
       <Outlet />
@@ -9,3 +10,4 @@ const Layout = () => {
 };
 
 export default Layout;
+

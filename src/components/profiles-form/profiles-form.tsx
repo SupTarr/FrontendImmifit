@@ -1,66 +1,122 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import axios from "../../api/axios";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import axios, { AxiosResponse } from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavigateFunction, Location } from "react-router-dom";
 
-function Profileform() {
-  const { auth } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+// Define interfaces
+interface ProfileData {
+  username: string;
+  about: string;
+  gender: string;
+  age: string | number;
+  height: string | number;
+  weight: string | number;
+  bmi: string | number;
+}
 
-  const [about, setAbout] = useState("");
-  const [gender, setGender] = useState("Male");
-  const [age, setAge] = useState("");
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
-  const [bmi, setBmi] = useState("");
+interface ProfileResponse {
+  profile: {
+    about?: string;
+    gender?: string;
+    age?: string | number;
+    height?: string | number;
+    weight?: string | number;
+    bmi?: string | number;
+    [key: string]: any; // For any additional properties
+  };
+  [key: string]: any; // For any additional properties
+}
 
-  const [formErrors, setFormErrors] = useState({});
+interface FormErrors {
+  about?: string;
+  age?: string;
+  height?: string;
+  weight?: string;
+  [key: string]: string | undefined;
+}
+
+interface AuthState {
+  user: string;
+  user_id: string;
+  accessToken?: string;
+  // Add other auth properties as needed
+}
+
+interface FormValues {
+  about: string;
+  gender: string;
+  age: string | number;
+  height: string | number;
+  weight: string | number;
+}
+
+const Profileform: React.FC = () => {
+  const { auth } = useAuth() as { auth: AuthState };
+  const navigate: NavigateFunction = useNavigate();
+  const location: Location = useLocation();
+  const from: string = location.state?.from?.pathname || "/";
+
+  const [about, setAbout] = useState<string>("");
+  const [gender, setGender] = useState<string>("Male");
+  const [age, setAge] = useState<string>("");
+  const [height, setHeight] = useState<string>("");
+  const [weight, setWeight] = useState<string>("");
+  const [bmi, setBmi] = useState<string>("");
+
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
 
   console.log(about, gender, age, height, weight, bmi);
 
   useEffect(() => {
-    axios.get(`/users/${auth.user_id}`).then((res) => {
-      setAbout(res.data.profile.about || "");
-      setGender(res.data.profile.gender || "");
-      setAge(res.data.profile.age || "");
-      setHeight(res.data.profile.height || "");
-      setWeight(res.data.profile.weight || "");
-      setBmi(res.data.profile.bmi || "");
-    });
-  }, []);
+    axios.get<ProfileResponse>(`/users/${auth.user_id}`)
+      .then((res: AxiosResponse<ProfileResponse>) => {
+        setAbout(res.data.profile?.about || "");
+        setGender(res.data.profile?.gender || "Male");
+        setAge(res.data.profile?.age?.toString() || "");
+        setHeight(res.data.profile?.height?.toString() || "");
+        setWeight(res.data.profile?.weight?.toString() || "");
+        setBmi(res.data.profile?.bmi?.toString() || "");
+      })
+      .catch((error) => {
+        console.error("Error fetching profile:", error);
+      });
+  }, [auth.user_id]);
 
-  const onChangeAbout = (e) => {
+  const onChangeAbout = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     setAbout(e.target.value);
   };
 
-  const onChangeGender = (e) => {
+  const onChangeGender = (e: ChangeEvent<HTMLSelectElement>): void => {
     setGender(e.target.value);
   };
 
-  const onChangeAge = (e) => {
-    if (e.target.value > 0 && e.target.value <= 150) {
+  const onChangeAge = (e: ChangeEvent<HTMLInputElement>): void => {
+    const value = parseInt(e.target.value);
+    if (value > 0 && value <= 150) {
       setAge(e.target.value);
     }
   };
 
-  const onChangeHeight = (e) => {
-    if (e.target.value > 0 && e.target.value <= 300) {
+  const onChangeHeight = (e: ChangeEvent<HTMLInputElement>): void => {
+    const value = parseInt(e.target.value);
+    if (value > 0 && value <= 300) {
       setHeight(e.target.value);
     }
   };
 
-  const onChangeWeight = (e) => {
-    if (e.target.value > 0 && e.target.value <= 200) {
+  const onChangeWeight = (e: ChangeEvent<HTMLInputElement>): void => {
+    const value = parseInt(e.target.value);
+    if (value > 0 && value <= 200) {
       setWeight(e.target.value);
     }
   };
 
   useEffect(() => {
-    if (height > 0 && weight > 0) {
-      setBmi(Math.round(weight / (height / 100) ** 2));
+    const heightNum = parseFloat(height);
+    const weightNum = parseFloat(weight);
+    if (heightNum > 0 && weightNum > 0) {
+      const bmiValue = Math.round(weightNum / (heightNum / 100) ** 2);
+      setBmi(bmiValue.toString());
     }
   }, [weight, height]);
 
@@ -68,10 +124,10 @@ function Profileform() {
     setFormErrors(validate({ about, gender, age, height, weight }));
   }, [about, gender, age, height, weight]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
     if (about && gender && age && height && weight) {
-      e.preventDefault();
-      const profile = {
+      const profile: ProfileData = {
         username: auth.user,
         about: about,
         gender: gender,
@@ -80,19 +136,25 @@ function Profileform() {
         weight: weight,
         bmi: bmi,
       };
-      await axios.post(`/users/profile`, profile);
-      setAbout("");
-      setGender("");
-      setAge("");
-      setHeight("");
-      setWeight("");
-      setBmi("");
-      navigate(from, { replace: true });
+      
+      try {
+        await axios.post(`/users/profile`, profile);
+        // Reset form
+        setAbout("");
+        setGender("Male");
+        setAge("");
+        setHeight("");
+        setWeight("");
+        setBmi("");
+        navigate(from, { replace: true });
+      } catch (error) {
+        console.error("Error saving profile:", error);
+      }
     }
   };
 
-  const validate = (values) => {
-    const errors = {};
+  const validate = (values: FormValues): FormErrors => {
+    const errors: FormErrors = {};
     if (!values.about) {
       errors.about = "About is required!";
     }
@@ -304,6 +366,6 @@ function Profileform() {
       </div>
     </div>
   );
-}
+};
 
 export default Profileform;

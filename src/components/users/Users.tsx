@@ -1,27 +1,38 @@
 import { useState, useEffect } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, NavigateFunction, Location } from "react-router-dom";
+import { AxiosInstance, AxiosResponse, AxiosError } from "axios";
 
-const Users = () => {
-  const [users, setUsers] = useState();
-  const axiosPrivate = useAxiosPrivate();
-  const navigate = useNavigate();
-  const location = useLocation();
+// Define interface for user data
+interface User {
+  username: string;
+  id?: string;
+  email?: string;
+  roles?: string[];
+  [key: string]: any; // For any additional properties
+}
+
+const Users: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const axiosPrivate: AxiosInstance = useAxiosPrivate();
+  const navigate: NavigateFunction = useNavigate();
+  const location: Location = useLocation();
 
   useEffect(() => {
     let isMounted = true;
     // AbortController : cancel our request if the component unmounts
     const controller = new AbortController();
 
-    const getUsers = async () => {
+  const getUsers = async (): Promise<void> => {
       try {
-        const response = await axiosPrivate.get("/users", {
+        const response: AxiosResponse<User[]> = await axiosPrivate.get("/users", {
           signal: controller.signal,
         });
         console.log(response.data);
         isMounted && setUsers(response.data);
       } catch (err) {
-        console.error(err);
+        const error = err as AxiosError;
+        console.error(error);
         navigate("/login", { state: { from: location }, replace: true });
       }
     };
