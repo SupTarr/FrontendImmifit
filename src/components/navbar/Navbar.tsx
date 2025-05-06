@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./navbar.css";
-import Logo from "./immifit.svg";
+import Logo from "/immifit.svg";
 import AuthContext from "../../context/AuthProvider";
 import {
   useNavigate,
