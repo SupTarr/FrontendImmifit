@@ -87,7 +87,7 @@ const Forgetpassword: React.FC = () => {
         <div className="flex max-w-5xl flex-col justify-center mobile:m-10 sm:flex-row">
           <img
             className="object-cover shadow-md sm:max-w-[200px] sm:rounded-l-xl md:max-w-sm lg:max-w-lg xl:max-w-xl"
-            src="../../public/imagecard2.jpg"
+            src="/imagecard2.jpg"
             alt="imagecard"
           />
           {submitSuccess ? (
