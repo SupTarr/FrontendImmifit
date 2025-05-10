@@ -76,8 +76,8 @@ const Logindetail = (): JSX.Element => {
     e.preventDefault();
     try {
       const response: AxiosResponse<AuthResponse> = await axios.post(
-        "/auth",
-        JSON.stringify({ username: user, password: password }),
+        "/auth/login",
+        JSON.stringify({ email: user, password: password }),
         config,
       );
       console.log(JSON.stringify(response?.data));
