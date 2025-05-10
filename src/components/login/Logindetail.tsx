@@ -28,6 +28,8 @@ interface AuthResponse {
 const config: AxiosRequestConfig = {
   headers: {
     "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "https://immifit.suptarr.vercel.app",
+    "Access-Control-Allow-Credentials": "true",
   },
   withCredentials: true,
 };
