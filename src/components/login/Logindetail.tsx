@@ -28,10 +28,8 @@ interface AuthResponse {
 const config: AxiosRequestConfig = {
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin":
-      "http://127.0.0.1:5173,https://immifit.vercel.app/",
-    withCredentials: "true",
   },
+  withCredentials: true,
 };
 
 interface LocationState {
