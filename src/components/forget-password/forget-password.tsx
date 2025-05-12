@@ -11,7 +11,6 @@ interface FormErrors {
 }
 
 const Forgetpassword: React.FC = () => {
-  // State for form data and validation
   const [formData, setFormData] = useState<FormState>({
     email: "",
   });
@@ -20,7 +19,6 @@ const Forgetpassword: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitSuccess, setSubmitSuccess] = useState<boolean>(false);
 
-  // Handle input changes
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = e.target;
     setFormData({
@@ -28,7 +26,6 @@ const Forgetpassword: React.FC = () => {
       [id]: value,
     });
 
-    // Clear error when user types
     if (formErrors[id as keyof FormErrors]) {
       setFormErrors({
         ...formErrors,
@@ -37,12 +34,10 @@ const Forgetpassword: React.FC = () => {
     }
   };
 
-  // Form validation
   const validateForm = (): boolean => {
     const errors: FormErrors = {};
     let isValid = true;
 
-    // Email validation
     if (!formData.email) {
       errors.email = "Email is required";
       isValid = false;
@@ -55,7 +50,6 @@ const Forgetpassword: React.FC = () => {
     return isValid;
   };
 
-  // Handle form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
@@ -63,7 +57,6 @@ const Forgetpassword: React.FC = () => {
       setIsSubmitting(true);
 
       try {
-        // Replace with your actual API endpoint for password reset
         await axios.post("/auth/forgot-password", {
           email: formData.email,
         });

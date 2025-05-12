@@ -107,9 +107,6 @@ const Logindetail = (): JSX.Element => {
 
   return (
     <div className="login relative sm:h-screen">
-      {/* <button className='w-[50px]'>
-          <img src={Back} alt="" />
-        </button> */}
       <div className="flex h-[100%] flex-col items-center justify-center sm:pt-16">
         <div className="flex max-w-5xl flex-col justify-center mobile:m-10 sm:flex-row">
           <img
@@ -234,11 +231,6 @@ const Logindetail = (): JSX.Element => {
                 Log in
               </button>
             </div>
-            {/* <div className="flex flex-col-3 mt-4 justify-around">
-              <a href="#"><img src={Facebook} alt="facebook" className='w-[50px]' /></a>
-              <a href="#"><img src={Line} alt="Line" className='w-[50px]' /></a>
-              <a href="#"><img src={Tel} alt="Tel" className='w-[50px]' /></a>
-            </div> */}
             <div className="mt-8 flex flex-1 justify-center">
               <p className="text-sm text-gray-700">
                 Don't have an account?{" "}

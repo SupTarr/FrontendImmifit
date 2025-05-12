@@ -4,23 +4,16 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/register";
 import RequireAuth from "./components/requireAuth/RequireAuth";
-// import Passreset from "./pages/password-reset/password-reset";
-// import Forgotpassword from "./pages/forgot-password/forgot-password";
 import Profilesform from "./pages/profiles-form/profiles-form";
 
 import Layout from "./components/layout/Layout";
 
-// Define role types using an interface
 interface RolesType {
   User: string;
-  Editor: string;
-  Admin: string;
 }
 
 const ROLES: RolesType = {
   User: "1000",
-  Editor: "2000",
-  Admin: "3000",
 };
 
 const App: React.FC = () => {
@@ -30,20 +23,11 @@ const App: React.FC = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
 
-        {/* we want to protect these routes */}
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
           <Route path="/" element={<Home />} />
           <Route path="form" element={<Form />} />
           <Route path="form_profile" element={<Profilesform />} />
         </Route>
-
-        {/* 
-        <Route path="/password_reset/" element={<Passreset />} />
-        <Route path="/forget_password/" element={<Forgotpassword />} />
-        <Route path="/form/:id" element={<Form />} />
-        <Route path="/login/:id" element={<Login />} />
-        <Route path="/register/:id" element={<Register />} /> 
-        */}
       </Route>
     </Routes>
   );

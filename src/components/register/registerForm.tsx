@@ -115,8 +115,6 @@ const Registerdetail = (): JSX.Element => {
       console.log(response?.data?.accessToken);
       console.log(response);
       setSuccess(true);
-      //clear state and controlled inputs
-      //need value attrib on inputs for this
       setUser("");
       setEmail("");
       setPassword("");

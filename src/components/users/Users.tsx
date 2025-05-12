@@ -8,13 +8,12 @@ import {
 } from "react-router-dom";
 import { AxiosInstance, AxiosResponse, AxiosError } from "axios";
 
-// Define interface for user data
 interface User {
   username: string;
   id?: string;
   email?: string;
   roles?: string[];
-  [key: string]: any; // For any additional properties
+  [key: string]: any;
 }
 
 const Users: React.FC = () => {
@@ -25,9 +24,7 @@ const Users: React.FC = () => {
 
   useEffect(() => {
     let isMounted = true;
-    // AbortController : cancel our request if the component unmounts
     const controller = new AbortController();
-
     const getUsers = async (): Promise<void> => {
       try {
         const response: AxiosResponse<User[]> = await axiosPrivate.get(

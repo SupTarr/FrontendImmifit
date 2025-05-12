@@ -7,25 +7,20 @@ import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import { AxiosResponse } from "axios";
 
-// Define interfaces for the data types
 interface UserAuth {
   user: string;
-  user_id: string;
-  // Add other auth properties that might be used
+  userId: string;
 }
 
 interface ProfileData {
-  // Define profile properties based on your API response
   id?: number;
   name?: string;
   email?: string;
-  // Add other profile fields as needed
-  [key: string]: any; // Allow for additional dynamic properties
+  [key: string]: any;
 }
 
 interface UserResponse {
   profile?: ProfileData;
-  // Add other response properties if needed
 }
 
 const Home: React.FC = () => {
@@ -39,7 +34,7 @@ const Home: React.FC = () => {
     const fetchUserProfile = async (): Promise<void> => {
       try {
         const res: AxiosResponse<UserResponse> = await axios.get(
-          `/users/${auth.user_id}`,
+          `/users/${auth.userId}`,
         );
         if (res.data.profile !== undefined) {
           setProfile(res.data.profile);
@@ -53,7 +48,7 @@ const Home: React.FC = () => {
     };
 
     fetchUserProfile();
-  }, [auth.user_id]); // Add auth.user_id as dependency
+  }, [auth.userId]);
 
   return (
     <div className="home min-h-screen">
@@ -68,11 +63,9 @@ const Home: React.FC = () => {
             />
           </div>
           <div className="Activities mx-5 w-[60%] rounded-xl bg-[#fbc3bc] tablet:mx-[2.5%] tablet:w-[95%]">
-            {/* <Header /> */}
             <div className="flex flex-wrap justify-around">
               <Container username={user} />
             </div>
-            {/* <Footer /> */}
           </div>
         </div>
       </div>

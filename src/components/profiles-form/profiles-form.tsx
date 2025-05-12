@@ -28,9 +28,9 @@ interface ProfileResponse {
     height?: string | number;
     weight?: string | number;
     bmi?: string | number;
-    [key: string]: any; // For any additional properties
+    [key: string]: any;
   };
-  [key: string]: any; // For any additional properties
+  [key: string]: any;
 }
 
 interface FormErrors {
@@ -145,7 +145,6 @@ const Profileform: React.FC = () => {
 
       try {
         await axios.post(`/users/profile`, profile);
-        // Reset form
         setAbout("");
         setGender("Male");
         setAge("");
@@ -178,51 +177,8 @@ const Profileform: React.FC = () => {
 
   return (
     <div className="mx-auto my-5 h-[100%] w-[100%] rounded-xl bg-[#fbc3bc]">
-      {/* <div className="flex items-end w-[100%] h-[300px] mx-auto bg-[#5F576C] rounded-t-xl"></div> */}
       <div className="mx-auto ml-5 pt-10">
         <form onSubmit={handleSubmit}>
-          {/* <div >
-						<label
-							className="block mb-2 text-sm font-medium text-gray-900"
-							htmlFor="file_input"
-						>
-							Upload Profile
-						</label>
-						<input
-							className="block w-[75%] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-							aria-describedby="file_input_help"
-							id="profle_pic"
-							type="file"
-						></input>
-						<p
-							className="mt-1 text-sm text-gray-500"
-							id="file_input_help"
-						>
-							SVG, PNG, JPG or GIF (MAX. 800x400px).
-						</p>
-					</div>
-
-					<div className="py-5">
-						<label
-							className="block mb-2 text-sm font-medium text-gray-900"
-							htmlFor="file_input"
-						>
-							Upload Cover
-						</label>
-						<input
-							className="block w-[75%] text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-							aria-describedby="file_input_help"
-							id="profile_cover"
-							type="file"
-						></input>
-						<p
-							className="mt-1 text-sm text-gray-500"
-							id="file_input_help"
-						>
-							SVG, PNG, JPG or GIF (MAX. 1980x1080px).
-						</p>
-					</div> */}
-
           <div>
             <label
               htmlFor="about"

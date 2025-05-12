@@ -1,8 +1,13 @@
-import { axiosPrivate } from "../api/axios";
+import axiosInstance from "../api/axios";
 import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
 import useAuth from "./useAuth";
-import { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import {
+  AxiosResponse,
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+} from "axios";
 
 interface ExtendedAxiosRequestConfig extends AxiosRequestConfig {
   sent?: boolean;
@@ -13,7 +18,7 @@ const useAxiosPrivate = (): AxiosInstance => {
   const { auth } = useAuth();
 
   useEffect(() => {
-    const requestIntercept = axiosPrivate.interceptors.request.use(
+    const requestIntercept = axiosInstance.interceptors.request.use(
       (config: AxiosRequestConfig): AxiosRequestConfig => {
         if (!config.headers) {
           config.headers = {};
@@ -27,31 +32,31 @@ const useAxiosPrivate = (): AxiosInstance => {
       (error: AxiosError): Promise<AxiosError> => Promise.reject(error),
     );
 
-    const responseIntercept = axiosPrivate.interceptors.response.use(
-      (response) => response,
+    const responseIntercept = axiosInstance.interceptors.response.use(
+      (response: AxiosResponse) => response,
       async (error: AxiosError): Promise<any> => {
         const prevRequest = error?.config as ExtendedAxiosRequestConfig;
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true;
-          const newAccessToken = await refresh();
+          const newAccessToken: string | undefined = await refresh();
           if (!prevRequest.headers) {
             prevRequest.headers = {};
           }
 
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-          return axiosPrivate(prevRequest);
+          return axiosInstance(prevRequest);
         }
         return Promise.reject(error);
       },
     );
 
     return () => {
-      axiosPrivate.interceptors.request.eject(requestIntercept);
-      axiosPrivate.interceptors.response.eject(responseIntercept);
+      axiosInstance.interceptors.request.eject(requestIntercept);
+      axiosInstance.interceptors.response.eject(responseIntercept);
     };
   }, [auth, refresh]);
 
-  return axiosPrivate;
+  return axiosInstance;
 };
 
 export default useAxiosPrivate;

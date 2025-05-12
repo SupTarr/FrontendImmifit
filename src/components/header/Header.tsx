@@ -78,8 +78,6 @@ const Header = ({
   };
 
   return (
-    // filter
-    // ["Running", "Cycling", "Swimming", "Weight training", "Walking"]
     <div className="Header relative z-40 mt-5 flex flex-wrap justify-between md:w-[450px] xl:w-[700px]">
       <div className="Container rounded-full bg-white bg-opacity-50 drop-shadow-lg backdrop-blur-sm">
         <button
@@ -144,16 +142,6 @@ const Header = ({
           </div>
         </div>
       </div>
-
-      {/* ✅ commented code properly typed
-      <div className="Card flex flex-row flex-wrap ">
-        {allUsers.map((user: ActivityItem, index: number) => (
-          <Card 
-            key={index} 
-            user={user}
-          />
-        ))}
-      </div> */}
     </div>
   );
 };

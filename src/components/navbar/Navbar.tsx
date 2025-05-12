@@ -54,7 +54,6 @@ function Navbar(): JSX.Element {
     <div className="rounded-b-xl bg-[#fbc3bc]">
       <div className="flex-col-2 navbar mx-auto mb-5 flex max-w-[1200px]">
         <img src={Logo} alt="logo" className="max-w-[80px]" />
-        {/* <div className="welcome"><p className="text-xl">Welcome to your exercise tracker</p></div> */}
         <div className="navbar-text flex mobile:hidden">
           <button
             onClick={handleClickHome}
