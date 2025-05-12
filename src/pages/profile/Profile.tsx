@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import { AuthState } from "../../context/AuthProvider";
 
-// Define interfaces for the Profile props and data structures
 interface ProfileData {
   about?: string;
   gender?: string;
@@ -16,7 +15,7 @@ interface ProfileData {
   height?: number;
   weight?: number;
   bmi?: number;
-  [key: string]: any; // For any additional properties
+  [key: string]: any;
 }
 
 interface ProfileProps {

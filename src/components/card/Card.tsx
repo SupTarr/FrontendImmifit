@@ -41,20 +41,14 @@ interface LocationState {
 }
 
 const Card = ({ item, setAllUsers, allUsers }: CardProps): JSX.Element => {
-  // const [newActivity, setNewActivity] = useState([]);
-  // const title_name = item.start
   const now: Date = new Date(item.end_time);
   const then: Date = new Date(item.start_time);
   const datetime: Date = new Date(item.date);
   const date: string = moment(datetime).format("DD/MM/YYYY");
-  // console.log(datetime)
-  // console.log(item.activity_id)
 
   console.log(item);
   const duration: number = (now.getTime() - then.getTime()) / 60000;
-  // console.log(duration)
 
-  // navigate
   const navigate: NavigateFunction = useNavigate();
   const location = useLocation() as unknown as Location & {
     state: LocationState;
@@ -68,18 +62,14 @@ const Card = ({ item, setAllUsers, allUsers }: CardProps): JSX.Element => {
 
   const handleDeleteClick = async (): Promise<void> => {
     try {
-      // e.preventDefault();
       const activityId: string = item.activity_id;
       await axios.delete(`/activities/${activityId}`, config);
       const newActivity: ActivityItem[] = allUsers.filter(
         (item) => item.activity_id !== activityId,
       );
-      // console.log(setAllUsers)
-      setAllUsers(newActivity);
-      // setNewActivity(newActivity);
 
+      setAllUsers(newActivity);
       console.log(activityId);
-      // console.log(newActivity)
     } catch (error) {
       console.log(error);
     }

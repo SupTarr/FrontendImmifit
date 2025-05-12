@@ -2,10 +2,8 @@ import React, { FormEvent } from "react";
 import "./password-reset.css";
 
 const Passwordreset: React.FC = () => {
-  // Function to handle form submission
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    // Add form submission logic here
     console.log("Password reset form submitted");
   };
 

@@ -40,7 +40,6 @@ const Container = (props: ContainerProps): JSX.Element => {
       const data: ActivityItem[] = await response.json();
       console.log(data);
       setAllUsers(data);
-      // setUsers(data)
     } catch (error) {
       console.error("Error fetching activities:", error);
     }
@@ -48,38 +47,7 @@ const Container = (props: ContainerProps): JSX.Element => {
 
   useEffect(() => {
     getUsers();
-  }, [props.username]); // Added props.username as dependency to reflect changes when username changes
-
-  // Commented code kept for reference, properly typed
-  /*
-  const [activities, setActivities] = useState<ActivityItem[]>([]);
-  
-  const updateActivity = async (id: string): Promise<void> => {
-    try {
-      const idx = activities.findIndex((activity) => activity._id === id);
-      const newActivity = [...activities];
-
-      let updateData = {
-        img: {
-          name: selectedImgFile.name,
-        },
-        title: title,
-        activity_type: type,
-        date: date,
-        start_time: new Date(`${date} ${startTime}`),
-        end_time: new Date(`${date} ${endTime}`),
-        description: description,
-      };
-
-      const res = await axios.put(`/activity_id/${id}`, updateData);
-      newActivity[idx] = res.data;
-      setActivities(newActivity);
-      getUsers();
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  */
+  }, [props.username]);
 
   return (
     <div>

@@ -6,22 +6,9 @@ const defaultConfig: AxiosRequestConfig = {
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "https://immifit.suptarr.vercel.app",
-    "Access-Control-Allow-Credentials": "true",
-  },
-  withCredentials: true,
-};
-
-const privateConfig: AxiosRequestConfig = {
-  baseURL: BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
   },
   withCredentials: true,
 };
 
 const axiosInstance: AxiosInstance = axios.create(defaultConfig);
-
-export const axiosPrivate: AxiosInstance = axios.create(privateConfig);
-
 export default axiosInstance;

@@ -129,7 +129,6 @@ const FormDetail: React.FC = () => {
     }
   }, [description]);
 
-  // Editing
   useEffect(() => {
     const activityId = searchParams.get("activity_id");
     if (!activityId) return;
@@ -138,10 +137,6 @@ const FormDetail: React.FC = () => {
       .get<ActivityResponse>(`/activities/byid/${activityId}`)
       .then((res: AxiosResponse<ActivityResponse>) => {
         console.log(res.data.date);
-        // const date = new Date(res.data.date);
-        // setImgInputState(res.data.img.name || '')
-        // setPreviewImgSource(res.data.img.name || '')
-        // setSelectedImgFile(res.data.img.name || '')
         var dateObj = new Date(res.data.date);
 
         var day = ("0" + dateObj.getDate()).slice(-2);
@@ -235,7 +230,6 @@ const FormDetail: React.FC = () => {
           await axios.post("/activities", activity);
         }
 
-        // Reset form state
         setImgInputState("");
         setPreviewImgSource("");
         setSelectedImgFile(undefined);
