@@ -1,5 +1,5 @@
 import { useReducer, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import EmailInput from "../components/EmailInput";
 import PasswordInput from "../components/PasswordInput";
 import Button from "../components/Button";
@@ -28,11 +28,15 @@ type LoginState = {
 interface LoginResponse {
   body: {
     accessToken: string;
-  }
+  };
 }
 
 const LoginContainer = () => {
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const [state, dispatch] = useReducer(
     (state: LoginState, action: LoginAction): LoginState => {
       switch (action.type) {
@@ -76,7 +80,6 @@ const LoginContainer = () => {
         },
       );
 
-      console.log("Login response:", response.data);
       dispatch({ type: "setEmail", email: "" });
       dispatch({ type: "setPassword", password: "" });
       dispatch({
@@ -85,7 +88,8 @@ const LoginContainer = () => {
         errorMessage: null,
       });
 
-      setAuth({ accessToken: response.data.body.accessToken });
+      setAuth({ ...auth, accessToken: response.data.body.accessToken });
+      navigate(from, { replace: true });
     } catch (err) {
       const error = err as AxiosError<any>;
       dispatch({

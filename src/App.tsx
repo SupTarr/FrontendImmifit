@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider";
 import Form from "./pages/form/Form";
 import Home from "./pages/home/Home";
-import RequireAuth from "./components/requireAuth/RequireAuth";
+import RequireAuth from "./components/RequireAuth.tsx";
 import DelayRender from "./components/DelayRender";
 import Profilesform from "./pages/profiles-form/profiles-form";
 
@@ -12,13 +12,7 @@ const Page404 = lazy(() => import("./pages/Page404.tsx"));
 const PageLogin = lazy(() => import("./pages/PageLogin.tsx"));
 const PageRegister = lazy(() => import("./pages/PageRegister.tsx"));
 
-interface RolesType {
-  User: string;
-}
 
-const ROLES: RolesType = {
-  User: "1000",
-};
 
 const App: React.FC = () => {
   return (
@@ -29,7 +23,7 @@ const App: React.FC = () => {
             <Route path="login" element={<PageLogin />} />
             <Route path="register" element={<PageRegister />} />
 
-            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+            <Route element={<RequireAuth />}>
               <Route path="/" element={<Home />} />
               <Route path="form" element={<Form />} />
               <Route path="form_profile" element={<Profilesform />} />

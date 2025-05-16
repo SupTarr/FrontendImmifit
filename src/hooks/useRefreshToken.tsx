@@ -1,7 +1,6 @@
 import axiosInstance from "../api/axios.js";
 import { AxiosResponse } from "axios";
 import useAuth from "./useAuth";
-import { AuthState } from "../context/AuthProvider";
 import { jwtDecode } from "jwt-decode";
 
 interface RefreshResponse {
