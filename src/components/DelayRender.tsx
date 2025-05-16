@@ -1,5 +1,5 @@
-import React, { useState, useEffect, ReactNode, lazy } from 'react';
-const PageLoading = lazy(() => import('../pages/PageLoading'));
+import React, { useState, useEffect, ReactNode, lazy } from "react";
+const PageLoading = lazy(() => import("../pages/PageLoading"));
 
 interface DelayedRenderProps {
   children: ReactNode;

@@ -18,4 +18,4 @@ const Textbox = ({ name, value, onChange }: PropsType) => {
   );
 };
 
-export default Textbox ;
+export default Textbox;

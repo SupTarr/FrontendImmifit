@@ -77,7 +77,7 @@ const Forgetpassword: React.FC = () => {
   return (
     <div className="forgetPassword relative sm:h-screen">
       <div className="flex h-[100vh] flex-col items-center justify-center sm:pt-16">
-        <div className="flex max-w-5xl flex-col justify-center mobile:m-10 sm:flex-row">
+        <div className="mobile:m-10 flex max-w-5xl flex-col justify-center sm:flex-row">
           <img
             className="object-cover shadow-md sm:max-w-[200px] sm:rounded-l-xl md:max-w-sm lg:max-w-lg xl:max-w-xl"
             src="/imagecard2.jpg"
@@ -118,7 +118,7 @@ const Forgetpassword: React.FC = () => {
                 <input
                   className={`appearance-none border-b shadow ${
                     formErrors.email ? "border-red-500" : "border-[#32312d]"
-                  } focus:shadow-outline w-full rounded py-2 px-3 leading-tight text-gray-700 focus:outline-none`}
+                  } focus:shadow-outline w-full rounded px-3 py-2 leading-tight text-gray-700 focus:outline-none`}
                   id="email"
                   type="email"
                   placeholder="example@immifit.com"
@@ -126,7 +126,7 @@ const Forgetpassword: React.FC = () => {
                   onChange={handleChange}
                 />
                 {formErrors.email && (
-                  <p className="mt-1 text-xs italic text-red-500">
+                  <p className="mt-1 text-xs text-red-500 italic">
                     {formErrors.email}
                   </p>
                 )}

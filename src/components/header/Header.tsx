@@ -79,23 +79,23 @@ const Header = ({
 
   return (
     <div className="Header relative z-40 mt-5 flex flex-wrap justify-between md:w-[450px] xl:w-[700px]">
-      <div className="Container rounded-full bg-white bg-opacity-50 drop-shadow-lg backdrop-blur-sm">
+      <div className="Container bg-opacity-50 rounded-full bg-white drop-shadow-lg backdrop-blur-sm">
         <button
-          className="Button rounded-full bg-white bg-opacity-50 py-2 px-4 font-semibold drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white"
+          className="Button bg-opacity-50 rounded-full bg-white px-4 py-2 font-semibold drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white"
           value="All"
           onClick={handleClickSortAll}
         >
           ALL
         </button>
         <button
-          className="Button rounded-full bg-white bg-opacity-50 py-2 px-4 font-semibold drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white"
+          className="Button bg-opacity-50 rounded-full bg-white px-4 py-2 font-semibold drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white"
           value="Running"
           onClick={handleClickSortRun}
         >
           RUN
         </button>
         <button
-          className="Button rounded-full bg-white bg-opacity-50 py-2 px-4 font-semibold drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white"
+          className="Button bg-opacity-50 rounded-full bg-white px-4 py-2 font-semibold drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white"
           value="Swimming"
           onClick={handleClickSortSwim}
         >
@@ -103,7 +103,7 @@ const Header = ({
         </button>
         <div className="Button rounded-full">
           <div className="dropdown relative inline-block">
-            <div className="inline-flex items-center rounded-full bg-white bg-opacity-50 py-2 px-4 font-semibold text-black drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white">
+            <div className="bg-opacity-50 inline-flex items-center rounded-full bg-white px-4 py-2 font-semibold text-black drop-shadow-lg backdrop-blur-sm hover:bg-[#005B97] hover:text-white">
               <button className="mr-1" value="Bike">
                 Other
               </button>
@@ -118,21 +118,21 @@ const Header = ({
 
             <div className="dropdown-menu absolute hidden pt-1 text-gray-700">
               <button
-                className="whitespace-no-wrap block w-[150px] bg-white py-2 px-4 hover:bg-gray-400"
+                className="whitespace-no-wrap block w-[150px] bg-white px-4 py-2 hover:bg-gray-400"
                 value="Weight training"
                 onClick={handleClickSortOther}
               >
                 Weight training
               </button>
               <button
-                className="whitespace-no-wrap block w-[150px] bg-white py-2 px-4 hover:bg-gray-400"
+                className="whitespace-no-wrap block w-[150px] bg-white px-4 py-2 hover:bg-gray-400"
                 value="Cycling"
                 onClick={handleClickSortOther}
               >
                 Cycling
               </button>
               <button
-                className="whitespace-no-wrap block w-[150px] rounded-b bg-white py-2 px-4 hover:bg-gray-400"
+                className="whitespace-no-wrap block w-[150px] rounded-b bg-white px-4 py-2 hover:bg-gray-400"
                 value="Walking"
                 onClick={handleClickSortOther}
               >
