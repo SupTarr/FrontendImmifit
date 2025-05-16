@@ -1,5 +1,6 @@
 import { useReducer } from "react";
 import { Link } from "react-router-dom";
+import EmailInput from "../components/EmailInput.tsx";
 import TextInput from "../components/TextInput.tsx";
 import PasswordInput from "../components/PasswordInput";
 import { Login } from "../Links.tsx";
@@ -56,7 +57,7 @@ const RegisterContainer = () => {
   return (
     <form className="register-container flex flex-col justify-center content-center h-full">
       <h2 className="card-title">Register</h2>
-      <TextInput
+      <EmailInput
         name="Email"
         onChange={(v: string) => dispatch({ type: "setEmail", email: v })}
       />
