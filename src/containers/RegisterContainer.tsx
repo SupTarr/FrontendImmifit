@@ -1,24 +1,43 @@
-import { useReducer } from "react";
-import { Link } from "react-router-dom";
+import { useReducer, FormEvent } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { AxiosResponse, AxiosError } from "axios";
+import axiosInstance from "../api/axios.js";
 import EmailInput from "../components/EmailInput.tsx";
 import TextInput from "../components/TextInput.tsx";
 import PasswordInput from "../components/PasswordInput";
+import Button from "../components/Button";
+import Alert from "../components/Alert";
 import { Login } from "../Links.tsx";
 
 type RegisterAction =
   | { type: "setEmail"; email: string }
   | { type: "setUsername"; username: string }
   | { type: "setPassword"; password: string }
-  | { type: "setConfirmPassword"; confirmPassword: string };
+  | { type: "setConfirmPassword"; confirmPassword: string }
+  | {
+      type: "setHandleSubmit";
+      isLoading: boolean;
+      errorMessage: string | null;
+    };
 
 type RegisterState = {
   email: string;
   username: string;
   password: string;
   confirmPassword: string;
+  isLoading: boolean;
+  errorMessage: string | null;
 };
 
+interface RegisterResponse {
+  status: string;
+}
+
 const RegisterContainer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || Login;
+
   const [state, dispatch] = useReducer(
     (state: RegisterState, action: RegisterAction): RegisterState => {
       switch (action.type) {
@@ -42,6 +61,12 @@ const RegisterContainer = () => {
             ...state,
             confirmPassword: action.confirmPassword,
           };
+        case "setHandleSubmit":
+          return {
+            ...state,
+            isLoading: action.isLoading,
+            errorMessage: action.errorMessage,
+          };
         default:
           return state;
       }
@@ -51,11 +76,55 @@ const RegisterContainer = () => {
       username: "",
       password: "",
       confirmPassword: "",
+      isLoading: false,
+      errorMessage: null,
     },
   );
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    dispatch({ type: "setHandleSubmit", isLoading: true, errorMessage: null });
+    e.preventDefault();
+    try {
+      const response: AxiosResponse<RegisterResponse> =
+        await axiosInstance.post("/auth/register", {
+          email: state.email,
+          username: state.username,
+          password: state.password,
+        });
+
+      if (!response.data) {
+        throw new Error("No response data");
+      }
+
+      dispatch({ type: "setEmail", email: "" });
+      dispatch({ type: "setUsername", username: "" });
+      dispatch({ type: "setPassword", password: "" });
+      dispatch({ type: "setConfirmPassword", confirmPassword: "" });
+      dispatch({
+        type: "setHandleSubmit",
+        isLoading: false,
+        errorMessage: null,
+      });
+
+      navigate(from, { replace: true });
+    } catch (err) {
+      const error = err as AxiosError<any>;
+      dispatch({
+        type: "setHandleSubmit",
+        isLoading: false,
+        errorMessage:
+          error?.response?.data?.message || "Register Failed. Please try again.",
+      });
+
+      console.error("Login error:", error.response || error.message);
+    }
+  };
+
   return (
-    <form className="register-container flex h-full flex-col content-center justify-center">
+    <form
+      className="register-container flex h-full flex-col content-center justify-center"
+      onSubmit={handleSubmit}
+    >
       <h2 className="card-title">Register</h2>
       <EmailInput
         name="Email"
@@ -79,9 +148,8 @@ const RegisterContainer = () => {
           dispatch({ type: "setConfirmPassword", confirmPassword: v })
         }
       />
-      <button className="btn btn-neutral mt-4" type="submit">
-        Register
-      </button>
+      <Button name="Register" isLoading={state.isLoading} />
+      {state.errorMessage && <Alert message={state.errorMessage} />}
       <p className="my-3 flex-grow-0">
         Already registered?
         <span className="ml-1 flex-grow-0">

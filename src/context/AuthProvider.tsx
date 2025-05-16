@@ -26,7 +26,7 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
   const [auth, setAuth] = useState<AuthState>(() => {
-    const storedData = localStorage.getItem('token');
+    const storedData = localStorage.getItem("authData");
     if (storedData) {
       try {
         return JSON.parse(storedData);
@@ -34,22 +34,22 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
         console.error("Failed to parse stored auth data", e);
       }
     }
+
     return {
       userId: null,
       roles: [],
       accessToken: null,
-      user: null
     };
   });
 
   const updateAuth = (newAuthData: Partial<AuthState>) => {
     const updatedAuth = { ...auth, ...newAuthData };
     setAuth(updatedAuth);
-    
+
     if (updatedAuth.accessToken) {
-      localStorage.setItem('token', JSON.stringify(updatedAuth));
+      localStorage.setItem("authData", JSON.stringify(updatedAuth));
     } else {
-      localStorage.removeItem('token');
+      localStorage.removeItem("authData");
     }
   };
 
