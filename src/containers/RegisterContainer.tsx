@@ -7,7 +7,7 @@ import TextInput from "../components/TextInput.tsx";
 import PasswordInput from "../components/PasswordInput";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
-import { Login } from "../Links.tsx";
+import { Login } from "../const/Links.ts";
 
 type RegisterAction =
   | { type: "setEmail"; email: string }
@@ -92,8 +92,8 @@ const RegisterContainer = () => {
           password: state.password,
         });
 
-      if (!response.data) {
-        throw new Error("No response data");
+      if (response.data.status !== "SUCCESS") {
+        throw new Error("Login failed");
       }
 
       dispatch({ type: "setEmail", email: "" });

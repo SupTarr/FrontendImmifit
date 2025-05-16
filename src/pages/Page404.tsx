@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Login } from "../Links.tsx";
+import { Login } from "../const/Links.ts";
 
 const Page404 = () => {
   return (

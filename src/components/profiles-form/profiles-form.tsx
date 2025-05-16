@@ -74,7 +74,7 @@ const Profileform: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get<ProfileResponse>(`/users/${auth.user_id}`)
+      .get<ProfileResponse>(`/users/${auth.userId}`)
       .then((res: AxiosResponse<ProfileResponse>) => {
         setAbout(res.data.profile?.about || "");
         setGender(res.data.profile?.gender || "Male");
@@ -86,7 +86,7 @@ const Profileform: React.FC = () => {
       .catch((error) => {
         console.error("Error fetching profile:", error);
       });
-  }, [auth.user_id]);
+  }, [auth.userId]);
 
   const onChangeAbout = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     setAbout(e.target.value);
@@ -134,7 +134,7 @@ const Profileform: React.FC = () => {
     e.preventDefault();
     if (about && gender && age && height && weight) {
       const profile: ProfileData = {
-        username: auth.user || "",
+        username: auth.userId || "",
         about: about,
         gender: gender,
         age: age,

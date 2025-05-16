@@ -5,7 +5,7 @@ import EmailInput from "../components/EmailInput";
 import PasswordInput from "../components/PasswordInput";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
-import { Register, Home } from "../Links";
+import { Register, Home } from "../const/Links.ts";
 import axiosInstance from "../api/axios.js";
 import useAuth from "../hooks/useAuth";
 
@@ -26,6 +26,7 @@ type LoginState = {
 };
 
 interface LoginResponse {
+  status: string;
   body: {
     accessToken: string;
   };
@@ -79,6 +80,10 @@ const LoginContainer = () => {
           password: state.password,
         },
       );
+
+      if (response.data.status !== "SUCCESS") {
+        throw new Error("Registration failed");
+      }
 
       dispatch({ type: "setEmail", email: "" });
       dispatch({ type: "setPassword", password: "" });

@@ -81,7 +81,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
         <div className="tablet:mx-[2.5%] tablet:mb-5 relative h-[100%] rounded-xl bg-[#fbc3bc] pb-10 md:ml-5">
           <div className="pt-10">
             <p className="pb-10 text-center text-gray-700">
-              Login first time? <span className="font-bold">{auth.user}</span>
+              Login first time? <span className="font-bold">{auth.userId}</span>
             </p>
             <button
               onClick={handleClickCreateProfile}
