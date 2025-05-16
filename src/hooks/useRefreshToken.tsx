@@ -1,30 +1,62 @@
-import axios from "../api/axios";
+import axiosInstance from "../api/axios.js";
 import { AxiosResponse } from "axios";
 import useAuth from "./useAuth";
 import { AuthState } from "../context/AuthProvider";
+import { jwtDecode } from "jwt-decode";
 
 interface RefreshResponse {
-  accessToken: string;
+  body: {
+    accessToken: string;
+  };
 }
 
-const useRefreshToken = (): (() => Promise<string>) => {
-  const { setAuth } = useAuth();
+interface DecodedToken {
+  userId?: string;
+  roles?: number[];
+  sub?: string;
+  exp?: number;
+}
 
-  const refresh = async (): Promise<string> => {
-    const response: AxiosResponse<RefreshResponse> = await axios.get(
-      "/refresh",
-      {
-        withCredentials: true,
-      },
-    );
+const useRefreshToken = () => {
+  const { auth, setAuth } = useAuth();
 
-    setAuth((prev: AuthState) => {
-      console.log(JSON.stringify(prev));
-      console.log(response.data.accessToken);
-      return { ...prev, accessToken: response.data.accessToken };
-    });
+  const refresh = async (): Promise<string | null> => {
+    try {
+      const response: AxiosResponse<RefreshResponse> =
+        await axiosInstance.post("/auth/refresh");
 
-    return response.data.accessToken;
+      const newToken = response.data.body.accessToken;
+      if (!newToken) {
+        console.error("Refresh token request did not return an access token");
+        return null;
+      }
+
+      try {
+        const decodedToken: DecodedToken = jwtDecode(newToken);
+
+        setAuth({
+          ...auth,
+          accessToken: newToken,
+          userId: decodedToken.userId || auth.userId,
+          roles: decodedToken.roles || auth.roles,
+        });
+
+        console.log("Token refreshed successfully");
+        return newToken;
+      } catch (decodeError) {
+        console.error("Error decoding refreshed token:", decodeError);
+        return newToken;
+      }
+    } catch (error) {
+      console.error("Token refresh failed:", error);
+      setAuth({
+        userId: null,
+        roles: [],
+        accessToken: null,
+      });
+
+      return null;
+    }
   };
 
   return refresh;
