@@ -1,9 +1,10 @@
 type PropsType = {
   name: string;
+  value: string;
   onChange: (value: string) => void;
 };
 
-const PasswordInput = ({ name, onChange }: PropsType) => {
+const PasswordInput = ({ name, value, onChange }: PropsType) => {
   return (
     <fieldset className="fieldset">
       <legend className="fieldset-legend">{name}</legend>
@@ -14,6 +15,7 @@ const PasswordInput = ({ name, onChange }: PropsType) => {
           minLength={8}
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
+          value={value}
           onChange={(e) => onChange(e.target.value)}
         />
       </label>
