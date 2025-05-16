@@ -54,15 +54,15 @@ const Home: React.FC = () => {
     <div className="home min-h-screen">
       <div>
         <Navbar />
-        <div className="mx-auto flex max-w-[1450px] tablet:flex-col">
-          <div className="Profile max-h-[700px] w-[40%] tablet:w-[100%]">
+        <div className="tablet:flex-col mx-auto flex max-w-[1450px]">
+          <div className="Profile tablet:w-[100%] max-h-[700px] w-[40%]">
             <Profile
               username={user}
               createdProfile={createdProfile}
               profile={profile}
             />
           </div>
-          <div className="Activities mx-5 w-[60%] rounded-xl bg-[#fbc3bc] tablet:mx-[2.5%] tablet:w-[95%]">
+          <div className="Activities tablet:mx-[2.5%] tablet:w-[95%] mx-5 w-[60%] rounded-xl bg-[#fbc3bc]">
             <div className="flex flex-wrap justify-around">
               <Container username={user} />
             </div>

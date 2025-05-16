@@ -48,7 +48,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
   return (
     <div>
       {props.createdProfile ? (
-        <div className="relative h-[100%] rounded-xl bg-[#fbc3bc] pb-10 tablet:mx-[2.5%] tablet:mb-5 md:ml-5">
+        <div className="tablet:mx-[2.5%] tablet:mb-5 relative h-[100%] rounded-xl bg-[#fbc3bc] pb-10 md:ml-5">
           <p className="max-w-[100%] p-5 text-gray-700">
             <b>Username</b> : {props.username}{" "}
           </p>
@@ -78,7 +78,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
           </button>
         </div>
       ) : (
-        <div className="relative h-[100%] rounded-xl bg-[#fbc3bc] pb-10 tablet:mx-[2.5%] tablet:mb-5 md:ml-5">
+        <div className="tablet:mx-[2.5%] tablet:mb-5 relative h-[100%] rounded-xl bg-[#fbc3bc] pb-10 md:ml-5">
           <div className="pt-10">
             <p className="pb-10 text-center text-gray-700">
               Login first time? <span className="font-bold">{auth.user}</span>

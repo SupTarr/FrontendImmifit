@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "../../api/axios";
 import { AxiosRequestConfig } from "axios";
-import "./card.css";
+import "./card.module.css";
 import moment from "moment";
 import { useNavigate, useLocation, NavigateFunction } from "react-router-dom";
 
@@ -82,7 +82,7 @@ const Card = ({ item, setAllUsers, allUsers }: CardProps): JSX.Element => {
           <img
             src={item.img.url}
             alt="imgcard"
-            className="block rounded-[40px] border shadow-md hover:bg-white dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 sm:mx-auto"
+            className="block rounded-[40px] border shadow-md hover:bg-white sm:mx-auto dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
           />
           <figcaption>
             <h5 className="text-md mb-2 font-bold tracking-tight text-black">

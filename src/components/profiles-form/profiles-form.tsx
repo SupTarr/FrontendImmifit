@@ -194,7 +194,7 @@ const Profileform: React.FC = () => {
                 cols={10}
                 onChange={onChangeAbout}
                 value={about}
-                className="mt-1 block w-[75%] resize-none rounded-md border border-gray-300 py-2 px-3 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-[75%] resize-none rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 placeholder="Brief description for your profile"
                 white-space="pre"
                 word-wrap="break-word"
@@ -216,7 +216,7 @@ const Profileform: React.FC = () => {
               autoComplete="gender"
               onChange={onChangeGender}
               value={gender}
-              className="mt-1 block w-[150px] rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-[150px] rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
             >
               <option>Male</option>
               <option>Female</option>
@@ -241,7 +241,7 @@ const Profileform: React.FC = () => {
               placeholder="Years"
               value={age}
               onChange={onChangeAge}
-              className="mt-1 block w-[150px] rounded-md border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-[150px] rounded-md border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
             <p className="mt-3 font-bold text-red-700">{formErrors.age}</p>
           </div>
@@ -265,7 +265,7 @@ const Profileform: React.FC = () => {
                     placeholder="Centimeters"
                     value={height}
                     onChange={onChangeHeight}
-                    className="mt-1 block w-[150px] rounded-md border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    className="mt-1 block w-[150px] rounded-md border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                   <p className="mt-3 font-bold text-red-700">
                     {formErrors.height}
@@ -288,7 +288,7 @@ const Profileform: React.FC = () => {
                     placeholder="Kilograms"
                     value={weight}
                     onChange={onChangeWeight}
-                    className="mt-1 block w-[150px] rounded-md border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    className="mt-1 block w-[150px] rounded-md border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                   <p className="mt-3 font-bold text-red-700">
                     {formErrors.weight}
@@ -311,7 +311,7 @@ const Profileform: React.FC = () => {
           <div className="px-4 py-4 text-right sm:px-6">
             <button
               type="submit"
-              className="inline-flex justify-center rounded-md border border-transparent bg-[#F08080] py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#ff5757]"
+              className="inline-flex justify-center rounded-md border border-transparent bg-[#F08080] px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-[#ff5757]"
               disabled={
                 formErrors.about ||
                 formErrors.age ||

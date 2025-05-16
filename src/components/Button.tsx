@@ -12,7 +12,7 @@ const Button = ({ name, isLoading }: PropsType) => {
         </button>
       )}
       {isLoading && (
-        <div className="flex justify-center items-center mt-4">
+        <div className="mt-4 flex items-center justify-center">
           <span className="loading loading-spinner"></span>
         </div>
       )}

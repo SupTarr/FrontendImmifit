@@ -4,7 +4,7 @@ type PropsType = {
   onChange: (value: string) => void;
 };
 
- const emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+const emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
 const EmailInput = ({ name, value, onChange }: PropsType) => {
   return (

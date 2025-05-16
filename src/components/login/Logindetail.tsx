@@ -108,7 +108,7 @@ const Logindetail = (): JSX.Element => {
   return (
     <div className="login relative sm:h-screen">
       <div className="flex h-[100%] flex-col items-center justify-center sm:pt-16">
-        <div className="flex max-w-5xl flex-col justify-center mobile:m-10 sm:flex-row">
+        <div className="mobile:m-10 flex max-w-5xl flex-col justify-center sm:flex-row">
           <img
             className="object-cover shadow-md sm:max-w-[200px] sm:rounded-l-xl md:max-w-sm lg:max-w-lg xl:max-w-xl"
             src="../../imagecard2.jpg"
@@ -144,7 +144,7 @@ const Logindetail = (): JSX.Element => {
                 />
               </label>
               <input
-                className="focus:shadow-outline mb-3 w-full appearance-none rounded border-b border-[#32312d] py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                className="focus:shadow-outline mb-3 w-full appearance-none rounded border-b border-[#32312d] px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                 value={user}
                 ref={userRef}
                 id="username"
@@ -191,7 +191,7 @@ const Logindetail = (): JSX.Element => {
                 />
               </label>
               <input
-                className="appearance-non focus:shadow-outline mb-3 w-full rounded border-b border-[#32312d] py-2 px-3 leading-tight text-gray-700 focus:outline-none"
+                className="appearance-non focus:shadow-outline mb-3 w-full rounded border-b border-[#32312d] px-3 py-2 leading-tight text-gray-700 focus:outline-none"
                 id="password"
                 value={password}
                 type="password"
