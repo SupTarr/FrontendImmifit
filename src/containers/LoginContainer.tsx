@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import EmailInput from "../components/EmailInput";
 import PasswordInput from "../components/PasswordInput";
 import Button from "../components/Button";
+import Alert from "../components/Alert";
 import { Register } from "../Links";
 import { AxiosResponse, AxiosError } from "axios";
 import axiosInstance from "../api/axios.js";
@@ -111,24 +112,7 @@ const LoginContainer = () => {
         onChange={(v: string) => dispatch({ type: "setPassword", password: v })}
       />
       <Button name="Login" isLoading={state.isLoading} />
-      {state.errorMessage && (
-        <div role="alert" className="alert alert-error mt-4">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 shrink-0 stroke-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <span>{state.errorMessage}</span>
-        </div>
-      )}
+      {state.errorMessage && <Alert message={state.errorMessage} />}
       <p className="flex-grow-0 my-3">
         Don't have an account?
         <span className="flex-grow-0 ml-1">
