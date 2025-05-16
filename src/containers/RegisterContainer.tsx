@@ -8,6 +8,7 @@ import PasswordInput from "../components/PasswordInput";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
 import { Login } from "../const/Links.ts";
+import { Success } from "@/const/Status.ts";
 
 type RegisterAction =
   | { type: "setEmail"; email: string }
@@ -92,7 +93,7 @@ const RegisterContainer = () => {
           password: state.password,
         });
 
-      if (response.data.status !== "SUCCESS") {
+      if (response.data.status !== Success) {
         throw new Error("Login failed");
       }
 
