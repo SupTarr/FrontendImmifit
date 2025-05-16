@@ -8,6 +8,7 @@ import Alert from "../components/Alert";
 import { Register, Home } from "../const/Links.ts";
 import axiosInstance from "../api/axios.js";
 import useAuth from "../hooks/useAuth";
+import { Success } from "@/const/Status.ts";
 
 type LoginAction =
   | { type: "setEmail"; email: string }
@@ -81,7 +82,7 @@ const LoginContainer = () => {
         },
       );
 
-      if (response.data.status !== "SUCCESS") {
+      if (response.data.status !== Success) {
         throw new Error("Registration failed");
       }
 
