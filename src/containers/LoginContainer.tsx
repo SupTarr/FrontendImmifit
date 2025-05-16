@@ -1,8 +1,10 @@
-import { useReducer } from "react";
+import { useReducer, FormEvent } from "react";
 import { Link } from "react-router-dom";
-import TextInput from "../components/TextInput";
+import EmailInput from "../components/EmailInput";
 import PasswordInput from "../components/PasswordInput";
 import { Register } from "../Links";
+import { AxiosResponse, AxiosError } from "axios";
+import axiosInstance from "../api/axios.js";
 
 type LoginAction =
   | { type: "setEmail"; email: string }
@@ -12,6 +14,13 @@ type LoginState = {
   email: string;
   password: string;
 };
+
+interface LoginResponse {
+  username: string;
+  email: string;
+  accessToken?: string;
+  id?: string;
+}
 
 const LoginContainer = () => {
   const [state, dispatch] = useReducer(
@@ -37,10 +46,27 @@ const LoginContainer = () => {
     },
   );
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    try {
+      const response: AxiosResponse<LoginResponse> = await axiosInstance.post(
+        "/auth/login",
+        {
+          email: state.email,
+          password: state.password,
+        },
+      );
+
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <form className="login-container flex flex-col justify-center content-center h-full">
+    <form className="login-container flex flex-col justify-center content-center h-full" onSubmit={handleSubmit}>
       <h2 className="card-title">Login</h2>
-      <TextInput
+      <EmailInput
         name="Email"
         onChange={(v: string) => dispatch({ type: "setEmail", email: v })}
       />

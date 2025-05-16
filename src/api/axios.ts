@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
-const BASE_URL: string = "https://immifit-backend.suptarr.vercel.app/";
+const BASE_URL: string = import.meta.env.VITE_BACKEND_URL;
 
 const defaultConfig: AxiosRequestConfig = {
   baseURL: BASE_URL,
