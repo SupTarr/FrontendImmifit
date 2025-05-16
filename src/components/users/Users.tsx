@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import {
   useNavigate,
   useLocation,
   NavigateFunction,
   Location,
 } from "react-router-dom";
-import { AxiosInstance, AxiosResponse, AxiosError } from "axios";
+import { AxiosResponse, AxiosError } from "axios";
+import axiosInstance from "@/api/axios";
 
 interface User {
   username: string;
@@ -18,7 +18,6 @@ interface User {
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const axiosPrivate: AxiosInstance = useAxiosPrivate();
   const navigate: NavigateFunction = useNavigate();
   const location: Location = useLocation();
 
@@ -27,7 +26,7 @@ const Users: React.FC = () => {
     const controller = new AbortController();
     const getUsers = async (): Promise<void> => {
       try {
-        const response: AxiosResponse<User[]> = await axiosPrivate.get(
+        const response: AxiosResponse<User[]> = await axiosInstance.get(
           "/users",
           {
             signal: controller.signal,

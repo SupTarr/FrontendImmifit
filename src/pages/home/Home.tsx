@@ -7,11 +7,6 @@ import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import { AxiosResponse } from "axios";
 
-interface UserAuth {
-  user: string;
-  userId: string;
-}
-
 interface ProfileData {
   id?: number;
   name?: string;
@@ -24,8 +19,8 @@ interface UserResponse {
 }
 
 const Home: React.FC = () => {
-  const { auth } = useAuth() as { auth: UserAuth };
-  const user = auth.user;
+  const { auth } = useAuth();
+  const user = auth.userId;
 
   const [createdProfile, setCreatedProfile] = useState<boolean>(false);
   const [profile, setProfile] = useState<ProfileData>({});
@@ -57,14 +52,14 @@ const Home: React.FC = () => {
         <div className="tablet:flex-col mx-auto flex max-w-[1450px]">
           <div className="Profile tablet:w-[100%] max-h-[700px] w-[40%]">
             <Profile
-              username={user}
+              username={user|| ""}
               createdProfile={createdProfile}
               profile={profile}
             />
           </div>
           <div className="Activities tablet:mx-[2.5%] tablet:w-[95%] mx-5 w-[60%] rounded-xl bg-[#fbc3bc]">
             <div className="flex flex-wrap justify-around">
-              <Container username={user} />
+              <Container username={user|| ""} />
             </div>
           </div>
         </div>

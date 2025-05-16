@@ -38,12 +38,12 @@ const Header = ({
     console.log("this is users", allUsers);
     console.log("This is type", type);
 
-    if (!type || !auth.user) return;
+    if (!type || !auth.userId) return;
 
     try {
       console.log(type, allUsers);
       const res: AxiosResponse<ActivityItem[]> = await axios.get(
-        `/activities/bytype/${auth.user}/${type}`,
+        `/activities/bytype/${auth.userId}/${type}`,
       );
       console.log("fetchDatabyType", res.data);
       setAllUsers(res.data);
