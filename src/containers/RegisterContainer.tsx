@@ -55,22 +55,26 @@ const RegisterContainer = () => {
   );
 
   return (
-    <form className="register-container flex flex-col justify-center content-center h-full">
+    <form className="register-container flex h-full flex-col content-center justify-center">
       <h2 className="card-title">Register</h2>
       <EmailInput
         name="Email"
+        value={state.email}
         onChange={(v: string) => dispatch({ type: "setEmail", email: v })}
       />
       <TextInput
         name="Username"
+        value={state.username}
         onChange={(v: string) => dispatch({ type: "setUsername", username: v })}
       />
       <PasswordInput
         name="Password"
+        value={state.password}
         onChange={(v: string) => dispatch({ type: "setPassword", password: v })}
       />
       <PasswordInput
         name="Confirm Password"
+        value={state.confirmPassword}
         onChange={(v: string) =>
           dispatch({ type: "setConfirmPassword", confirmPassword: v })
         }
@@ -78,9 +82,9 @@ const RegisterContainer = () => {
       <button className="btn btn-neutral mt-4" type="submit">
         Register
       </button>
-      <p className="flex-grow-0 my-3">
+      <p className="my-3 flex-grow-0">
         Already registered?
-        <span className="flex-grow-0 ml-1">
+        <span className="ml-1 flex-grow-0">
           <Link className="link" to={Login}>
             Login
           </Link>

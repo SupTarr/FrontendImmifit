@@ -7,6 +7,7 @@ import Alert from "../components/Alert";
 import { Register } from "../Links";
 import { AxiosResponse, AxiosError } from "axios";
 import axiosInstance from "../api/axios.js";
+import useAuth from "../hooks/useAuth";
 
 type LoginAction =
   | { type: "setEmail"; email: string }
@@ -25,10 +26,13 @@ type LoginState = {
 };
 
 interface LoginResponse {
-  accessToken: string;
+  body: {
+    accessToken: string;
+  }
 }
 
 const LoginContainer = () => {
+  const { setAuth } = useAuth();
   const [state, dispatch] = useReducer(
     (state: LoginState, action: LoginAction): LoginState => {
       switch (action.type) {
@@ -72,16 +76,16 @@ const LoginContainer = () => {
         },
       );
 
-      setTimeout(() => {
-        dispatch({ type: "setEmail", email: "" });
-        dispatch({ type: "setPassword", password: "" });
-        dispatch({
-          type: "setHandleSubmit",
-          isLoading: false,
-          errorMessage: null,
-        });
-      }, 500);
-      console.log(response);
+      console.log("Login response:", response.data);
+      dispatch({ type: "setEmail", email: "" });
+      dispatch({ type: "setPassword", password: "" });
+      dispatch({
+        type: "setHandleSubmit",
+        isLoading: false,
+        errorMessage: null,
+      });
+
+      setAuth({ accessToken: response.data.body.accessToken });
     } catch (err) {
       const error = err as AxiosError<any>;
       dispatch({
@@ -97,7 +101,7 @@ const LoginContainer = () => {
 
   return (
     <form
-      className="login-container flex flex-col justify-center content-center h-full"
+      className="login-container flex h-full flex-col content-center justify-center"
       onSubmit={handleSubmit}
     >
       <h2 className="card-title">Login</h2>
@@ -113,9 +117,9 @@ const LoginContainer = () => {
       />
       <Button name="Login" isLoading={state.isLoading} />
       {state.errorMessage && <Alert message={state.errorMessage} />}
-      <p className="flex-grow-0 my-3">
+      <p className="my-3 flex-grow-0">
         Don't have an account?
-        <span className="flex-grow-0 ml-1">
+        <span className="ml-1 flex-grow-0">
           <Link className="link" to={Register}>
             Sign up
           </Link>

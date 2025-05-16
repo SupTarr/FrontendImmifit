@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthProvider";
 import Form from "./pages/form/Form";
 import Home from "./pages/home/Home";
 import RequireAuth from "./components/requireAuth/RequireAuth";
@@ -21,21 +22,23 @@ const ROLES: RolesType = {
 
 const App: React.FC = () => {
   return (
-    <Suspense fallback={<PageLoading />}>
-      <DelayRender delay={500}>
-        <Routes>
-          <Route path="login" element={<PageLogin />} />
-          <Route path="register" element={<PageRegister />} />
+    <AuthProvider>
+      <Suspense fallback={<PageLoading />}>
+        <DelayRender delay={500}>
+          <Routes>
+            <Route path="login" element={<PageLogin />} />
+            <Route path="register" element={<PageRegister />} />
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-            <Route path="/" element={<Home />} />
-            <Route path="form" element={<Form />} />
-            <Route path="form_profile" element={<Profilesform />} />
-          </Route>
-          <Route path="*" Component={Page404} />
-        </Routes>
-      </DelayRender>
-    </Suspense>
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/" element={<Home />} />
+              <Route path="form" element={<Form />} />
+              <Route path="form_profile" element={<Profilesform />} />
+            </Route>
+            <Route path="*" Component={Page404} />
+          </Routes>
+        </DelayRender>
+      </Suspense>
+    </AuthProvider>
   );
 };
 
