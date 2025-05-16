@@ -1,11 +1,11 @@
 import { useReducer, FormEvent } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { AxiosResponse, AxiosError } from "axios";
 import EmailInput from "../components/EmailInput";
 import PasswordInput from "../components/PasswordInput";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
-import { Register } from "../Links";
-import { AxiosResponse, AxiosError } from "axios";
+import { Register, Home } from "../Links";
 import axiosInstance from "../api/axios.js";
 import useAuth from "../hooks/useAuth";
 
@@ -35,7 +35,7 @@ const LoginContainer = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || Home;
 
   const [state, dispatch] = useReducer(
     (state: LoginState, action: LoginAction): LoginState => {
