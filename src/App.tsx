@@ -12,8 +12,6 @@ const Page404 = lazy(() => import("./pages/Page404.tsx"));
 const PageLogin = lazy(() => import("./pages/PageLogin.tsx"));
 const PageRegister = lazy(() => import("./pages/PageRegister.tsx"));
 
-
-
 const App: React.FC = () => {
   return (
     <AuthProvider>
