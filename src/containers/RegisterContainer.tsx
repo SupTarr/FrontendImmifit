@@ -113,7 +113,8 @@ const RegisterContainer = () => {
         type: "setHandleSubmit",
         isLoading: false,
         errorMessage:
-          error?.response?.data?.message || "Register Failed. Please try again.",
+          error?.response?.data?.message ||
+          "Register Failed. Please try again.",
       });
 
       console.error("Login error:", error.response || error.message);
