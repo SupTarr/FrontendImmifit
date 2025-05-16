@@ -5,11 +5,13 @@ import PasswordInput from "../components/PasswordInput";
 import { Login } from "../Links.tsx";
 
 type RegisterAction =
+  | { type: "setEmail"; email: string }
   | { type: "setUsername"; username: string }
   | { type: "setPassword"; password: string }
   | { type: "setConfirmPassword"; confirmPassword: string };
 
 type RegisterState = {
+  email: string;
   username: string;
   password: string;
   confirmPassword: string;
@@ -19,6 +21,11 @@ const RegisterContainer = () => {
   const [state, dispatch] = useReducer(
     (state: RegisterState, action: RegisterAction): RegisterState => {
       switch (action.type) {
+        case "setEmail":
+          return {
+            ...state,
+            email: action.email,
+          };
         case "setUsername":
           return {
             ...state,
@@ -39,6 +46,7 @@ const RegisterContainer = () => {
       }
     },
     {
+      email: "",
       username: "",
       password: "",
       confirmPassword: "",
@@ -48,6 +56,10 @@ const RegisterContainer = () => {
   return (
     <form className="register-container flex flex-col justify-center content-center h-full">
       <h2 className="card-title">Register</h2>
+      <TextInput
+        name="Email"
+        onChange={(v: string) => dispatch({ type: "setEmail", email: v })}
+      />
       <TextInput
         name="Username"
         onChange={(v: string) => dispatch({ type: "setUsername", username: v })}
