@@ -13,7 +13,7 @@ const RequireAuth = (): JSX.Element => {
 
   if (auth?.roles?.find((role: number) => allowedRoles?.includes(role))) {
     return <Outlet />;
-  }  else {
+  } else {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 };
