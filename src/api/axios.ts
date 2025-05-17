@@ -11,4 +11,24 @@ const defaultConfig: AxiosRequestConfig = {
 };
 
 const axiosInstance: AxiosInstance = axios.create(defaultConfig);
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const authDataString = localStorage.getItem("authData") || "";
+    try {
+      const authData = JSON.parse(authDataString);
+      const token = authData?.accessToken;
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (error) {
+      console.error("Failed to parse authData from localStorage", error);
+      localStorage.removeItem("authData");
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
+
 export default axiosInstance;
