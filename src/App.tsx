@@ -25,13 +25,13 @@ const App: React.FC = () => {
     <AuthProvider>
       <Suspense fallback={<PageLoading />}>
         <Routes>
-          <Route path="login" element={<PageLogin />} />
-          <Route path="register" element={<PageRegister />} />
+          <Route path="/login" element={<PageLogin />} />
+          <Route path="/register" element={<PageRegister />} />
 
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
-            <Route path="form/activites" element={<Form />} />
-            <Route path="form/profile" element={<Profilesform />} />
+            <Route path="/form/activites" element={<Form />} />
+            <Route path="/form/profile" element={<Profilesform />} />
           </Route>
           <Route path="*" Component={Page404} />
         </Routes>
