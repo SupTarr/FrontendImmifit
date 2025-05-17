@@ -8,7 +8,7 @@ import PasswordInput from "../components/PasswordInput";
 import Button from "../components/Button";
 import Alert from "../components/Alert";
 import { Login } from "../const/Links.ts";
-import { Success } from "@/const/Status.ts";
+import { Success } from "../const/Status.ts";
 
 type RegisterAction =
   | { type: "setEmail"; email: string }
