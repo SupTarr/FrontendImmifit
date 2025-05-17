@@ -10,16 +10,15 @@ const EmailInput = ({ name, value, onChange }: PropsType) => {
   return (
     <fieldset className="fieldset">
       <legend className="fieldset-legend">{name}</legend>
-      <label className="input validator w-full">
-        <input
-          type="email"
-          required
-          pattern={emailPattern}
-          title="Please enter a valid email address (e.g., user@example.com)"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-        />
-      </label>
+      <input
+        className="input validator w-full"
+        type="email"
+        required
+        pattern={emailPattern}
+        title="Please enter a valid email address (e.g., user@example.com)"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
       <p className="validator-hint hidden">
         Please enter a valid email address.
         <br />
