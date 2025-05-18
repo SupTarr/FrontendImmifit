@@ -7,6 +7,8 @@ import { jwtDecode } from "jwt-decode";
 
 interface DecodedToken {
   userId?: string;
+  username?: string;
+  email?: string;
   roles?: number[];
   sub?: string;
   exp?: number;
@@ -24,6 +26,8 @@ const useAuth = (): AuthContextType => {
       const updatedAuth: AuthState = {
         ...auth,
         userId: decodedToken.userId || auth.userId,
+        username: decodedToken.username || auth.username,
+        email: decodedToken.email || auth.email,
         roles: decodedToken.roles || auth.roles,
       };
 
