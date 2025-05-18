@@ -2,6 +2,8 @@ import { createContext, useState, ReactNode } from "react";
 
 export interface AuthState {
   userId?: string | null;
+  username?: string | null;
+  email?: string | null;
   roles?: number[];
   accessToken?: string | null;
 }
@@ -14,6 +16,8 @@ export interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({
   auth: {
     userId: null,
+    username: null,
+    email: null,
     roles: [],
     accessToken: null,
   },
@@ -37,6 +41,8 @@ export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
 
     return {
       userId: null,
+      username: null,
+      email: null,
       roles: [],
       accessToken: null,
     };
