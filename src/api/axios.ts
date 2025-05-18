@@ -14,7 +14,11 @@ const axiosInstance: AxiosInstance = axios.create(defaultConfig);
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const authDataString = localStorage.getItem("authData") || "";
+    const authDataString = localStorage.getItem("authData");
+    if (!authDataString) {
+      return config;
+    }
+    
     try {
       const authData = JSON.parse(authDataString);
       const token = authData?.accessToken;

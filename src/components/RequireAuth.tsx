@@ -11,7 +11,14 @@ const RequireAuth = (): JSX.Element => {
   const { auth } = useAuth();
   const location: Location = useLocation();
 
-  if (auth?.roles?.find((role: number) => allowedRoles?.includes(role))) {
+  if (!auth?.accessToken) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+  
+  const hasRequiredRole = auth?.roles?.length === 0 || 
+    auth?.roles?.some((role: number) => allowedRoles.includes(role));
+  
+  if (hasRequiredRole) {
     return <Outlet />;
   } else {
     return <Navigate to="/login" state={{ from: location }} replace />;

@@ -86,6 +86,7 @@ const LoginContainer = () => {
         throw new Error("Registration failed");
       }
 
+      setAuth({ ...auth, accessToken: response.data.body.accessToken });
       dispatch({ type: "setEmail", email: "" });
       dispatch({ type: "setPassword", password: "" });
       dispatch({
@@ -93,8 +94,7 @@ const LoginContainer = () => {
         isLoading: false,
         errorMessage: null,
       });
-
-      setAuth({ ...auth, accessToken: response.data.body.accessToken });
+      
       navigate(from, { replace: true });
     } catch (err) {
       const error = err as AxiosError<any>;
