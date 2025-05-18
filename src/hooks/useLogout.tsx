@@ -13,6 +13,8 @@ const useLogout = () => {
     } finally {
       setAuth({
         userId: null,
+        username: null,
+        email: null,
         roles: [],
         accessToken: null,
       });

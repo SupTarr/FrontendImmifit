@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../const/Links.ts";
 import useLogout from "../hooks/useLogout";
 
 const Navbar = () => {
   const logout = useLogout();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate(Login);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   return (
     <div className="navbar bg-base-300 fixed top-0 left-0 z-50 w-full shadow-sm">
@@ -15,7 +25,7 @@ const Navbar = () => {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link to={Login} className="link" onClick={logout}>Logout</Link>
+            <button className="link" onClick={handleLogout}>Logout</button>
           </li>
         </ul>
       </div>
