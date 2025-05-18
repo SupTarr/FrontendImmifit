@@ -7,6 +7,7 @@ const useLogout = () => {
   const logout = async () => {
     try {
       await axiosInstance.post("/auth/logout");
+      localStorage.removeItem("authData");
     } catch (err) {
       console.error("Logout error:", err);
     } finally {
