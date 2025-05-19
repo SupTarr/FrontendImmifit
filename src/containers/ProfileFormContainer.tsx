@@ -91,7 +91,7 @@ const ProfileFormContainer = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     dispatch({ type: "setHandleSubmit", isLoading: true, errorMessage: null });
     e.preventDefault();
-   
+
     try {
       const formData = new FormData();
       formData.append("about", state.about || "");
@@ -131,7 +131,8 @@ const ProfileFormContainer = () => {
         type: "setHandleSubmit",
         isLoading: false,
         errorMessage:
-          error?.response?.data?.message || "Update profile failed. Please try again.",
+          error?.response?.data?.message ||
+          "Update profile failed. Please try again.",
       });
     }
   };
