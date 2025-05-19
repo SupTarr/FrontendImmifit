@@ -9,7 +9,7 @@ const PasswordInput = ({ name, value, onChange }: PropsType) => {
     <fieldset className="fieldset">
       <legend className="fieldset-legend">{name}</legend>
       <input
-        className="input validator w-full"
+        className="input validator w-full rounded-sm"
         type="password"
         required
         minLength={8}

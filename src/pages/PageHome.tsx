@@ -6,7 +6,7 @@ const PageHome = () => {
   return (
     <section className="page-home min-h-screen">
       <Navbar />
-      <div className="min-h-screen flex flex-col items-center justify-center bg-base-200 pt-[64px] pb-[52px]">
+      <div className="bg-base-200 flex min-h-screen flex-col items-center justify-center pt-[64px] pb-[52px]">
         <ProfileCard />
       </div>
       <Footer />

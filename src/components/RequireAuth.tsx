@@ -14,10 +14,11 @@ const RequireAuth = (): JSX.Element => {
   if (!auth?.accessToken) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-  
-  const hasRequiredRole = auth?.roles?.length === 0 || 
+
+  const hasRequiredRole =
+    auth?.roles?.length === 0 ||
     auth?.roles?.some((role: number) => allowedRoles.includes(role));
-  
+
   if (hasRequiredRole) {
     return <Outlet />;
   } else {

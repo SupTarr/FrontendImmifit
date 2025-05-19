@@ -4,13 +4,13 @@ type PropsType = {
   onChange: (value: string) => void;
 };
 
-const Textbox = ({ name, value, onChange }: PropsType) => {
+const TextInput = ({ name, value, onChange }: PropsType) => {
   return (
     <fieldset className="fieldset">
       <legend className="fieldset-legend">{name}</legend>
       <input
         type="text"
-        className="input input-bordered w-full"
+        className="input w-full rounded-sm"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
@@ -18,4 +18,4 @@ const Textbox = ({ name, value, onChange }: PropsType) => {
   );
 };
 
-export default Textbox;
+export default TextInput;

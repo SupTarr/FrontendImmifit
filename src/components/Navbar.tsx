@@ -25,7 +25,9 @@ const Navbar = () => {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <button className="link" onClick={handleLogout}>Logout</button>
+            <button className="link" onClick={handleLogout}>
+              Logout
+            </button>
           </li>
         </ul>
       </div>

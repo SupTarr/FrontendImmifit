@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useProfile from "../hooks/useProfile";
+import { Profile } from "../const/Links";
 
 const Navbar = () => {
   const { auth } = useAuth();
   const { profile } = useProfile();
 
   return (
-    <div className="card bg-base-100 p-5 shadow-sm min-w-100">
+    <div className="card bg-base-100 mx-5 max-w-9/12 p-5 drop-shadow-2xl sm:min-w-100">
       <figure className="avatar">
         <div className="w-32 rounded-full">
           <img
@@ -34,7 +36,9 @@ const Navbar = () => {
         <h2 className="mt-2 font-bold">BMI:</h2>
         <p>{profile?.bmi}</p>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary">Edit Profile</button>
+          <Link to={Profile}>
+            <button className="btn btn-neutral">Edit Profile</button>
+          </Link>
         </div>
       </div>
     </div>
