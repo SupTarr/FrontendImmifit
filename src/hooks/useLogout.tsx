@@ -18,6 +18,8 @@ const useLogout = () => {
         roles: [],
         accessToken: null,
       });
+
+      window.location.reload();
     }
   };
 

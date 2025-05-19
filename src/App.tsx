@@ -7,13 +7,13 @@ import { setupAxiosInterceptors } from "./api/interceptor.ts";
 
 import Form from "./pages/form/Form";
 import RequireAuth from "./components/RequireAuth.tsx";
-import Profilesform from "./pages/profiles-form/profiles-form";
 
 const PageLoading = lazy(() => import("./pages/PageLoading.tsx"));
 const Page404 = lazy(() => import("./pages/Page404.tsx"));
 const PageLogin = lazy(() => import("./pages/PageLogin.tsx"));
 const PageRegister = lazy(() => import("./pages/PageRegister.tsx"));
 const PageHome = lazy(() => import("./pages/PageHome.tsx"));
+const PageProfileForm = lazy(() => import("./pages/PageProfileForm.tsx"));
 
 const App: React.FC = () => {
   const refresh = useRefreshToken();
@@ -32,8 +32,8 @@ const App: React.FC = () => {
 
             <Route element={<RequireAuth />}>
               <Route path="/" element={<PageHome />} />
-              <Route path="/form/activites" element={<Form />} />
-              <Route path="/form/profile" element={<Profilesform />} />
+              <Route path="/activites" element={<Form />} />
+              <Route path="/profile" element={<PageProfileForm />} />
             </Route>
             <Route path="*" Component={Page404} />
           </Routes>
