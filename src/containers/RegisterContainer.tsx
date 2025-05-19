@@ -83,8 +83,8 @@ const RegisterContainer = () => {
   );
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    dispatch({ type: "setHandleSubmit", isLoading: true, errorMessage: null });
     e.preventDefault();
+    dispatch({ type: "setHandleSubmit", isLoading: true, errorMessage: null });
     try {
       const response: AxiosResponse<RegisterResponse> =
         await axiosInstance.post("/auth/register", {

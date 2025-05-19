@@ -18,7 +18,7 @@ axiosInstance.interceptors.request.use(
     if (!authDataString) {
       return config;
     }
-    
+
     try {
       const authData = JSON.parse(authDataString);
       const token = authData?.accessToken;

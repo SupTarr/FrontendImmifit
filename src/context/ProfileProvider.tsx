@@ -11,7 +11,7 @@ import axiosInstance from "../api/axios.js";
 export interface ProfileState {
   profileId?: string | null;
   userId?: string | null;
-  about?: number | null;
+  about?: string | null;
   gender?: number | null;
   age?: number | null;
   height?: number | null;

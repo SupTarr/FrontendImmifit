@@ -71,8 +71,8 @@ const LoginContainer = () => {
   );
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    dispatch({ type: "setHandleSubmit", isLoading: true, errorMessage: null });
     e.preventDefault();
+    dispatch({ type: "setHandleSubmit", isLoading: true, errorMessage: null });
     try {
       const response: AxiosResponse<LoginResponse> = await axiosInstance.post(
         "/auth/login",
@@ -94,7 +94,7 @@ const LoginContainer = () => {
         isLoading: false,
         errorMessage: null,
       });
-      
+
       navigate(from, { replace: true });
     } catch (err) {
       const error = err as AxiosError<any>;
