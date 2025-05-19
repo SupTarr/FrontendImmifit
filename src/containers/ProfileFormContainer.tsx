@@ -160,7 +160,7 @@ const ProfileFormContainer = () => {
         <ImageInput
           name="Profile Image"
           aspect={1}
-          initialImageUrl={state.imageUrl}
+          initialImageUrl={state.imageUrl || ""}
           onImageChange={(blob) => setProfileImageBlob(blob)}
         />
       </div>

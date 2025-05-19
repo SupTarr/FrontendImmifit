@@ -1,8 +1,9 @@
-import { useState, useRef, ChangeEvent } from "react";
+import { useState, useRef, ChangeEvent, useEffect } from "react";
 import ReactCrop, { type Crop, PixelCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { useDebounceEffect } from "../hooks/useDebounceEffect";
 import { centerAspectCrop, canvasPreview } from "../utils/canvas";
+import RangeInput from "./RangeInput";
 
 interface ProfileImageUploadProps {
   name: string;
@@ -18,14 +19,13 @@ const ImageInput = ({
   onImageChange,
 }: ProfileImageUploadProps) => {
   const imgRef = useRef<HTMLImageElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement>(null);
 
-  const [imgSrc, setImgSrc] = useState<string>(initialImageUrl || "");
+  const [imgSrc, setImgSrc] = useState<string>("");
   const [crop, setCrop] = useState<Crop | null>(null);
   const [completedCrop, setCompletedCrop] = useState<PixelCrop | null>(null);
-  const [croppedImageUrl, setCroppedImageUrl] = useState<string | null>(
-    initialImageUrl || null,
-  );
+  const [croppedImageUrl, setCroppedImageUrl] = useState<string | null>(null);
   const [latestBlob, setLatestBlob] = useState<Blob | null>(null);
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
@@ -136,11 +136,40 @@ const ImageInput = ({
     [completedCrop, scale, rotate, onImageChange],
   );
 
+  const cancelCrop = () => {
+    if (croppedImageUrl) {
+      setImgSrc(croppedImageUrl);
+    } else if (initialImageUrl) {
+      setImgSrc(initialImageUrl);
+      setCroppedImageUrl(initialImageUrl);
+    } else {
+      setImgSrc("");
+    }
+    
+    setCrop(null);
+    setCompletedCrop(null);
+    setLatestBlob(null);
+    setScale(1);
+    setRotate(0);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  useEffect(() => {
+    if (initialImageUrl) {
+      setImgSrc(initialImageUrl);
+      setCroppedImageUrl(initialImageUrl);
+    }
+  }, [initialImageUrl]);
+
   return (
     <div className="flex w-full flex-col items-center gap-2">
       <fieldset className="fieldset">
         <legend className="fieldset-legend">{name}</legend>
         <input
+          ref={fileInputRef}
           type="file"
           accept="image/*"
           onChange={handleImageSelect}
@@ -177,28 +206,23 @@ const ImageInput = ({
               crossOrigin="anonymous"
             />
           </ReactCrop>
-          <input
-            className="range range-xs w-full"
-            id="scale-input"
-            type="range"
+          <RangeInput
+            name="Scale"
+            min="0"
+            max="10"
             step="0.1"
-            max="3"
-            value={scale}
+            value={scale.toString()}
             disabled={!imgSrc}
-            onChange={(e) => setScale(Number(e.target.value))}
+            onChange={(value) => setScale(Number(value))}
           />
-          <input
-            className="range range-xs w-full"
-            id="rotate-input"
-            type="range"
-            value={rotate}
+          <RangeInput
+            name="Rotate"
             min="-180"
             max="180"
             step="1"
+            value={scale.toString()}
             disabled={!imgSrc}
-            onChange={(e) =>
-              setRotate(Math.min(180, Math.max(-180, Number(e.target.value))))
-            }
+            onChange={(value) => setRotate(Number(value))}
           />
           <canvas
             ref={previewCanvasRef}
@@ -211,7 +235,14 @@ const ImageInput = ({
               top: "-500vh",
             }}
           />
-          <div className="mt-2 flex justify-center">
+          <div className="mt-2 flex justify-center gap-2">
+            <button
+              type="button"
+              className="btn btn-sm btn-outline"
+              onClick={cancelCrop}
+            >
+              Cancel
+            </button>
             <button
               type="button"
               className="btn btn-sm btn-neutral"
