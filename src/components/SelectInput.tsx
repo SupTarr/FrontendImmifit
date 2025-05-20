@@ -15,7 +15,6 @@ const SelectInput = ({ name, options, value, onChange }: PropsType) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >
-        <option value="">Select {name}</option>
         {options.map((option) => (
           <option key={option} value={option}>
             {option}

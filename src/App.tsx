@@ -4,8 +4,6 @@ import { AuthProvider } from "./context/AuthProvider";
 import { ProfileProvider } from "./context/ProfileProvider";
 import useRefreshToken from "./hooks/useRefreshToken";
 import { setupAxiosInterceptors } from "./api/interceptor.ts";
-
-import Form from "./pages/form/Form";
 import RequireAuth from "./components/RequireAuth.tsx";
 
 const PageLoading = lazy(() => import("./pages/PageLoading.tsx"));
@@ -32,7 +30,6 @@ const App: React.FC = () => {
 
             <Route element={<RequireAuth />}>
               <Route path="/" element={<PageHome />} />
-              <Route path="/activites" element={<Form />} />
               <Route path="/profile" element={<PageProfileForm />} />
             </Route>
             <Route path="*" Component={Page404} />
