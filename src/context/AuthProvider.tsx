@@ -1,17 +1,5 @@
 import { createContext, useState, ReactNode } from "react";
-
-export interface AuthState {
-  userId?: string | null;
-  username?: string | null;
-  email?: string | null;
-  roles?: number[];
-  accessToken?: string | null;
-}
-
-export interface AuthContextType {
-  auth: AuthState;
-  setAuth: (auth: AuthState) => void;
-}
+import { AuthState, AuthContextType } from "../models/Auth";
 
 const AuthContext = createContext<AuthContextType>({
   auth: {
@@ -28,7 +16,7 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthProvider = ({ children }: AuthProviderProps): JSX.Element => {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [auth, setAuth] = useState<AuthState>(() => {
     const storedData = localStorage.getItem("authData");
     if (storedData) {

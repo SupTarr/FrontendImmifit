@@ -13,7 +13,7 @@ const Navbar = () => {
         <div className="w-32 rounded-full">
           <img
             src={
-              profile?.imageUrl ||
+              profile?.image?.url ||
               "https://img.daisyui.com/images/profile/demo/superperson@192.webp"
             }
           />

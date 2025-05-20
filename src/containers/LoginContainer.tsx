@@ -9,29 +9,7 @@ import { Register, Home } from "../const/Links.ts";
 import axiosInstance from "../api/axios.js";
 import useAuth from "../hooks/useAuth";
 import { Success } from "../const/Status.ts";
-
-type LoginAction =
-  | { type: "setEmail"; email: string }
-  | { type: "setPassword"; password: string }
-  | {
-      type: "setHandleSubmit";
-      isLoading: boolean;
-      errorMessage: string | null;
-    };
-
-type LoginState = {
-  email: string;
-  password: string;
-  isLoading: boolean;
-  errorMessage: string | null;
-};
-
-interface LoginResponse {
-  status: string;
-  body: {
-    accessToken: string;
-  };
-}
+import { LoginState, LoginAction, LoginResponse } from "@/models/Login.ts";
 
 const LoginContainer = () => {
   const { auth, setAuth } = useAuth();

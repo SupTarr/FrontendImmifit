@@ -2,19 +2,7 @@ import axiosInstance from "../api/axios.js";
 import { AxiosResponse } from "axios";
 import useAuth from "./useAuth";
 import { jwtDecode } from "jwt-decode";
-
-interface RefreshResponse {
-  body: {
-    accessToken: string;
-  };
-}
-
-interface DecodedToken {
-  userId?: string;
-  roles?: number[];
-  sub?: string;
-  exp?: number;
-}
+import { DecodedToken, RefreshResponse } from "../models/Refresh";
 
 const useRefreshToken = () => {
   const { auth, setAuth } = useAuth();
@@ -38,9 +26,10 @@ const useRefreshToken = () => {
           accessToken: newToken,
           userId: decodedToken.userId || auth.userId,
           roles: decodedToken.roles || auth.roles,
+          username: decodedToken.username || auth.username,
+          email: decodedToken.email || auth.email,
         });
 
-        console.log("Token refreshed successfully");
         return newToken;
       } catch (decodeError) {
         console.error("Error decoding refreshed token:", decodeError);
