@@ -7,7 +7,7 @@ enum Role {
 
 const allowedRoles: number[] = [Role.User];
 
-const RequireAuth = (): JSX.Element => {
+const RequireAuth = () => {
   const { auth } = useAuth();
   const location: Location = useLocation();
 

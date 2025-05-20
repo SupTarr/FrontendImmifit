@@ -145,7 +145,7 @@ const ImageInput = ({
     } else {
       setImgSrc("");
     }
-    
+
     setCrop(null);
     setCompletedCrop(null);
     setLatestBlob(null);
@@ -166,7 +166,7 @@ const ImageInput = ({
 
   return (
     <div className="flex w-full flex-col items-center gap-2">
-      <fieldset className="fieldset">
+      <fieldset className="fieldset w-full">
         <legend className="fieldset-legend">{name}</legend>
         <input
           ref={fileInputRef}
@@ -209,7 +209,7 @@ const ImageInput = ({
           <RangeInput
             name="Scale"
             min="0"
-            max="10"
+            max="2"
             step="0.1"
             value={scale.toString()}
             disabled={!imgSrc}
@@ -220,7 +220,7 @@ const ImageInput = ({
             min="-180"
             max="180"
             step="1"
-            value={scale.toString()}
+            value={rotate.toString()}
             disabled={!imgSrc}
             onChange={(value) => setRotate(Number(value))}
           />

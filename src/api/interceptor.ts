@@ -17,23 +17,24 @@ export const setupAxiosInterceptors = (
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
-      if (error.response?.status !== 400 && originalRequest._retry) {
+      if (originalRequest._retry) {
         return Promise.reject(error);
       }
 
-      originalRequest._retry = true;
       if (refreshing) {
         return new Promise((resolve, reject) => {
           requestsQueue.push({ resolve, reject, request: originalRequest });
         });
       }
 
+      originalRequest._retry = true;
       refreshing = true;
+
       try {
         const newToken = await refresh();
         if (!newToken) {
-          requestsQueue.forEach(({ reject }) =>
-            reject(new Error("Token refresh failed to return a new token.")),
+          requestsQueue.forEach(({ reject: qReject }) =>
+            qReject(new Error("Token refresh failed to return a new token.")),
           );
 
           requestsQueue.length = 0;
@@ -42,16 +43,24 @@ export const setupAxiosInterceptors = (
           );
         }
 
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        requestsQueue.forEach(({ resolve, reject, request }) => {
-          request.headers.Authorization = `Bearer ${newToken}`;
-          axiosInstance(request).then(resolve).catch(reject);
-        });
+        if (originalRequest.headers) {
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+        }
+
+        requestsQueue.forEach(
+          ({ resolve: qResolve, reject: qReject, request: qRequest }) => {
+            if (qRequest.headers) {
+              qRequest.headers.Authorization = `Bearer ${newToken}`;
+            }
+
+            axiosInstance(qRequest).then(qResolve).catch(qReject);
+          },
+        );
 
         requestsQueue.length = 0;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        requestsQueue.forEach(({ reject }) => reject(refreshError));
+        requestsQueue.forEach(({ reject: qReject }) => qReject(refreshError));
         requestsQueue.length = 0;
         return Promise.reject(refreshError);
       } finally {
