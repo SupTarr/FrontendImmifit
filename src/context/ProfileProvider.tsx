@@ -7,25 +7,10 @@ import {
 } from "react";
 import AuthContext from "./AuthProvider";
 import axiosInstance from "../api/axios.js";
+import { ProfileState, ProfileContextType } from "../models/Profile.ts";
 
-export interface ProfileState {
-  profileId?: string | null;
-  userId?: string | null;
-  about?: string | null;
-  gender?: number | null;
-  age?: number | null;
-  height?: number | null;
-  weight?: number | null;
-  bmi?: number | null;
-  imageUrl?: string | null;
-  isLoading: boolean;
-  error: string | null;
-}
-
-export interface ProfileContextType {
-  profile: ProfileState;
-  updateProfile: (profileData: Partial<ProfileState>) => Promise<void>;
-  refreshProfile: () => Promise<void>;
+interface ProfileProviderProps {
+  children: ReactNode;
 }
 
 const defaultProfileState: ProfileState = {
@@ -37,9 +22,9 @@ const defaultProfileState: ProfileState = {
   weight: null,
   height: null,
   bmi: null,
-  imageUrl: null,
+  image: null,
   isLoading: false,
-  error: null,
+  errorMessage: null,
 };
 
 const ProfileContext = createContext<ProfileContextType>({
@@ -48,13 +33,9 @@ const ProfileContext = createContext<ProfileContextType>({
   refreshProfile: async () => {},
 });
 
-interface ProfileProviderProps {
-  children: ReactNode;
-}
-
 export const ProfileProvider = ({
   children,
-}: ProfileProviderProps): JSX.Element => {
+}: ProfileProviderProps) => {
   const [profile, setProfile] = useState<ProfileState>(defaultProfileState);
   const { auth } = useContext(AuthContext);
 
@@ -63,25 +44,68 @@ export const ProfileProvider = ({
       return;
     }
 
-    setProfile((prev) => ({ ...prev, isLoading: true, error: null }));
+    setProfile((prev) => ({ ...prev, isLoading: true, errorMessage: null }));
     try {
-      const response = await axiosInstance.get("/users", {
-        headers: {
-          Authorization: `Bearer ${auth.accessToken}`,
-        },
-      });
-
+      const response = await axiosInstance.get("/users");
       setProfile({
         ...response.data.body,
         isLoading: false,
-        error: null,
+        errorMessage: null,
       });
     } catch (err) {
       console.error("Error fetching profile data", err);
       setProfile((prev) => ({
         ...prev,
         isLoading: false,
-        error: "Failed to fetch profile data",
+        errorMessage: "Failed to fetch profile data",
+      }));
+    }
+  };
+
+  const updateProfile = async (
+    profileData: Partial<ProfileState>,
+    file: Blob | null,
+  ) => {
+    if (!auth?.accessToken) {
+      return;
+    }
+
+    setProfile((prev) => ({
+      ...prev,
+      ...profileData,
+      isLoading: true,
+      errorMessage: null,
+    }));
+    const formData = new FormData();
+    formData.append("about", profileData.about || "");
+    formData.append("gender", profileData.gender?.toString() || "");
+    formData.append("age", profileData.age?.toString() || "");
+    formData.append("weight", profileData.weight?.toString() || "");
+    formData.append("height", profileData.height?.toString() || "");
+    if (file) {
+      formData.append("imageId", profileData.image?.id || "");
+      formData.append("file", file, `${crypto.randomUUID()}.png`);
+    }
+
+    try {
+      const response = await axiosInstance.post("/users", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setProfile((prev) => ({
+        ...prev,
+        ...response.data.body,
+        isLoading: false,
+        errorMessage: null,
+      }));
+    } catch (err) {
+      console.error("Error updating profile data", err);
+      setProfile((prev) => ({
+        ...prev,
+        isLoading: false,
+        errorMessage: "Failed to update profile data",
       }));
     }
   };
@@ -93,35 +117,6 @@ export const ProfileProvider = ({
       setProfile(defaultProfileState);
     }
   }, [auth?.accessToken]);
-
-  const updateProfile = async (profileData: Partial<ProfileState>) => {
-    if (!auth?.accessToken) {
-      return;
-    }
-
-    setProfile((prev) => ({ ...prev, isLoading: true, error: null }));
-    try {
-      await axiosInstance.post("/users", profileData, {
-        headers: {
-          Authorization: `Bearer ${auth.accessToken}`,
-        },
-      });
-
-      setProfile((prev) => ({
-        ...prev,
-        ...profileData,
-        isLoading: false,
-        error: null,
-      }));
-    } catch (err) {
-      console.error("Error updating profile data", err);
-      setProfile((prev) => ({
-        ...prev,
-        isLoading: false,
-        error: "Failed to update profile data",
-      }));
-    }
-  };
 
   return (
     <ProfileContext.Provider

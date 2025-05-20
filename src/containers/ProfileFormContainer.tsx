@@ -1,6 +1,6 @@
 import { useReducer, FormEvent, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { AxiosResponse, AxiosError } from "axios";
+import { AxiosError } from "axios";
 import TextareaInput from "../components/TextareaInput.tsx";
 import NumberInput from "../components/NumberInput.tsx";
 import SelectInput from "../components/SelectInput.tsx";
@@ -8,43 +8,18 @@ import Button from "../components/Button.tsx";
 import Alert from "../components/Alert.tsx";
 import ImageInput from "../components/ImageInput.tsx";
 import { Home } from "../const/Links.ts";
-import axiosInstance from "../api/axios.js";
 import useProfile from "../hooks/useProfile.tsx";
-import { Success } from "../const/Status.ts";
-
-type ProfileFormAction =
-  | { type: "setAbout"; about: string | null }
-  | { type: "setGender"; gender: number | null }
-  | { type: "setAge"; age: number | null }
-  | { type: "setWeight"; weight: number | null }
-  | { type: "setHeight"; height: number | null }
-  | { type: "updateProfile"; profile: any }
-  | {
-      type: "setHandleSubmit";
-      isLoading: boolean;
-      errorMessage: string | null;
-    };
-
-type ProfileFormState = {
-  about: string | null;
-  gender: number | null;
-  age: number | null;
-  weight: number | null;
-  height: number | null;
-  imageUrl: string | null;
-  isLoading: boolean;
-  errorMessage: string | null;
-};
+import { ProfileState, ProfileAction } from "../models/Profile.ts";
 
 const ProfileFormContainer = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || Home;
-  const { profile, refreshProfile } = useProfile();
+  const { profile, updateProfile } = useProfile();
   const [profileImageBlob, setProfileImageBlob] = useState<Blob | null>(null);
 
   const [state, dispatch] = useReducer(
-    (state: ProfileFormState, action: ProfileFormAction): ProfileFormState => {
+    (state: ProfileState, action: ProfileAction): ProfileState => {
       switch (action.type) {
         case "setAbout":
           return { ...state, about: action.about };
@@ -59,12 +34,12 @@ const ProfileFormContainer = () => {
         case "updateProfile":
           return {
             ...state,
+            image: action.profile?.image || null,
             about: action.profile?.about || null,
             gender: action.profile?.gender || null,
             age: action.profile?.age || null,
             weight: action.profile?.weight || null,
             height: action.profile?.height || null,
-            imageUrl: action.profile?.imageUrl || null,
           };
         case "setHandleSubmit":
           return {
@@ -77,6 +52,7 @@ const ProfileFormContainer = () => {
       }
     },
     {
+      image: null,
       about: null,
       gender: null,
       age: null,
@@ -84,7 +60,6 @@ const ProfileFormContainer = () => {
       height: null,
       isLoading: false,
       errorMessage: null,
-      imageUrl: null,
     },
   );
 
@@ -93,37 +68,13 @@ const ProfileFormContainer = () => {
     e.preventDefault();
 
     try {
-      const formData = new FormData();
-      formData.append("about", state.about || "");
-      formData.append("gender", state.gender?.toString() || "");
-      formData.append("age", state.age?.toString() || "");
-      formData.append("weight", state.weight?.toString() || "");
-      formData.append("height", state.height?.toString() || "");
-      if (profileImageBlob) {
-        formData.append("profileImage", profileImageBlob, "profile-image.jpg");
-      }
-
-      const response: AxiosResponse = await axiosInstance.post(
-        "/users",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
-
-      if (response.data.status !== Success) {
-        throw new Error("Edit profile failed");
-      }
-
+      await updateProfile(state, profileImageBlob);
       dispatch({
         type: "setHandleSubmit",
         isLoading: false,
         errorMessage: null,
       });
 
-      refreshProfile();
       navigate(from, { replace: true });
     } catch (err) {
       const error = err as AxiosError<any>;
@@ -146,8 +97,6 @@ const ProfileFormContainer = () => {
     }
   }, [profile]);
 
-  console.log("state", profile);
-
   return (
     <form
       className="profile-form-container card-body flex h-full w-full flex-1 flex-col flex-wrap content-center justify-center"
@@ -160,7 +109,7 @@ const ProfileFormContainer = () => {
         <ImageInput
           name="Profile Image"
           aspect={1}
-          initialImageUrl={state.imageUrl || ""}
+          initialImageUrl={state.image?.url || ""}
           onImageChange={(blob) => setProfileImageBlob(blob)}
         />
       </div>

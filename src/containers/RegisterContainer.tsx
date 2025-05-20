@@ -9,30 +9,11 @@ import Button from "../components/Button";
 import Alert from "../components/Alert";
 import { Login } from "../const/Links.ts";
 import { Success } from "../const/Status.ts";
-
-type RegisterAction =
-  | { type: "setEmail"; email: string }
-  | { type: "setUsername"; username: string }
-  | { type: "setPassword"; password: string }
-  | { type: "setConfirmPassword"; confirmPassword: string }
-  | {
-      type: "setHandleSubmit";
-      isLoading: boolean;
-      errorMessage: string | null;
-    };
-
-type RegisterState = {
-  email: string;
-  username: string;
-  password: string;
-  confirmPassword: string;
-  isLoading: boolean;
-  errorMessage: string | null;
-};
-
-interface RegisterResponse {
-  status: string;
-}
+import {
+  RegisterState,
+  RegisterAction,
+  RegisterResponse,
+} from "../models/Register.ts";
 
 const RegisterContainer = () => {
   const navigate = useNavigate();
@@ -85,6 +66,16 @@ const RegisterContainer = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     dispatch({ type: "setHandleSubmit", isLoading: true, errorMessage: null });
+    if (state.password !== state.confirmPassword) {
+      dispatch({
+        type: "setHandleSubmit",
+        isLoading: false,
+        errorMessage: "Passwords do not match.",
+      });
+
+      return;
+    }
+
     try {
       const response: AxiosResponse<RegisterResponse> =
         await axiosInstance.post("/auth/register", {
@@ -118,7 +109,7 @@ const RegisterContainer = () => {
           "Register Failed. Please try again.",
       });
 
-      console.error("Login error:", error.response || error.message);
+      console.error("Register error:", error.response || error.message);
     }
   };
 
