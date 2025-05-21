@@ -6,14 +6,14 @@ import { centerAspectCrop, canvasPreview } from "../utils/canvas";
 import RangeInput from "./RangeInput";
 
 interface ProfileImageUploadProps {
-  name: string;
+  label: string;
   aspect: number;
   initialImageUrl?: string | null;
   onImageChange: (imageBlob: Blob | null) => void;
 }
 
 const ImageInput = ({
-  name,
+  label,
   aspect,
   initialImageUrl,
   onImageChange,
@@ -167,7 +167,7 @@ const ImageInput = ({
   return (
     <div className="flex w-full flex-col items-center gap-2">
       <fieldset className="fieldset w-full">
-        <legend className="fieldset-legend">{name}</legend>
+        <legend className="fieldset-legend">{label}</legend>
         <input
           ref={fileInputRef}
           type="file"
@@ -207,7 +207,8 @@ const ImageInput = ({
             />
           </ReactCrop>
           <RangeInput
-            name="Scale"
+            label="Scale"
+            name="scale"
             min="0"
             max="2"
             step="0.1"
@@ -216,7 +217,8 @@ const ImageInput = ({
             onChange={(value) => setScale(Number(value))}
           />
           <RangeInput
-            name="Rotate"
+            label="Rotate"
+            name="rotate"
             min="-180"
             max="180"
             step="1"

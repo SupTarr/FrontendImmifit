@@ -107,19 +107,21 @@ const ProfileFormContainer = () => {
       </div>
       <div className="flex max-w-[400px] items-center justify-center">
         <ImageInput
-          name="Profile Image"
+          label="Profile Image"
           aspect={1}
           initialImageUrl={state.image?.url || ""}
           onImageChange={(blob) => setProfileImageBlob(blob)}
         />
       </div>
       <TextareaInput
-        name="About"
+        label="About"
+        name="about"
         value={state.about || ""}
         onChange={(value) => dispatch({ type: "setAbout", about: value })}
       />
       <SelectInput
-        name="Gender"
+        label="Gender"
+        name="gender"
         options={["Male", "Female"]}
         value={state.gender === 1000 ? "Male" : "Female"}
         onChange={(value) =>
@@ -130,14 +132,16 @@ const ProfileFormContainer = () => {
         }
       />
       <NumberInput
-        name="Age"
+        label="Age"
+        name="age"
         min="1"
         max="200"
         value={state.age?.toString() || ""}
         onChange={(value) => dispatch({ type: "setAge", age: Number(value) })}
       />
       <NumberInput
-        name="Weight"
+        label="Weight"
+        name="weight"
         min="1"
         max="500"
         step="0.1"
@@ -147,7 +151,8 @@ const ProfileFormContainer = () => {
         }
       />
       <NumberInput
-        name="Height"
+        label="Height"
+        name="height"
         min="1"
         max="5"
         step="0.01"
