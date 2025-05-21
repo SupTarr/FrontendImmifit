@@ -7,25 +7,11 @@ import {
 } from "react";
 import AuthContext from "./AuthProvider";
 import axiosInstance from "../api/axios.js";
-import { ProfileState, ProfileContextType } from "../models/Profile.ts";
+import { ProfileState, ProfileContextType, defaultProfileState } from "../models/Profile.ts";
 
 interface ProfileProviderProps {
   children: ReactNode;
 }
-
-const defaultProfileState: ProfileState = {
-  profileId: null,
-  userId: null,
-  about: null,
-  gender: null,
-  age: null,
-  weight: null,
-  height: null,
-  bmi: null,
-  image: null,
-  isLoading: false,
-  errorMessage: null,
-};
 
 const ProfileContext = createContext<ProfileContextType>({
   profile: defaultProfileState,
@@ -76,6 +62,7 @@ export const ProfileProvider = ({
       isLoading: true,
       errorMessage: null,
     }));
+    
     const formData = new FormData();
     formData.append("about", profileData.about || "");
     formData.append("gender", profileData.gender?.toString() || "");

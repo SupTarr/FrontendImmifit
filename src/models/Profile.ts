@@ -14,13 +14,27 @@ export interface ProfileState {
   errorMessage: string | null;
 }
 
+export const defaultProfileState: ProfileState = {
+  profileId: null,
+  userId: null,
+  about: null,
+  gender: null,
+  age: null,
+  weight: null,
+  height: null,
+  bmi: null,
+  image: null,
+  isLoading: false,
+  errorMessage: null,
+};
+
 export type ProfileAction =
   | { type: "setAbout"; about: string | null }
   | { type: "setGender"; gender: number | null }
   | { type: "setAge"; age: number | null }
   | { type: "setWeight"; weight: number | null }
   | { type: "setHeight"; height: number | null }
-  | { type: "updateProfile"; profile: any }
+  | { type: "updateProfile"; profile: Partial<ProfileState> }
   | {
       type: "setHandleSubmit";
       isLoading: boolean;
