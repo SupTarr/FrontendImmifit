@@ -1,6 +1,5 @@
-import { useReducer, FormEvent, useEffect, useState } from "react";
+import { FormEvent, FC } from "react"; // Import FC for functional component typing
 import { useNavigate, useLocation } from "react-router-dom";
-import { AxiosError } from "axios";
 import TextareaInput from "../components/TextareaInput.tsx";
 import NumberInput from "../components/NumberInput.tsx";
 import SelectInput from "../components/SelectInput.tsx";
@@ -9,110 +8,86 @@ import Alert from "../components/Alert.tsx";
 import ImageInput from "../components/ImageInput.tsx";
 import { Home } from "../const/Links.ts";
 import useProfile from "../hooks/useProfile.tsx";
-import { ProfileState, ProfileAction } from "../models/Profile.ts";
+import { GENDER_MALE, GENDER_FEMALE } from "../const/genderConstants.ts";
+import { useProfileForm } from "../hooks/useProfileForm.tsx";
 
-const ProfileFormContainer = () => {
+/**
+ * `ProfileFormContainer` component handles the user's profile creation and updates.
+ * It uses the `useProfile` hook to get current profile data and the update function,
+ * and the `useProfileForm` hook to manage form state, validation, and submission logic.
+ *
+ * @returns A form element for editing the user profile.
+ */
+const ProfileFormContainer: FC = () => {
+  // React Router hooks for navigation and location state.
   const navigate = useNavigate();
   const location = useLocation();
+  // Determines the redirect path after successful profile update, defaulting to the Home page.
   const from = location.state?.from?.pathname || Home;
-  const { profile, updateProfile } = useProfile();
-  const [profileImageBlob, setProfileImageBlob] = useState<Blob | null>(null);
 
-  const [state, dispatch] = useReducer(
-    (state: ProfileState, action: ProfileAction): ProfileState => {
-      switch (action.type) {
-        case "setAbout":
-          return { ...state, about: action.about };
-        case "setGender":
-          return { ...state, gender: action.gender };
-        case "setAge":
-          return { ...state, age: action.age };
-        case "setWeight":
-          return { ...state, weight: action.weight };
-        case "setHeight":
-          return { ...state, height: action.height };
-        case "updateProfile":
-          return {
-            ...state,
-            image: action.profile?.image || null,
-            about: action.profile?.about || null,
-            gender: action.profile?.gender || null,
-            age: action.profile?.age || null,
-            weight: action.profile?.weight || null,
-            height: action.profile?.height || null,
-          };
-        case "setHandleSubmit":
-          return {
-            ...state,
-            isLoading: action.isLoading,
-            errorMessage: action.errorMessage,
-          };
-        default:
-          return state;
-      }
-    },
-    {
-      image: null,
-      about: null,
-      gender: null,
-      age: null,
-      weight: null,
-      height: null,
-      isLoading: false,
-      errorMessage: null,
-    },
-  );
+  // `useProfile` hook provides the current profile data (`initialProfileData`)
+  // and the `updateProfile` function from `ProfileContext`.
+  const { profile: initialProfileData, updateProfile } = useProfile();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    dispatch({ type: "setHandleSubmit", isLoading: true, errorMessage: null });
-    e.preventDefault();
+  // `useProfileForm` hook manages the form's state and core submission logic.
+  // - `initialProfileData`: Used to populate the form when it loads.
+  // - `onFormSubmit`: The `updateProfile` function from `ProfileContext` is passed here
+  //   to be called by the hook upon successful validation and submission.
+  const {
+    state, // Contains form field values (about, gender, age, etc.), isLoading, and errorMessage.
+    dispatch, // Function to dispatch actions to the `useProfileForm` reducer (e.g., for field changes).
+    setProfileImageBlob, // Function to set the profile image Blob, managed by `useProfileForm`.
+    handleSubmit: handleFormSubmit, // The core submission handler from `useProfileForm`.
+  } = useProfileForm({
+    initialProfileData,
+    onFormSubmit: updateProfile,
+  });
 
+  /**
+   * Wraps the `handleFormSubmit` from `useProfileForm` to add navigation logic
+   * after the form submission is processed by the hook.
+   *
+   * @param e - The form event.
+   */
+  const containerSubmit = async (
+    e: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     try {
-      await updateProfile(state, profileImageBlob);
-      dispatch({
-        type: "setHandleSubmit",
-        isLoading: false,
-        errorMessage: null,
-      });
-
+      // Call the handleSubmit function from `useProfileForm`.
+      // This function handles form validation, API call (via `onFormSubmit`),
+      // and updates `isLoading` and `errorMessage` in its state.
+      await handleFormSubmit(e);
+      // If `handleFormSubmit` resolves, it means the update was successful.
+      // Navigate to the 'from' path.
       navigate(from, { replace: true });
-    } catch (err) {
-      const error = err as AxiosError<any>;
-      dispatch({
-        type: "setHandleSubmit",
-        isLoading: false,
-        errorMessage:
-          error?.response?.data?.message ||
-          "Update profile failed. Please try again.",
-      });
+    } catch (error) {
+      // If `handleFormSubmit` rejects, an error occurred during the process.
+      // The `useProfileForm` hook sets `state.errorMessage`, which is displayed by the Alert component.
+      // This catch block is for any additional component-specific error handling, like logging.
+      console.error("Profile update failed in ProfileFormContainer:", error);
     }
   };
 
-  useEffect(() => {
-    if (profile) {
-      dispatch({
-        type: "updateProfile",
-        profile,
-      });
-    }
-  }, [profile]);
-
   return (
+    // Form submission is handled by `containerSubmit`.
     <form
       className="profile-form-container card-body flex h-full w-full flex-1 flex-col flex-wrap content-center justify-center"
-      onSubmit={handleSubmit}
+      onSubmit={containerSubmit}
     >
       <div className="flex items-center justify-center">
         <h1 className="card-title">Profile</h1>
       </div>
+      {/* ImageInput for uploading/displaying the profile image. */}
       <div className="flex max-w-[400px] items-center justify-center">
         <ImageInput
           name="Profile Image"
-          aspect={1}
-          initialImageUrl={state.image?.url || ""}
-          onImageChange={(blob) => setProfileImageBlob(blob)}
+          aspect={1} // Aspect ratio for the image cropper.
+          initialImageUrl={state.image?.url || ""} // Initial image URL from form state.
+          onImageChange={(blob) => setProfileImageBlob(blob)} // Callback to update image Blob in `useProfileForm`.
         />
       </div>
+      {/* Input fields for profile details. Values are bound to `state` from `useProfileForm`.
+          onChange handlers use `dispatch` from `useProfileForm` to update specific fields. */}
       <TextareaInput
         name="About"
         value={state.about || ""}
@@ -121,11 +96,11 @@ const ProfileFormContainer = () => {
       <SelectInput
         name="Gender"
         options={["Male", "Female"]}
-        value={state.gender === 1000 ? "Male" : "Female"}
+        value={state.gender === GENDER_MALE ? "Male" : "Female"}
         onChange={(value) =>
           dispatch({
             type: "setGender",
-            gender: value === "Male" ? 1000 : 2000,
+            gender: value === "Male" ? GENDER_MALE : GENDER_FEMALE,
           })
         }
       />
@@ -140,7 +115,7 @@ const ProfileFormContainer = () => {
         name="Weight"
         min="1"
         max="500"
-        step="0.1"
+        step="0.1" // Allows decimal input for weight.
         value={state.weight?.toString() || ""}
         onChange={(value) =>
           dispatch({ type: "setWeight", weight: Number(value) })
@@ -149,14 +124,16 @@ const ProfileFormContainer = () => {
       <NumberInput
         name="Height"
         min="1"
-        max="5"
-        step="0.01"
+        max="5" // Assuming height is in meters.
+        step="0.01" // Allows decimal input for height.
         value={state.height?.toString() || ""}
         onChange={(value) =>
           dispatch({ type: "setHeight", height: Number(value) })
         }
       />
+      {/* Submit button displays loading state from `useProfileForm`. */}
       <Button name="Submit" isLoading={state.isLoading} />
+      {/* Alert displays any error messages from `useProfileForm` state. */}
       {state.errorMessage && <Alert message={state.errorMessage} />}
     </form>
   );
