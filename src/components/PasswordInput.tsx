@@ -1,14 +1,16 @@
 type PropsType = {
+  label: string;
   name: string;
   value: string;
   onChange: (value: string) => void;
 };
 
-const PasswordInput = ({ name, value, onChange }: PropsType) => {
+const PasswordInput = ({ label, name, value, onChange }: PropsType) => {
   return (
     <fieldset className="fieldset">
-      <legend className="fieldset-legend">{name}</legend>
+      <legend className="fieldset-legend">{label}</legend>
       <input
+        name={name}
         className="input validator w-full rounded-sm"
         type="password"
         required

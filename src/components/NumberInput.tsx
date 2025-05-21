@@ -1,4 +1,5 @@
 type PropsType = {
+  label: string;
   name: string;
   min: string;
   max: string;
@@ -7,11 +8,20 @@ type PropsType = {
   onChange: (value: string) => void;
 };
 
-const NumberInput = ({ name, min, max, step, value, onChange }: PropsType) => {
+const NumberInput = ({
+  label,
+  name,
+  min,
+  max,
+  step,
+  value,
+  onChange,
+}: PropsType) => {
   return (
     <fieldset className="fieldset">
-      <legend className="fieldset-legend">{name}</legend>
+      <legend className="fieldset-legend">{label}</legend>
       <input
+        name={name}
         type="number"
         min={min}
         max={max}

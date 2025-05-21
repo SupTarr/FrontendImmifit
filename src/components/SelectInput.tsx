@@ -1,4 +1,5 @@
 type PropsType = {
+  label: string;
   name: string;
   options: string[];
   placeholder?: string;
@@ -6,11 +7,12 @@ type PropsType = {
   onChange: (value: string) => void;
 };
 
-const SelectInput = ({ name, options, value, onChange }: PropsType) => {
+const SelectInput = ({ label, name, options, value, onChange }: PropsType) => {
   return (
     <fieldset className="fieldset">
-      <legend className="fieldset-legend">{name}</legend>
+      <legend className="fieldset-legend">{label}</legend>
       <select
+        name={name}
         className="select w-full rounded-sm"
         value={value}
         onChange={(e) => onChange(e.target.value)}

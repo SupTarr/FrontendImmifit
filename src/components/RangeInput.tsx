@@ -1,4 +1,5 @@
 type PropsType = {
+  label: string;
   name: string;
   value: string;
   min?: string;
@@ -9,6 +10,7 @@ type PropsType = {
 };
 
 const RangeInput = ({
+  label,
   name,
   value,
   min,
@@ -19,10 +21,10 @@ const RangeInput = ({
 }: PropsType) => {
   return (
     <fieldset className="fieldset">
-      <legend className="fieldset-legend">{name}</legend>
+      <legend className="fieldset-legend">{label}</legend>
       <input
+        name={name}
         className="range range-xs w-full"
-        id="scale-input"
         type="range"
         value={value}
         min={min}
