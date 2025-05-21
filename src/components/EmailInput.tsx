@@ -1,4 +1,5 @@
 type PropsType = {
+  label: string;
   name: string;
   value: string;
   onChange: (value: string) => void;
@@ -6,11 +7,12 @@ type PropsType = {
 
 const emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
-const EmailInput = ({ name, value, onChange }: PropsType) => {
+const EmailInput = ({ label, name, value, onChange }: PropsType) => {
   return (
     <fieldset className="fieldset">
-      <legend className="fieldset-legend">{name}</legend>
+      <legend className="fieldset-legend">{label}</legend>
       <input
+        name={name}
         className="input validator w-full rounded-sm"
         type="email"
         required

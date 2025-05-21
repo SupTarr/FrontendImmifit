@@ -94,12 +94,14 @@ const LoginContainer = () => {
     >
       <h2 className="card-title">Login</h2>
       <EmailInput
-        name="Email"
+        label="Email"
+        name="email"
         value={state.email}
         onChange={(v: string) => dispatch({ type: "setEmail", email: v })}
       />
       <PasswordInput
-        name="Password"
+        label="Password"
+        name="password"
         value={state.password}
         onChange={(v: string) => dispatch({ type: "setPassword", password: v })}
       />

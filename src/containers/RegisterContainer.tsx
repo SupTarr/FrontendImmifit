@@ -120,22 +120,26 @@ const RegisterContainer = () => {
     >
       <h2 className="card-title">Register</h2>
       <EmailInput
-        name="Email"
+        label="Email"
+        name="email"
         value={state.email}
         onChange={(v: string) => dispatch({ type: "setEmail", email: v })}
       />
       <TextInput
-        name="Username"
+        label="Username"
+        name="username"
         value={state.username}
         onChange={(v: string) => dispatch({ type: "setUsername", username: v })}
       />
       <PasswordInput
-        name="Password"
+        label="Password"
+        name="password"
         value={state.password}
         onChange={(v: string) => dispatch({ type: "setPassword", password: v })}
       />
       <PasswordInput
-        name="Confirm Password"
+        label="Confirm Password"
+        name="confirmPassword"
         value={state.confirmPassword}
         onChange={(v: string) =>
           dispatch({ type: "setConfirmPassword", confirmPassword: v })
