@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import ProfileCard from "../components/ProfileCard";
+import ProfileDisplay from "../components/ProfileDisplay"; // Updated import
 import Footer from "../components/Footer";
 
 const PageHome = () => {
@@ -7,7 +7,7 @@ const PageHome = () => {
     <section className="page-home min-h-screen">
       <Navbar />
       <div className="bg-base-200 flex min-h-screen flex-col items-center justify-center pt-[64px] pb-[52px]">
-        <ProfileCard />
+        <ProfileDisplay /> {/* Updated component name */}
       </div>
       <Footer />
     </section>

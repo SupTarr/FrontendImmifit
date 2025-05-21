@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useProfile from "../hooks/useProfile";
 import { Profile } from "../const/Links";
+import { GENDER_MALE } from "../const/genderConstants"; // Import GENDER_MALE
 
-const Navbar = () => {
+const ProfileDisplay = () => {
   const { auth } = useAuth();
   const { profile } = useProfile();
 
@@ -28,7 +29,7 @@ const Navbar = () => {
             <h2 className="mt-2 font-bold">About:</h2>
             <p>{profile?.about}</p>
             <h2 className="mt-2 font-bold">Gender:</h2>
-            <p>{profile?.gender === 1000 ? "Male" : "Female"}</p>
+            <p>{profile?.gender === GENDER_MALE ? "Male" : "Female"}</p>
             <h2 className="mt-2 font-bold">Age:</h2>
             <p>{profile?.age}</p>
             <h2 className="mt-2 font-bold">Weight:</h2>
@@ -61,4 +62,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default ProfileDisplay;
