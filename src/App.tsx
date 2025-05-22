@@ -9,9 +9,13 @@ import RequireAuth from "./shared/components/RequireAuth.tsx";
 const PageLoading = lazy(() => import("./shared/pages/PageLoading.tsx"));
 const Page404 = lazy(() => import("./shared/pages/Page404.tsx"));
 const PageLogin = lazy(() => import("./features/auth/pages/PageLogin.tsx"));
-const PageRegister = lazy(() => import("./features/auth/pages/PageRegister.tsx"));
+const PageRegister = lazy(
+  () => import("./features/auth/pages/PageRegister.tsx"),
+);
 const PageHome = lazy(() => import("./shared/pages/PageHome.tsx"));
-const PageProfileForm = lazy(() => import("./features/profile/pages/PageProfileForm.tsx"));
+const PageProfileForm = lazy(
+  () => import("./features/profile/pages/PageProfileForm.tsx"),
+);
 
 const App: React.FC = () => {
   const refresh = useRefreshToken();

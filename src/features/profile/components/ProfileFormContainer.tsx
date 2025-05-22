@@ -10,6 +10,7 @@ import ImageInput from "../../../shared/components/form/ImageInput.tsx";
 import { Home } from "../../../shared/const/Links.ts";
 import useProfile from "../hooks/useProfile.tsx";
 import { ProfileState, ProfileAction } from "../types/Profile.ts";
+import Gender from "../../../shared/const/Gender.ts";
 
 const ProfileFormContainer = () => {
   const navigate = useNavigate();
@@ -123,11 +124,11 @@ const ProfileFormContainer = () => {
         label="Gender"
         name="gender"
         options={["Male", "Female"]}
-        value={state.gender === 1000 ? "Male" : "Female"}
+        value={state.gender === Gender.Male ? "Male" : "Female"}
         onChange={(value) =>
           dispatch({
             type: "setGender",
-            gender: value === "Male" ? 1000 : 2000,
+            gender: value === "Male" ? Gender.Male : Gender.Female,
           })
         }
       />
