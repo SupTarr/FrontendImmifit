@@ -1,11 +1,6 @@
 import { useLocation, Navigate, Outlet, Location } from "react-router-dom";
 import useAuth from "../../features/auth/hooks/useAuth.tsx";
-
-enum Role {
-  User = 1000,
-}
-
-const allowedRoles: number[] = [Role.User];
+import Role from "../const/Role.ts";
 
 const RequireAuth = () => {
   const { auth } = useAuth();
@@ -17,7 +12,7 @@ const RequireAuth = () => {
 
   const hasRequiredRole =
     auth?.roles?.length === 0 ||
-    auth?.roles?.some((role: number) => allowedRoles.includes(role));
+    auth?.roles?.some((role: number) => role === Role.User);
 
   if (hasRequiredRole) {
     return <Outlet />;

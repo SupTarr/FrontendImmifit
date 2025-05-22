@@ -7,7 +7,11 @@ import {
 } from "react";
 import AuthContext from "../../auth/context/AuthProvider";
 import axiosInstance from "../../../shared/api/axios.js";
-import { ProfileState, ProfileContextType, defaultProfileState } from "../types/Profile.ts";
+import {
+  ProfileState,
+  ProfileContextType,
+  defaultProfileState,
+} from "../types/Profile.ts";
 
 interface ProfileProviderProps {
   children: ReactNode;
@@ -19,9 +23,7 @@ const ProfileContext = createContext<ProfileContextType>({
   refreshProfile: async () => {},
 });
 
-export const ProfileProvider = ({
-  children,
-}: ProfileProviderProps) => {
+export const ProfileProvider = ({ children }: ProfileProviderProps) => {
   const [profile, setProfile] = useState<ProfileState>(defaultProfileState);
   const { auth } = useContext(AuthContext);
 
@@ -32,7 +34,7 @@ export const ProfileProvider = ({
 
     setProfile((prev) => ({ ...prev, isLoading: true, errorMessage: null }));
     try {
-      const response = await axiosInstance.get("/users");
+      const response = await axiosInstance.get("/profile");
       setProfile({
         ...response.data.body,
         isLoading: false,
@@ -62,7 +64,7 @@ export const ProfileProvider = ({
       isLoading: true,
       errorMessage: null,
     }));
-    
+
     const formData = new FormData();
     formData.append("about", profileData.about || "");
     formData.append("gender", profileData.gender?.toString() || "");
@@ -75,7 +77,7 @@ export const ProfileProvider = ({
     }
 
     try {
-      const response = await axiosInstance.post("/users", formData, {
+      const response = await axiosInstance.post("/profile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
