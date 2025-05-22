@@ -4,6 +4,7 @@ type PropsType = {
   min: string;
   max: string;
   step?: string;
+  required?: boolean;
   value: string;
   onChange: (value: string) => void;
 };
@@ -14,6 +15,7 @@ const NumberInput = ({
   min,
   max,
   step,
+  required,
   value,
   onChange,
 }: PropsType) => {
@@ -26,6 +28,7 @@ const NumberInput = ({
         min={min}
         max={max}
         step={step ?? "1"}
+        required={required}
         className="input w-full rounded-sm"
         value={value}
         onChange={(e) => onChange(e.target.value)}

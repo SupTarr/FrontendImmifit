@@ -1,4 +1,4 @@
-import { useReducer, FormEvent, useEffect, useState } from "react";
+import { useReducer, FormEvent, useEffect, useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AxiosError } from "axios";
 import TextareaInput from "../../../shared/components/form/TextareaInput.tsx";
@@ -8,39 +8,33 @@ import Button from "../../../shared/components/ui/Button.tsx";
 import Alert from "../../../shared/components/ui/Alert.tsx";
 import ImageInput from "../../../shared/components/form/ImageInput.tsx";
 import { Home } from "../../../shared/const/Links.ts";
-import useProfile from "../hooks/useProfile.tsx";
-import { ProfileState, ProfileAction } from "../types/Profile.ts";
+import ProfileContext from "../context/ProfileProvider.tsx";
+import {
+  ProfileState,
+  ProfileAction,
+  defaultProfileState,
+} from "../types/Profile.ts";
 import Gender from "../../../shared/const/Gender.ts";
 
 const ProfileFormContainer = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || Home;
-  const { profile, updateProfile } = useProfile();
+  const { profile, updateProfile } = useContext(ProfileContext);
   const [profileImageBlob, setProfileImageBlob] = useState<Blob | null>(null);
 
   const [state, dispatch] = useReducer(
     (state: ProfileState, action: ProfileAction): ProfileState => {
       switch (action.type) {
-        case "setAbout":
-          return { ...state, about: action.about };
-        case "setGender":
-          return { ...state, gender: action.gender };
-        case "setAge":
-          return { ...state, age: action.age };
-        case "setWeight":
-          return { ...state, weight: action.weight };
-        case "setHeight":
-          return { ...state, height: action.height };
         case "updateProfile":
           return {
             ...state,
-            image: action.profile?.image || null,
-            about: action.profile?.about || null,
-            gender: action.profile?.gender || null,
-            age: action.profile?.age || null,
-            weight: action.profile?.weight || null,
-            height: action.profile?.height || null,
+            image: action.profile?.image || state.image,
+            about: action.profile?.about || state.about,
+            gender: action.profile?.gender || state.gender,
+            age: action.profile?.age || state.age,
+            weight: action.profile?.weight || state.weight,
+            height: action.profile?.height || state.height,
           };
         case "setHandleSubmit":
           return {
@@ -52,16 +46,7 @@ const ProfileFormContainer = () => {
           return state;
       }
     },
-    {
-      image: null,
-      about: null,
-      gender: null,
-      age: null,
-      weight: null,
-      height: null,
-      isLoading: false,
-      errorMessage: null,
-    },
+    defaultProfileState,
   );
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -118,7 +103,9 @@ const ProfileFormContainer = () => {
         label="About"
         name="about"
         value={state.about || ""}
-        onChange={(value) => dispatch({ type: "setAbout", about: value })}
+        onChange={(value) =>
+          dispatch({ type: "updateProfile", profile: { about: value } })
+        }
       />
       <SelectInput
         label="Gender"
@@ -127,8 +114,8 @@ const ProfileFormContainer = () => {
         value={state.gender === Gender.Male ? "Male" : "Female"}
         onChange={(value) =>
           dispatch({
-            type: "setGender",
-            gender: value === "Male" ? Gender.Male : Gender.Female,
+            type: "updateProfile",
+            profile: { gender: value === "Male" ? Gender.Male : Gender.Female },
           })
         }
       />
@@ -137,8 +124,14 @@ const ProfileFormContainer = () => {
         name="age"
         min="1"
         max="200"
+        required={true}
         value={state.age?.toString() || ""}
-        onChange={(value) => dispatch({ type: "setAge", age: Number(value) })}
+        onChange={(value) =>
+          dispatch({
+            type: "updateProfile",
+            profile: { age: Number(value) },
+          })
+        }
       />
       <NumberInput
         label="Weight"
@@ -146,20 +139,28 @@ const ProfileFormContainer = () => {
         min="1"
         max="500"
         step="0.1"
+        required={true}
         value={state.weight?.toString() || ""}
         onChange={(value) =>
-          dispatch({ type: "setWeight", weight: Number(value) })
+          dispatch({
+            type: "updateProfile",
+            profile: { weight: Number(value) },
+          })
         }
       />
       <NumberInput
         label="Height"
         name="height"
-        min="1"
+        min="0"
         max="5"
         step="0.01"
+        required={true}
         value={state.height?.toString() || ""}
         onChange={(value) =>
-          dispatch({ type: "setHeight", height: Number(value) })
+          dispatch({
+            type: "updateProfile",
+            profile: { height: Number(value) },
+          })
         }
       />
       <Button name="Submit" isLoading={state.isLoading} />

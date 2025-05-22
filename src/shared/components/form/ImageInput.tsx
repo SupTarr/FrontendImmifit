@@ -4,6 +4,7 @@ import "react-image-crop/dist/ReactCrop.css";
 import { useDebounceEffect } from "../../hooks/useDebounceEffect";
 import { centerAspectCrop, canvasPreview } from "../../utils/canvas";
 import RangeInput from "../form/RangeInput";
+import ProfileImage from "../ui/ProfileImage";
 
 interface ProfileImageUploadProps {
   label: string;
@@ -176,13 +177,7 @@ const ImageInput = ({
           className="file-input w-full"
         />
       </fieldset>
-      {croppedImageUrl && (
-        <img
-          className="avatar mt-2 h-32 w-32 rounded-full"
-          src={croppedImageUrl}
-          alt="Picture preview"
-        />
-      )}
+      {croppedImageUrl && <ProfileImage src={croppedImageUrl} />}
       {imgSrc && !croppedImageUrl && (
         <div className="bg-base-200 mt-4 rounded-lg border p-2">
           <p className="mb-2 text-center text-sm">
