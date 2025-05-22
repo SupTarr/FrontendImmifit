@@ -1,18 +1,18 @@
-import RegisterContainer from "../containers/RegisterContainer";
+import LoginContainer from "../components/LoginContainer.tsx";
 
-const PageRegister = () => {
+const PageLogin = () => {
   return (
-    <section className="page-register bg-neutral-content flex min-h-screen flex-col flex-wrap content-center justify-center">
+    <section className="page-login bg-neutral-content flex min-h-screen flex-col flex-wrap content-center justify-center">
       <div className="card bg-base-100 md:card-side mx-5 max-w-9/12 drop-shadow-2xl">
         <figure className="md:max-w-[50%]">
           <img src="/cover.jpg" alt="Album" />
         </figure>
         <div className="card-body">
-          <RegisterContainer />
+          <LoginContainer />
         </div>
       </div>
     </section>
   );
 };
 
-export default PageRegister;
+export default PageLogin;

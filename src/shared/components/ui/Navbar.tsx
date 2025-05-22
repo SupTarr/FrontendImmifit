@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Login } from "../const/Links.ts";
-import useLogout from "../hooks/useLogout";
+import { Login } from "../../const/Links.ts";
+import useLogout from "../../../features/auth/hooks/useLogout.tsx";
 
 const Navbar = () => {
   const logout = useLogout();

@@ -1,8 +1,8 @@
-import axiosInstance from "../api/axios.js";
+import axiosInstance from "../../../shared/api/axios.js";
 import { AxiosResponse } from "axios";
 import useAuth from "./useAuth";
 import { jwtDecode } from "jwt-decode";
-import { DecodedToken, RefreshResponse } from "../models/Refresh";
+import { DecodedToken, RefreshResponse } from "../types/Refresh.js";
 
 const useRefreshToken = () => {
   const { auth, setAuth } = useAuth();

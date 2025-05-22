@@ -1,19 +1,19 @@
 import { useReducer, FormEvent } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AxiosResponse, AxiosError } from "axios";
-import axiosInstance from "../api/axios.js";
-import EmailInput from "../components/EmailInput.tsx";
-import TextInput from "../components/TextInput.tsx";
-import PasswordInput from "../components/PasswordInput";
-import Button from "../components/Button";
-import Alert from "../components/Alert";
-import { Login } from "../const/Links.ts";
-import { Success } from "../const/Status.ts";
+import axiosInstance from "../../../shared/api/axios.js";
+import EmailInput from "../../../shared/components/form/EmailInput.tsx";
+import TextInput from "../../../shared/components/form/TextInput.tsx";
+import PasswordInput from "../../../shared/components/form/PasswordInput";
+import Button from "../../../shared/components/ui/Button";
+import Alert from "../../../shared/components/ui/Alert";
+import { Login } from "../../../shared/const/Links.ts";
+import { Success } from "../../../shared/const/Status.ts";
 import {
   RegisterState,
   RegisterAction,
   RegisterResponse,
-} from "../models/Register.ts";
+} from "../types/Register.ts";
 
 const RegisterContainer = () => {
   const navigate = useNavigate();
