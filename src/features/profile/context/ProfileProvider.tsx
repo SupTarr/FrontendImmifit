@@ -1,31 +1,23 @@
-import {
-  createContext,
-  useState,
-  useEffect,
-  ReactNode,
-  useContext,
-} from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import AuthContext from "../../auth/context/AuthProvider";
-import axiosInstance from "../../../shared/api/axios.js";
 import {
   ProfileState,
+  ProfileProviderProps,
   ProfileContextType,
   defaultProfileState,
 } from "../types/Profile.ts";
-
-interface ProfileProviderProps {
-  children: ReactNode;
-}
+import { useProfileApi } from "../hooks/useProfileApi";
 
 const ProfileContext = createContext<ProfileContextType>({
   profile: defaultProfileState,
   updateProfile: async () => {},
-  refreshProfile: async () => {},
 });
 
 export const ProfileProvider = ({ children }: ProfileProviderProps) => {
   const [profile, setProfile] = useState<ProfileState>(defaultProfileState);
   const { auth } = useContext(AuthContext);
+  const { fetchProfile: apiFetchProfile, updateProfile: apiUpdateProfile } =
+    useProfileApi();
 
   const fetchProfile = async () => {
     if (!auth?.accessToken) {
@@ -33,15 +25,15 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
     }
 
     setProfile((prev) => ({ ...prev, isLoading: true, errorMessage: null }));
+
     try {
-      const response = await axiosInstance.get("/profile");
+      const profileData = await apiFetchProfile();
       setProfile({
-        ...response.data.body,
+        ...profileData,
         isLoading: false,
         errorMessage: null,
       });
     } catch (err) {
-      console.error("Error fetching profile data", err);
       setProfile((prev) => ({
         ...prev,
         isLoading: false,
@@ -52,7 +44,7 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
 
   const updateProfile = async (
     profileData: Partial<ProfileState>,
-    file: Blob | null,
+    imageFile: Blob | null,
   ) => {
     if (!auth?.accessToken) {
       return;
@@ -65,32 +57,15 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
       errorMessage: null,
     }));
 
-    const formData = new FormData();
-    formData.append("about", profileData.about || "");
-    formData.append("gender", profileData.gender?.toString() || "");
-    formData.append("age", profileData.age?.toString() || "");
-    formData.append("weight", profileData.weight?.toString() || "");
-    formData.append("height", profileData.height?.toString() || "");
-    if (file) {
-      formData.append("imageId", profileData.image?.id || "");
-      formData.append("file", file, `${crypto.randomUUID()}.png`);
-    }
-
     try {
-      const response = await axiosInstance.post("/profile", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
+      const updatedProfileData = await apiUpdateProfile(profileData, imageFile);
       setProfile((prev) => ({
         ...prev,
-        ...response.data.body,
+        ...updatedProfileData,
         isLoading: false,
         errorMessage: null,
       }));
     } catch (err) {
-      console.error("Error updating profile data", err);
       setProfile((prev) => ({
         ...prev,
         isLoading: false,
@@ -112,7 +87,6 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
       value={{
         profile,
         updateProfile,
-        refreshProfile: fetchProfile,
       }}
     >
       {children}

@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { Image } from "../../../shared/types/Image";
 
 export interface ProfileState {
@@ -29,11 +30,6 @@ export const defaultProfileState: ProfileState = {
 };
 
 export type ProfileAction =
-  | { type: "setAbout"; about: string | null }
-  | { type: "setGender"; gender: number | null }
-  | { type: "setAge"; age: number | null }
-  | { type: "setWeight"; weight: number | null }
-  | { type: "setHeight"; height: number | null }
   | { type: "updateProfile"; profile: Partial<ProfileState> }
   | {
       type: "setHandleSubmit";
@@ -41,11 +37,14 @@ export type ProfileAction =
       errorMessage: string | null;
     };
 
+export interface ProfileProviderProps {
+  children: ReactNode;
+}
+
 export interface ProfileContextType {
   profile: ProfileState;
   updateProfile: (
     profileData: Partial<ProfileState>,
     file: Blob | null,
   ) => Promise<void>;
-  refreshProfile: () => Promise<void>;
 }
