@@ -1,6 +1,6 @@
-import Navbar from "../components/Navbar";
-import ProfileFormContainer from "../containers/ProfileFormContainer";
-import Footer from "../components/Footer";
+import Navbar from "../../../shared/components/ui/Navbar";
+import ProfileFormContainer from "../components/ProfileFormContainer";
+import Footer from "../../../shared/components/ui/Footer";
 
 const PageProfileForm = () => {
   return (

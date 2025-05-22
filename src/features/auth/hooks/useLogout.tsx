@@ -1,4 +1,4 @@
-import axiosInstance from "../api/axios.js";
+import axiosInstance from "../../../shared/api/axios.js";
 import useAuth from "./useAuth";
 
 const useLogout = () => {

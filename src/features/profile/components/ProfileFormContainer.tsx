@@ -1,15 +1,15 @@
 import { useReducer, FormEvent, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AxiosError } from "axios";
-import TextareaInput from "../components/TextareaInput.tsx";
-import NumberInput from "../components/NumberInput.tsx";
-import SelectInput from "../components/SelectInput.tsx";
-import Button from "../components/Button.tsx";
-import Alert from "../components/Alert.tsx";
-import ImageInput from "../components/ImageInput.tsx";
-import { Home } from "../const/Links.ts";
+import TextareaInput from "../../../shared/components/form/TextareaInput.tsx";
+import NumberInput from "../../../shared/components/form/NumberInput.tsx";
+import SelectInput from "../../../shared/components/form/SelectInput.tsx";
+import Button from "../../../shared/components/ui/Button.tsx";
+import Alert from "../../../shared/components/ui/Alert.tsx";
+import ImageInput from "../../../shared/components/form/ImageInput.tsx";
+import { Home } from "../../../shared/const/Links.ts";
 import useProfile from "../hooks/useProfile.tsx";
-import { ProfileState, ProfileAction } from "../models/Profile.ts";
+import { ProfileState, ProfileAction } from "../types/Profile.ts";
 
 const ProfileFormContainer = () => {
   const navigate = useNavigate();

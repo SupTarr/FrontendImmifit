@@ -1,15 +1,15 @@
 import { useReducer, FormEvent } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AxiosResponse, AxiosError } from "axios";
-import EmailInput from "../components/EmailInput";
-import PasswordInput from "../components/PasswordInput";
-import Button from "../components/Button";
-import Alert from "../components/Alert";
-import { Register, Home } from "../const/Links.ts";
-import axiosInstance from "../api/axios.js";
+import EmailInput from "../../../shared/components/form/EmailInput";
+import PasswordInput from "../../../shared/components/form/PasswordInput";
+import Button from "../../../shared/components/ui/Button";
+import Alert from "../../../shared/components/ui/Alert";
+import { Register, Home } from "../../../shared/const/Links.ts";
+import axiosInstance from "../../../shared/api/axios.js";
 import useAuth from "../hooks/useAuth";
-import { Success } from "../const/Status.ts";
-import { LoginState, LoginAction, LoginResponse } from "@/models/Login.ts";
+import { Success } from "../../../shared/const/Status.ts";
+import { LoginState, LoginAction, LoginResponse } from "../types/Login";
 
 const LoginContainer = () => {
   const { auth, setAuth } = useAuth();

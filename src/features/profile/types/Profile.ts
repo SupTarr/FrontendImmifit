@@ -1,4 +1,4 @@
-import { Image } from "./Image";
+import { Image } from "../../../shared/types/Image";
 
 export interface ProfileState {
   profileId?: string | null;

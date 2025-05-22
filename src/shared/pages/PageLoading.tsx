@@ -1,4 +1,4 @@
-import { Loading, Size } from "../components/Loading.tsx";
+import { Loading, Size } from "../components/ui/Loading.tsx";
 
 const PageLoading = () => {
   return (

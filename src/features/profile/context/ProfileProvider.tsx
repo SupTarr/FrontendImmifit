@@ -5,9 +5,9 @@ import {
   ReactNode,
   useContext,
 } from "react";
-import AuthContext from "./AuthProvider";
-import axiosInstance from "../api/axios.js";
-import { ProfileState, ProfileContextType, defaultProfileState } from "../models/Profile.ts";
+import AuthContext from "../../auth/context/AuthProvider";
+import axiosInstance from "../../../shared/api/axios.js";
+import { ProfileState, ProfileContextType, defaultProfileState } from "../types/Profile.ts";
 
 interface ProfileProviderProps {
   children: ReactNode;

@@ -1,9 +1,9 @@
 import { useState, useRef, ChangeEvent, useEffect } from "react";
 import ReactCrop, { type Crop, PixelCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { useDebounceEffect } from "../hooks/useDebounceEffect";
-import { centerAspectCrop, canvasPreview } from "../utils/canvas";
-import RangeInput from "./RangeInput";
+import { useDebounceEffect } from "../../hooks/useDebounceEffect";
+import { centerAspectCrop, canvasPreview } from "../../utils/canvas";
+import RangeInput from "../form/RangeInput";
 
 interface ProfileImageUploadProps {
   label: string;
